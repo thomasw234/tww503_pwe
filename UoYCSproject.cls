@@ -66,7 +66,7 @@
 \UoYCSP@mk@degree{BSc}
 \UoYCSP@mk@degree{MEng}
 \UoYCSP@mk@degree{MMath}
-\newcommand*{\SWE}{\newcommand*{\UoYCSP@degree}{MSc~in~Software~Engineering}}
+\newcommand*{\SWE}{\newcommand*{\UoYCSP@degree}{MEng~in~Software~Engineering}}
 \newcommand*{\SCSE}{\newcommand*{\UoYCSP@degree}{MSc~in~Safety~Critical~Systems~Engineering}}
 \newcommand*{\MIP}{\newcommand*{\UoYCSP@degree}{MSc~in~Information~Processing}}
 \newcommand*{\MIT}{\newcommand*{\UoYCSP@degree}{MSc~in~Information~Technology}}
