@@ -1,0 +1,8 @@
+#!/bin/bash
+
+pdflatex main.tex
+
+if [ $? -eq 0 ] 
+then evince main.pdf
+else echo 'Build Failed. Not opening pdf'
+fi
