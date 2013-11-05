@@ -1,8 +1,11 @@
 #!/bin/bash
 
-pdflatex main.tex
+pdflatex main 
+bibtex main
+pdflatex main
+pdflatex main
 
 if [ $? -eq 0 ] 
-then evince main.pdf
+then evince main.pdf &
 else echo 'Build Failed. Not opening pdf'
 fi
