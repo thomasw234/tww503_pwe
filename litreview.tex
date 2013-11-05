@@ -12,12 +12,24 @@ Model Driven Engineering is a development methodology that aims to reduce the am
 
 In the 1980's there was a software quality crisis that lead to the search for alternative approaches to developing software. Model Driven Engineering is one solution that was of interest at the time as it provided a way to visually represent a system architecture, and from that generate code automatically. However, the return on investment that companies were expecting from model driven engineering was far too high, causing much disappointment and disillusionment, and for a while the concept was sidelined. More recently, the Object Managment Group (OMG) have promoted and developed a Unified Modeling Language (UML), and tools such as Epsilon have further promoted the use of MDE \citep{mdeHistory}.  \citet{brambillaBook} believes that Model Driven Engineering is now past the `trough of disillusionment' and into the `slope of enlightenment' (see figure \ref{mde_pos}) \\
 
-\begin{figure}[p]
-\includegraphics[scale=0.6]{figures/mde_pos.jpg}
+\begin{figure}
+\includegraphics[width=4in]{figures/mde_pos.jpg}
 \caption{The technology hype cycle according to \citet{brambillaBook}}
 \label{mde_pos}
 \end{figure}
 
+\subsection{Model}
+
+\begin{figure}
+\includegraphics[width=4in]{figures/sample_model.jpg}
+\caption{A sample model}
+%TODO: Create my own model to sample here?
+\label{A sample UML model}
+\end{figure}
+
+A model is a representation of something that abstracts away many details that aren't necessary for its use \citep{brambillaBook}. For example, think about The Utah Teapot \citep{utahTeapot}. It's a model of a teapot that is rendered by a 3D engine. However, many aspects of the teapot aren't considered in its model, as they're not necessary for a simple render. An example is that the lid isn't a removable component, because for the purpose of rendering the teapot, the lid never has to be removed. Another example is that the properties of the material that the teapot is made from won't be considered (with the possible exception of reflection), because we have no need to know about them.
+
+A commonly used modeling language is UML. 
 \subsection{Metamodels}
 \subsection{Epsilon}
 \subsection{EuGENia}
