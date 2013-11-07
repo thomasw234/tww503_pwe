@@ -8,7 +8,7 @@ In this chapter I will give an overview of the existing literature that is appro
 
 \subsection{Introduction}
 % The Oxford English dictionary defines Model Driven Engineering as... just kidding
-Model Driven Engineering is a development methodology that aims to reduce the amount of time spent on code development by building models that can be transformed and used to generate code automatically. This reduces the probability of bugs, as the automatically generated code should contain no bugs (as long as the model is correct). Maintenance time is also reduced, as changes to the system can be implemented by changing a model, and re-generating code \citep{mdseLano}.
+Model Driven Engineering is a development methodology that aims to reduce the amount of time spent on code development by building models that can be transformed and used to generate code automatically. Bugs that would normally be in code (through developer error) will no longer be present, as all the code has been generated automatically from a model. Of course this assumes that the model is correct in the first place. Cross-platform implementation overheads are also reduced. The model can remain the same for all platforms, and only the model-to-code program has to be modified for different target platforms. \citep{mdseLano}.
 
 In the 1980's there was a software quality crisis that lead to the search for alternative approaches to developing software. Model Driven Engineering is one solution that was of interest at the time as it provided a way to visually represent a system architecture, and from that generate code automatically. However, the return on investment that companies were expecting from model driven engineering was far too high, causing much disappointment and disillusionment, and for a while the concept was sidelined. More recently, the Object Managment Group (OMG) have promoted and developed a Unified Modeling Language (UML), and tools such as Epsilon have further promoted the use of MDE \citep{mdeHistory}.  \citet{brambillaBook} believes that Model Driven Engineering is now past the `trough of disillusionment' and into the `slope of enlightenment' (see figure \ref{mde_pos}) \\
 
@@ -24,14 +24,37 @@ In the 1980's there was a software quality crisis that lead to the search for al
 \includegraphics[width=4in]{figures/sample_model.jpg}
 \caption{A sample model}
 %TODO: Create my own model to sample here?
-\label{A sample UML model}
+\label{uml_sample}
 \end{figure}
 
-A model is a representation of something that abstracts away many details that aren't necessary for its use \citep{brambillaBook}. For example, think about The Utah Teapot \citep{utahTeapot}. It's a model of a teapot that is rendered by a 3D engine. However, many aspects of the teapot aren't considered in its model, as they're not necessary for a simple render. An example is that the lid isn't a removable component, because for the purpose of rendering the teapot, the lid never has to be removed. Another example is that the properties of the material that the teapot is made from won't be considered (with the possible exception of reflection), because we have no need to know about them.
+A model is a representation of something that abstracts away many details that aren't necessary for its use \citep{brambillaBook}. For example, the Utah Teapot \citep{utahTeapot} is a model of a teapot that is rendered by a 3D engine. However, many aspects of the teapot aren't considered in its model, as they're not necessary for a simple render. An example is that the lid isn't a removable component, because for the purpose of rendering the teapot, the lid never has to be removed. Another example is that the only physical property of the teapot that will be included in the model is it's finish (texture), so that lighting and reflection can be calculated. Other details such as its weight will not be included in the model, because it's not necessary.
 
-A commonly used modeling language is UML. 
+UML (Unified Modeling Language) is a language that is designed specifically for representing models visually. It is ideal for object-oriented design, as it represents classes with boxes and links between classes with lines. Within the boxes there are definitions of the classes (spelling?) methods and fields. In figure \ref{uml_sample}, author is a class that has properties such as name, born, dead. The diagram also shows that there is a connection between author and book.
+%TODO: Write about the connection, or update to a better sample model
+
 \subsection{Metamodels}
+To have a modeling language, there must be a specification of that language that defines the valid syntax, constraints etc. In the case of UML, the Object Management Group provide a detailed specification \citep{umlSpec} of the language, and we can check that any diagram is a UML diagram by checking it against the UML specification.
+
+A metamodel is the specification of a modeling language, in the form of a model \citep{brambillaBook}. A metamodel could be represented visually or textually, depending on the specification of the metamodeling language. As with many aspects of computer science, the metamodel is just another layer of abstraction, and we can continue to abstract to higher and higher levels. A metametamodel (known as M3) will define the specification of a metamodeling language, and the abstraction can continue as far as is required.
+
+Going back to the example of The Utah Teapot, the metamodel in this case may define that the teapot is made up from interconnected polygons, and specify that each polygon has a location and size given in 3D space. 
+
 \subsection{Epsilon}
+To be able to perform Model Driven Engineering, we of course require some tools and languages to build and manipulate models. These tools could be built from scratch for each project, but that would be a waste of time.
+
+Epsilon is a suite of languages and tools that provide all the necessary components to begin a model driven engineering project \citep{epsilonWebsite}. From the Epsilon Website \citep{epsilonWebsite}, the languages that are provided by Epsilon are:
+
+\begin{description}
+\item[EOL] Epsilon Object Language is an expression language that is used to create, query and model EMF models.
+\item[ETL] Epsilon Transformation Language is a model-to-model transformation language.
+\item[EVL] Epsilon Validation Language is a model constraint language.
+\item[EGL] Epsilon Generation Language is a model-to-text generation language that can be used to generate code from models.
+\item[EWL] Epsilon Wizard Language is similar to ETL, except that ETL performs batch operations whereas EWL works with in-place model transformations based on user selections.
+\item[ECL] Epsilon Comparison Language is a model comparison language.
+\item[EML] Epsilon Merging Language is used to merge models of diverse metamodels.
+\item[Epsilon Flock] A rule
+\end{description}
+
 \subsection{EuGENia}
 \subsection{EuGENia Live}
 
