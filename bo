@@ -5,7 +5,15 @@ bibtex main
 pdflatex main
 pdflatex main
 
-if [ $? -eq 0 ] 
-then evince main.pdf &
-else echo 'Build Failed. Not opening pdf'
+if [ $OSTYPE = "darwin12" ]
+then	
+	if [ $? -eq 0 ]
+	then open main.pdf &
+	else echo 'Build Failed. Not opening pdf'
+	fi
+else
+	if [ $? -eq 0 ] 
+	then evince main.pdf &
+	else echo 'Build Failed. Not opening pdf'
+	fi
 fi
