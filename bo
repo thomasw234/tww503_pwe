@@ -5,14 +5,17 @@ bibtex main
 pdflatex main
 pdflatex main
 
+EXIT_STATE=$?
+
 if [ $OSTYPE = "darwin12" ]
 then	
-	if [ $? -eq 0 ]
+	if [ $EXIT_STATE -eq 0 ]
 	then open main.pdf &
 	else echo 'Build Failed. Not opening pdf'
 	fi
-else
-	if [ $? -eq 0 ] 
+elif [ $OSTYPE = 'linux-gnu' ]
+then
+	if [ $EXIT_STATE -eq 0 ] 
 	then evince main.pdf &
 	else echo 'Build Failed. Not opening pdf'
 	fi
