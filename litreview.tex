@@ -137,8 +137,33 @@ Consider the code in figure \ref{sampleCoverageCode}. Even if a test covers all 
 \end{figure}
 
 \subsubsection{Path Coverage}
+
+Another approach to determining the quality of a test set is to consider the path coverage of the code being tested. A section of code can have many paths through it. In the sample code in figure \ref{sampleCoverageCode} there are two obvious paths. The first is through the if statement, the second is to skip the if statement. For a section of code with $n$ inputs, there are potentially $2^n$ code paths \cite{something}. This can of course be problematic, because for any program larger than a few lines of code the numbers of code paths will be very large, quickly getting to the point where it's not feasible to compute all paths, and therefore not possible to check if all paths are covered by a test set.
+
 \subsection{Mutation Testing}
+
+Mutation testing is another approach to determining the quality of a test set. Consider the following line of code:
+
+\begin{lstlisting}
+y := 3x + 4 - z;
+\end{lstlisting}
+
+This is the fragment of code that we want to check that our test sets sufficiently cover. The code is called the \emph{ground string}. From the ground string, mutant strings are created. These mutant strings are based on the ground string, but have been `mutated' in some way such that they are not the same as the ground string, but still compile \citep{softwareTestingIntro}. Some example mutants might be:
+
+\begin{lstlisting}
+y := 3x - 4 - z;
+y := 3x - 4 + z;
+y := 10x + 6 - i;
+\end{lstlisting}
+
+The mutants all compile, but alter the outcome of executing the function. So the quality of a test set can be determined by running the set on each of the mutants and checking how many of the mutants are rejected. The perfect test set would reject all of the mutants \citep{softwareTestingIntro}. The example above is greatly simplified, and in reality it is unlikely that all of the mutants would be caught by the test set.
+
+In addition to being used to determine the quality of test sets, mutation testing (and path coverage and code coverage) can be used to help develop a high quality test set \citep{softwareTestingIntro}.
+
 \subsection{Model Transformation Testing}
+
+EuGENia essentially performs a model transformation - it takes an Ecore metamodel as an input and generates gmf models \citep{eugeniaSite}. 
+
 
 % Close chapter with testing of model transformations
 % Barriers to systematic model transformation testing 2010
