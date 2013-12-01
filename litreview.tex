@@ -45,8 +45,21 @@ Going back to the example of The Utah Teapot, the metamodel in this case may def
 
 \subsubsection{Abstract and Concrete Syntax}
 
-When building a metamodel, both the abstract and concrete syntax must be defined. The abstract syntax is :q
+When building a metamodel, both the abstract and concrete syntax must be defined. The abstract syntax of a language is a definition of how the language components interact. For an OO language, the abstract synatax would specify that a class can inherit the properties of another class, that a class must have a constructor, and that a class must be given a name. How these requirements are met by the user is specified by the concrete syntax. The concrete syntax for allowing class inheritance would state that the colon symbol must be used after the class name:
 
+\begin{lstlisting}
+class NewClass : ParentClass
+\end{lstlisting}
+
+The concrete syntax does not necessarily need to be textual. To build a modeling language you require a metamodel, which is the abstract syntax. You also require a way to visually display the model. The concrete syntax could state that a class is represented as a rectangle with the name of the class in the middle, and that to show inheritence the NewClass must have an arrow coming out of it that goes to the ParentClass that it is inheriting from.
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[width=2in]{figures/concrete_syntax.png}
+	\label{concreteSyntaxFigure}
+	\caption{Concrete Syntax example for a modeling language}
+\end{center}
+\end{figure}
 
 \subsection{Graphical Modeling Framework}
 
@@ -170,7 +183,30 @@ In addition to being used to determine the quality of test sets, mutation testin
 
 \subsection{Model Transformation Testing}
 
-EuGENia essentially performs a model transformation - it takes an Ecore metamodel as an input and generates gmf models \citep{eugeniaSite}. 
+EuGENia is a model transformation written in ETL. It takes an Ecore metamodel as an input and generates gmf models as an output\citep{eugeniaSite}. One approach to verifying and possibly improving the consistency between EuGENia and EuGENia Live is to ensure that both applications have a good quality test suite.
+
+\citet{mttBarriers} describe the three stages to model transformation testing:
+
+\begin{enumerate}
+	\item Generate test data: As with any type of test, there needs to be some input to the system. In this case it will be a set of models that are to be transformed. These models will conform to the metamodel that specifies input to the model transformation, and will either be manually created by the tester, or automatically generated in the form of graphs of metamodel instances \citep{mttBarriers}.
+	\item Define test adequacy criteria: For any modeling language beyond the very basic there will be a very large number of possible inputs. This rules out running every possible model through the transformer in to test it as it would take too long. Instead a test adequacy criteria must be defined that allows the effective seletion of test models. According to \citet{mttBarriers}, there is no well-defined criteria for model transformation testing.
+	\item Construct an oracle: The oracle gets the output of the system and determines if it is correct (based on the test input model).
+\end{enumerate}
+
+%ToDo: Write about quality of model testing here
+
+The oracle can be difficult to create for any complex model transformation. \citet{mttOracleIssue} propose six ways that an oracle could be implemented for model transformation testing:
+
+\begin{enumerate}
+	\item Compare the output to a reference model (i.e. the expected output model for the particular input). Unfortunately this requires that the tester has to create the expected models for each test. For a large test set this could be incredibly time consuming.
+	\item Perform an inverse transformation on the output. This would give the original input model, if the model transformation was correct. This requires that the tester implement a reverse transformation, and also requires that the transformation is an injective function (i.e. a function that preserves distinctness). According to \citet{mttOracleIssue}, this is unfortunately unlikely.
+	\item Compare the output with that from a reference model transformation. This reference model transformation can produce the reference model from the test model. 
+	\item A generic contract is a list of constraints on the output of the model transformation based on the input. Once the model transformation has completed the output model is checked against the constraints defined in the generic contract.
+	\item The tester could provide a list of assertions in OCL (or EVL) that can be checked on the output model. Not every detail about the output model must be provided. Doing so would be a waste of time as providing the expected output model would be quicker.
+	\item Model snippets could be provided by the tester. Each snippet is associated with a cardinality and logical operator so that the expected number of occurrences of each snippet can be calculated. The oracle would check that the expected number of each snippet appears in the output. 
+\end{enumerate}
+
+
 
 
 % Close chapter with testing of model transformations
