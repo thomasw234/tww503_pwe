@@ -193,7 +193,9 @@ EuGENia is a model transformation written in ETL. It takes an Ecore metamodel as
 	\item Construct an oracle: The oracle gets the output of the system and determines if it is correct (based on the test input model).
 \end{enumerate}
 
-%ToDo: Write about quality of model testing here
+\citet{fleureyMTInputs} propose a general framework for assessing the quality of model transformations. Their paper begins by discussing the possibility of finding `partitions' of the transformation's input meta-model. A partition is where the model could be one of a range of values, so for example if the metamodel specifies a boolean, there is a partition as the boolean could be either true or false. With these partitions, we could check that the input test set covers each possible combination of partitions. \citet{fleureyMTInputs} then go on to state why this isn't necessarily the most useful approach: first the complexity rises quickly with each additional partition. Secondly some of combinations of partitions will not be relevant for testing, and the tester would have to find these and remove them. Finally, some relevant combinations could be missing. Generating every single combination of partition will `not ensure the existence of more than one composite state' they state.
+
+What \citet{fleureyMTInputs} propose is the idea of model and object fragments that `define specific combinations of ranges for properties that should be covered by test models'.
 
 The oracle can be difficult to create for any complex model transformation. \citet{mttOracleIssue} propose six ways that an oracle could be implemented for model transformation testing:
 
