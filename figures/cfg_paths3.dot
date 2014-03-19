@@ -1,0 +1,15 @@
+digraph path2 {
+a [label="function foo" color=red];
+b [label="A > 1 && B=0" color=red];
+c [label="X = X / A"];
+d [label="A == 2 || X > 1" color=red];
+e [label="X = X + 1" color=red];
+f [label="return" color=red];
+a -> b [color="red"];
+b -> c [label="true"];
+b -> d [label="false" color=red];
+c -> d;
+d -> e [label="true" color=red];
+e -> f [color=red];
+d -> f [label="false"];
+}

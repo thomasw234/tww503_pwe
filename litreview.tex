@@ -141,27 +141,104 @@ Test sets have a \emph{coverage criterion} that measures how good a collection o
 
 In addition to coverage, coverage level is also defined by \citep{softwareTestingIntro} as:
 
-\begin{quote}Given a set of test requirements $TR$ and a test set $T$, the coverage level is simply the ratio of the number of test requirements satisfied by $T$ to the size of $TR$\end{quote}
+\begin{quote}Given a set of test requirements $TR$ and a test set $T$, the coverage level is simply the ratio of the number of test requirements satisfied by $T$ to the size of $TR$\end{quote}.
 
-\subsubsection{Code Coverage}
+There are different approaches to determining the test coverage level of a program. Below I discuss each of these.
+
+\subsection{Statement Coverage}
 
 % ToDo: Find a source other than what Louis told me in lectures...
 
-One approach to determining the quality of a test set is to analyse the number of lines of code that have tests that run them. If all lines of code are executed at least once when all tests have been run, then code coverage is 100\% \citep{something}. This approach is flawed however - having a line of code covered by a test does not necessarily ensure a good quality test set. Many factor can affect the result of a line of code's execution. 
+Arguably the simplest approach to determining the quality of a test set is to analyse the number of lines of code that execute when the tests are run. If all lines of code are executed at least once when all tests have been run, then statement coverage is said to be 100\% \citep{something}.
 
-Consider the code in figure \ref{sampleCoverageCode}. Even if a test covers all the lines of code in exampleProcedure, the state of globalVariable will affect the execution path and potentially the outcome of exampleFunction. This means that the tests do not cover all possible states that the program can be in.
+While simple to implement, line coverage suffers from an obvious downfall. In most programming languages it is perfectly valid to have as many operations on one line as the developer chooses. In an extreme case it would be possible for the developer to have the whole program on one line. A contrived example of this is shown in Figure \ref{lineCoverage}. If a test was created that executed that program, the coverage should come back as 100\%, regardless of whether the test tried to run the program with different date's set on the test machine or not.
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=4in]{figures/code_coverage.png}
+		\includegraphics[width=6in]{figures/line_coverage.png}
 	\end{center}
-\caption{A sample code snippet}
-\label{sampleCoverageCode}
+\caption{A valid program that is all on one line.}
+\label{lineCoverage}
 \end{figure}
 
-\subsubsection{Path Coverage}
+An easy but non-ideal solution to this is to require that developers only place one statement on each line. Alternatively, a more complex coverage analysis tool could be used that takes this into account.
 
-Another approach to determining the quality of a test set is to consider the path coverage of the code being tested. A section of code can have many paths through it. In the sample code in figure \ref{sampleCoverageCode} there are two obvious paths. The first is through the if statement, the second is to skip the if statement. For a section of code with $n$ inputs, there are potentially $2^n$ code paths \cite{something}. This can of course be problematic, because for any program larger than a few lines of code the numbers of code paths will be very large, quickly getting to the point where it is not feasible to compute all paths, and therefore not possible to check if all paths are covered by a test set.
+Statement coverage is the term used when talking about the number of program statements that are executed by testing \citep{Myers:2004:AST:983238}. \citet{Myers:2004:AST:983238} argue that statement coverage is `generally useless' as a metric of test quality because of the number of problems that it can potentially miss.
+
+The example provided by \citet{Myers:2004:AST:983238} gives the code as shown in Figure \ref{codeCoverage}. They argue that a single test can provide 100\% statement coverage for the code by passing in the values \verb+A=2, B=0, X=3+, even though the code could be logically incorrect. The example that they provide is that if the first decision should be an \verb+or+ instead of an \verb+and+, then the single test will not notice, despite providing 100\% statement coverage.
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=2in]{figures/code_coverage.png}
+	\end{center}
+\caption{The sample code provided by \citet{Myers:2004:AST:983238}.}
+\label{codeCoverage}
+\end{figure}
+
+\subsection{Branch Coverage}
+
+\subsubsection{Control Flow Graph}
+
+Before branch coverage can be introduced, the concept of a program control flow graph must be explained. A control flow graph shows the potential paths through a piece of code. Figure \ref{cfg} shows the control flow graph for the code listed in Figure \ref{codeCoverage}. At the top of the control flow graph is the entry point to the graph. From there, the first conditional statement is represented as a vertex of the graph. From that vertex there are two outward arrows. One represents the case when the conditional statement evaluates to true, and the other to false \citep{Myers:2004:AST:983238}
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.5]{figures/cfg.pdf}
+	\end{center}
+\caption{A simple control flow graph for the function foo}
+\label{cfg}
+\end{figure}
+
+\subsubsection{Branch Coverage}
+
+Branch coverage then is the number of branches that have been executed within the control flow graph. In Figure \ref{cfg} there are two branching points - both of the conditional statements. For 100\% branch coverage it is necessary for every edge to have been executed at least once by the test set. An alternative way to think of this is that at every decision point in the program, the outcome of each decision has been executed at least once. At an \verb+if+ statement, the case where the outcome is true has been executed as well as the case where the outcome is false. If branch coverage is 100\%, then so should statement coverage \citep{Myers:2004:AST:983238}.
+
+However, \citet{Myers:2004:AST:983238} also argue that branch coverage can be a weak test quality metric. Going back to the code listed in Figure \ref{codeCoverage}, branch coverage can be satisfied with the two following test cases: \verb+A=2, B=0, X=1+ and \verb+A=3, B=1, X=1+. However, if the second conditional statement was supposed to check that X < 1 instead of X > 1, then this will not be picked up by any tests, despite the branch coverage being 100\%. \citet{497650} have done a comparison of the effectiveness of decision coverage (i.e. branch coverage) and block coverage (i.e. statement coverage) after they inserted some random faults in the Unix utility Grep. Their results show in Figure \ref{coverageReliability} that block coverage analysis requires a higher percentage of coverage to find the same number of faults when compared to decision coverage.
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=5in]{figures/coverage_reliability.png}
+	\end{center}
+\caption{\citet{497650}'s results of testing various coverage approaches on Grep}
+\label{coverageReliability}
+\end{figure}
+
+\subsection{Path Coverage}
+
+%Another approach to determining the quality of a test set is to consider the path coverage of the code being tested. A section of code can have many paths through it. In the sample code in figure \ref{sampleCoverageCode} there are two obvious paths. The first is through the if statement, the second is to skip the if statement. For a section of code with $n$ inputs, there are potentially $2^n$ code paths \cite{something}. This can of course be problematic, because for any program larger than a few lines of code the numbers of code paths will be very large, quickly getting to the point where it is not feasible to compute all paths, and therefore not possible to check if all paths are covered by a test set.
+
+\begin{figure}%
+    \centering
+    \subfloat[Path 1]{{\includegraphics[scale=0.25]{figures/cfg_path1.pdf} }}%
+    \qquad
+    \subfloat[Path 2]{{\includegraphics[scale=0.25]{figures/cfg_path2.pdf} }}%
+    \qquad
+    \subfloat[Path 3]{{\includegraphics[scale=0.25]{figures/cfg_path3.pdf} }}%
+    \qquad
+    \subfloat[Path 4]{{\includegraphics[scale=0.25]{figures/cfg_path4.pdf} }}%
+    \caption{The possible paths through the program}%
+    \label{programPaths}%
+\end{figure}
+
+Path coverage is a stronger test quality metric. Branch coverage covers all possible decisions at a program branch, but path coverage considers every possible path through the program \citep{Myers:2004:AST:983238}\citep{softwareTestingIntro}. Using the example again given by \citet{Myers:2004:AST:983238} in Figure \ref{codeCoverage}, there are four possible paths through the code. Each \verb+if+ statement can evaluate to true or false. Every path through the program therefore is when the \verb+if+ statements evaluate as follows: \verb+false, true+, \verb+false, false+, \verb+true, false+ and \verb+true, true+. Figure \ref{programPaths} colours in red the possible paths through the program.
+
+Because \verb+if+ statements only have two possible outcomes - true or false - the number of paths through a program that only contains $n$ \verb+if+ decisions is $2^n$. However, the complexity is increased with statements such as \verb+switch+ that can have any number of paths. This is known as the cyclomatic complexity of the program, and the calculation to calculate this complexity from a control flow graph was given by \citet{1702388}:
+
+$M = E - N + 2P$
+
+Where M is the cyclomatic complexity, E is the number of edges in the graph, N is the number of nodes in the graph and P is the number of exit nodes. With this formula we can verify that the number of paths through the code in Figure \ref{codeCoverage} is 4. There are 7 edges, 5 nodes, and one exit point (the return statement).
+
+$M = 7 - 5 + (2*1)$
+
+\citet{Myers:2004:AST:983238} are even more critical of path coverage than the previous test quality metrics described. Their main points of criticism are:
+
+\begin{enumerate}
+\item The time that it would take to even generate all possible paths through a program grows exponentially with the number of branches in the program.
+\item As some decisions are dependent on the outcome of previous decisions, once all possible paths have been generated it is then necessary to do further computation to calculate the actual number of possible paths through the code.
+\item Even with each possible path through the code covered, there is no guarantee that the inputs used by the tests will find every problem with the code.
+\end{enumerate}
+
+In her early work on the effectiveness of path analysis, \citet{1658851} found that while the data used by tests will cause path coverage to be completed, it may not actually find bugs that are present.  therefore recommends that tests that have good path coverage are used in conjunction with boundary input data tests.
 
 \subsection{Mutation Testing}
 
@@ -182,6 +259,8 @@ y := 10x + 6 - i;
 The mutants all compile, but alter the outcome of executing the function. So the quality of a test set can be determined by running the set on each of the mutants and checking how many of the mutants are rejected. The perfect test set would reject all of the mutants \citep{softwareTestingIntro}. The example above is greatly simplified, and in reality it is unlikely that all of the mutants would be caught by the test set.
 
 In addition to being used to determine the quality of test sets, mutation testing (and path coverage and code coverage) can be used to help develop a high quality test set \citep{softwareTestingIntro}.
+
+\subsection{Coverage Analysis Software}
 
 \subsection{Model Transformation Testing}
 
