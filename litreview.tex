@@ -242,7 +242,7 @@ In her early work on the effectiveness of path analysis, \citet{1658851} found t
 
 \subsection{Mutation Testing}
 
-Mutation testing is another approach to determining the quality of a test set. Consider the following line of code:
+Mutation testing is another approach to determining the quality of a test set. Consider the following statement:
 
 \begin{lstlisting}
 y := 3x + 4 - z;
@@ -258,8 +258,23 @@ y := 10x + 6 - i;
 
 The mutants all compile, but alter the outcome of executing the function. So the quality of a test set can be determined by running the set on each of the mutants and checking how many of the mutants are rejected. The perfect test set would reject all of the mutants \citep{softwareTestingIntro}. The example above is greatly simplified, and in reality it is unlikely that all of the mutants would be caught by the test set.
 
-In addition to being used to determine the quality of test sets, mutation testing (and path coverage and code coverage) can be used to help develop a high quality test set \citep{softwareTestingIntro}.
+According to \citet{softwareTestingIntro}, in addition to being used to determine the quality of test sets, mutation testing (and path coverage and code coverage) can be used to help develop a high quality test set. He claims that there are 11 mutation operations that should be used, regardless of the programming language in question:
 
+\begin{description}
+\item[ABS] Absolute Value Insertion - Forces the tester to have at least one positive, one 0 and one negative value for the variable that has the \verb+abs+ function applied to it.
+\item[AOR] Arithmetic Operator Replacement - Swapping between addition, subtraction, multiplication, division and modulus operators.
+\item[ROR] Relational Operator Replacement - $<, \leq, ==, \geq, >, \neq$ operators are interchanged.
+\item[COR] Conditional Operator Replacement - AND, OR, true and false are interchanged.
+\item [SOR] Shift Operator Replacement - The shift operators $\ll,\gg $and $\ggg$ are interchanged.
+\item[LOR] Logical Operator Replacement - Bitwise operators AND (\&), OR ($\mid$) and exclusive OR (\^{}).
+\item[ASR] Assignment Operator Replacement - The operators $+=, -=, *=, /=, \%=, \&=, |=, \^{}=, \ll=, \gg=, \ggg=$ are replaced with one of the other operators.
+\item[UOI] Unary Operator Insertion - One of the unary operators $+, -, !, ~ $ is inserted in a valid position.
+\item[UOD] Unary Operator Deletion - One of the unary operators $+, -, !, ~ $ is deleted from a position where a deletion will leave the statement valid.
+\item[SVR] Scalar Variable Replacement - Each reference to a variable is replaced by another variable in scope of an appropriate type.
+\item[BSR] Bomb Statement Replacement - Each statement is replaced by a bomb statement that causes the program to fail.
+\end{description}
+
+\citet{softwareTestingIntro} 
 \subsection{Coverage Analysis Software}
 
 \subsection{Model Transformation Testing}
