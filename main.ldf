@@ -1,0 +1,23 @@
+\usepackage{graphicx}
+\usepackage{fullpage}
+\usepackage{listings}
+\usepackage{subfig}
+\usepackage[parfill]{parskip}
+\usepackage{calc}  
+\usepackage{enumitem}
+
+% For code listings
+% For code listings
+\usepackage{listings}
+\lstloadlanguages{[LaTeX]TeX}
+\lstset{%
+  language=[LaTeX]TeX,%
+  keywordstyle={\sffamily\bfseries\upshape},%
+  identifierstyle={\sffamily\mdseries\upshape},%
+  commentstyle={\upshape},%
+  columns={fullflexible},%
+  captionpos={b},%
+  showspaces={false},%
+  gobble={2},%
+  frame=single
+}

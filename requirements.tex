@@ -1,0 +1,185 @@
+\chapter{Requirements Analysis}
+
+\section{Introduction}
+
+In this chapter I will perform some analysis on the requirements of this project. I will begin by identifying the stakeholders in this project, and explaining their role and general aims. From this, I will then move on to detail some derived functional requirements, followed by some derived non-functional requirements.
+
+\section{Stakeholders}
+A stakeholder in the most general sense is defined by \citet{stakeholderDef} as:
+
+\begin{quote}
+	A person, group or organization that has interest or concern in an organization
+\end{quote}
+
+More specifically in this project a stakeholder is someone or some group of people who have an interest in, or may benefit from, the contributions that my project makes to the field of model driven engineering or software testing.
+
+I have identified the following stakeholders then from the above definition:
+
+\begin{enumerate}
+\item Enterprise Systems Group at The University of York
+\item Developers who use EOL
+\item Users of EuGENia
+\item Project Supervisor
+\item Student
+\end{enumerate}
+
+The Enterprise Systems Group is a group of academics and research students at The University of York. As outlined on their website \cite{ESG}, the group's primary objectives are to research and teach the fundamental objectives of enterprise systems. One of their main research areas is Model-Driven Development, which is how Epsilon came to be. Any contributions that my project make will be based around Epsilon, and should it be of a high enough standard then the outcome of my project may be incorporated into the Epsilon plugin.
+
+The developers who use EOL is a potentially large group of people. As EuGENia is a transformation that is written in EOL, and EOL is not a language that is as widely used as say Java, the approach taken to testing will be thoroughly detailed so that another developer using EOL can use this thesis as a reference.
+
+The users of EuGENia have an obvious interest in the outcome of my project. Should I find any bugs in EuGENia then I will either attempt to fix them, or at least alert the relevant people (such as a developer in the Enterprise Systems Group). This will improve the experience of EuGENia for users.
+
+My project supervisor is a stakeholder in the project in a different way than the previously listed groups. He is currently and will continue to be involved in the project until the end. He sets deadlines, makes recommendations and suggests areas to research. His contribution steers the direction of the project throughout, and without him the project would be completely different (and to a much lower standard).
+
+The student (myself) has a stake in the project. He is the primary researcher, developer and author of documentation. However his stake ends when the project is complete, as it is assumed that he will have no long-term benefit from the outcome of the project. For this reason, no requirements should be derived from the view of the student.
+
+\section{Functional Requirements}
+
+\subsection{It will be possible to run an assessment of the EuGENia test suite}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] F-01
+\item[\hspace*{0.3cm}Description] Using this thesis as a reference, a developer should be able to generate a metric that can be used to judge the quality of the EuGENia test suite.
+\item[\hspace*{0.3cm}Source] Requirements Analysis
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] A user can modify the test suite and observe an updated metric on the test suite's quality.
+\end{description}
+
+\subsection{A user will be able to perform statement coverage on any EOL file}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] F-02
+\item[\hspace*{0.3cm}Description] Given an EOL file to execute, it will be possible to determine which statements within the EOL file were executed, and which were not.
+\item[\hspace*{0.3cm}Source] Requirements Analysis
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] A user can find out which statements were executed, and which were not.
+\end{description}
+
+\subsection{The output of statement analysis will tell the user what number of statements were executed}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] F-03
+\item[\hspace*{0.3cm}Description] After running the statement analysis, the output to the user will include the number of statements that were executed and the total number of statements.
+\item[\hspace*{0.3cm}Source] Requirements Analysis, Literature Review
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] The number of statements that were executed is shown, as well as the total number of statements in the input EOL file.
+\end{description}
+
+\subsection{The output of statement analysis will tell the user which statements were executed, and which were not}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] F-04
+\item[\hspace*{0.3cm}Description] After running the statement analysis, the output to the user will include which particular statements were executed, and which were not.
+\item[\hspace*{0.3cm}Source] Requirements Analysis, Literature Review
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] The statements that were executed can be distinguished from those that were not executed.
+\end{description}
+
+\subsection{A user will be able to perform branch coverage analysis on any EOL file}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] F-05
+\item[\hspace*{0.3cm}Description] Given an EOL file to execute, it will be possible to determine which branches within the EOL file were executed, and which were not.
+\item[\hspace*{0.3cm}Source] Requirements Analysis
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] A user can find out which branches were executed, and which were not.
+\end{description}
+
+\subsection{The output of branch analysis will tell the user what number of branches were executed}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] F-06
+\item[\hspace*{0.3cm}Description] After running the statement analysis, the output to the user will include the number of branches that were executed and the total number of branches.
+\item[\hspace*{0.3cm}Source] Requirements Analysis, Literature Review
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] The number of branches that were executed is shown, as well as the total number of branches in the input EOL file.
+\end{description}
+
+\subsection{The output of branch analysis will tell the user which branches were executed, and which were not}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] F-07
+\item[\hspace*{0.3cm}Description] After running the branch analysis, the output to the user will include which particular branches were executed, and which were not.
+\item[\hspace*{0.3cm}Source] Requirements Analysis, Literature Review
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] The branches that were executed can be distinguished from those that were not executed.
+\end{description}
+
+\subsection{A user will be able to perform path coverage on any EOL file}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] F-08
+\item[\hspace*{0.3cm}Description] Given an EOL file to execute, it will be possible to determine which paths within the EOL file were executed, and which were not.
+\item[\hspace*{0.3cm}Source] Requirements Analysis
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] A user can find out which paths were executed, and which were not.
+\end{description}
+
+\subsection{The output of path analysis will tell the user what number of statements were executed}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] F-09
+\item[\hspace*{0.3cm}Description] After running the path analysis, the output to the user will include the number of statements that were executed and the total number of statements.
+\item[\hspace*{0.3cm}Source] Requirements Analysis, Literature Review
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] The number of paths that were executed is shown, as well as the total number of paths through the input EOL file.
+\end{description}
+
+\subsection{The output of path analysis will tell the user which paths were executed, and which were not}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] F-10
+\item[\hspace*{0.3cm}Description] After running the path analysis, the output to the user will include which particular statements were executed, and which were not.
+\item[\hspace*{0.3cm}Source] Requirements Analysis, Literature Review
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] The paths that were executed can be distinguished from those that were not executed.
+\end{description}
+
+\section{Non-Functional Requirements}
+
+
+\subsection{Statement coverage will not take an excessive amount of time to complete}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] NF-01
+\item[\hspace*{0.3cm}Description] Statement analysis will not take an excessive amount of time to complete once the code has finished executing.
+\item[\hspace*{0.3cm}Source] Requirements Analysis
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] Statement analysis completes within 5 seconds of the EuGENia transformation completing.
+\end{description}
+
+\subsection{Statement coverage will not slow down the execution of an EOL file excessively}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] NF-02
+\item[\hspace*{0.3cm}Description] Statement analysis may slow down the execution of EOL files, but not by an excessive amount.
+\item[\hspace*{0.3cm}Source] Requirements Analysis
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] Execution should not take more than twice as long as it does when statement coverage is being monitored.
+\end{description}
+
+\subsection{Branch coverage will not take an excessive amount of time to complete}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] NF-03
+\item[\hspace*{0.3cm}Description] Branch analysis will not take an excessive amount of time to complete once the code has finished executing.
+\item[\hspace*{0.3cm}Source] Requirements Analysis
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] Branch analysis completes within 5 seconds of the EuGENia transformation completing.
+\end{description}
+
+\subsection{Branch coverage will not slow down the execution of an EOL file excessively}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] NF-04
+\item[\hspace*{0.3cm}Description] Branch analysis may slow down the execution of EOL files, but not by an excessive amount.
+\item[\hspace*{0.3cm}Source] Requirements Analysis
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] Execution should not take more than twice as long as it does when branch coverage is being monitored.
+\end{description}
+
+\subsection{Path coverage will not take an excessive amount of time to complete}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] NF-01
+\item[\hspace*{0.3cm}Description] Path analysis will not take an excessive amount of time to complete once the code has finished executing.
+\item[\hspace*{0.3cm}Source] Requirements Analysis
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] Path analysis completes within 5 seconds of the EuGENia transformation completing.
+\end{description}
+
+\subsection{Path coverage will not slow down the execution of an EOL file excessively}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] NF-02
+\item[\hspace*{0.3cm}Description] Path analysis may slow down the execution of EOL files, but not by an excessive amount.
+\item[\hspace*{0.3cm}Source] Requirements Analysis
+\item[\hspace*{0.3cm}Stakeholders] Enterprise Systems at The University of York, Developers who use EOL
+\item[\hspace*{0.3cm}Satisfiable Conditions] Execution should not take more than twice as long as it does when path coverage is being monitored.
+\end{description}
+
+This is of course not a final list of requirements. Each is subject to change throughout the project should it be necessary. However, a reasonable attempt will be made to keep to these requirements, and any changes will be justified fully.

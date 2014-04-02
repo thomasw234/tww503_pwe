@@ -1,0 +1,23 @@
+\chapter{Statement Coverage}
+
+\section{Introduction}
+
+This chapter details my effort to implement statement coverage for EOL programs. I begin by analysing the Epsilon source code that I will be working with. I then move on to detailing the design and implementation of the solution. Then I move onto testing the solution, and finish off with a conclusion on the successes and failures of the solution.
+
+\section{Analysis}
+
+The Epsilon source is broken into many well-organised packages. The packages \verb+org.eclipse.epsilon.eol.*+ contain all of the code that is specific to the EOL language, and so these will be the primary focus of this analysis.
+
+The package \verb+org.eclipse.epsilon.eol.execute+ unsurprisingly contains the code to execute an EOL program. To perform statement coverage, it is necessary to determine which statements have been executed. 
+
+Some analysis of the execute package and its sub-packages has uncovered the interface \verb+IExecutionListener+, as shown in Figure \ref{lst:IExecutionListener}. An instance of a class that implements this interface can be added to a list of execution listeners. When a statement is about to execute, each object in the list has its \verb+aboutToExecute+ method called, and similarly after each statement has executed, each object in the list has its \verb+finishedExecuting+ method called.
+
+\begin{figure}
+	\lstinputlisting[language=java]{code/IExecutionListener.java}
+	\caption{The public interface IExecutionListener}
+	\label{lst:IExecutionListener}
+\end{figure}
+
+In the literature review the purpose of an Abstract Syntax Tree (AST) was described. The first parameter of both methods in \verb+IExecutionListener+ is an abstract syntax tree object. The Abstract Syntax Tree class in Epsilon is designed in such a way that each vertex is an object of type AST, and each vertex has a list of children vertices, as well as a pointer back to the parent vertex. The parent vertex will have a null pointer in place of a pointer to a parent vertex, and leaf of the tree will have an empty list of children.
+
+The AST object that is passed as a parameter into both functions is a pointer to the vertex in the program's abstract syntax tree that is about to be executed or has just been executed, depending on the method being called.
