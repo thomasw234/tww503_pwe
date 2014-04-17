@@ -1,6 +1,5 @@
-if (true) {
+if (true)
 	"Hello".println();
-}
 
 "Hello".println();
 

@@ -3,8 +3,11 @@
 \usepackage{listings}
 \usepackage{subfig}
 \usepackage[parfill]{parskip}
-\usepackage{calc}  
+\usepackage{calc} 
+%\usepackage{color}
 \usepackage{enumitem}
+%\usepackage{textcomp}
+\usepackage{graphviz}
 
 % For code listings
 % For code listings

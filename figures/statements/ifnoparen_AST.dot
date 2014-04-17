@@ -1,0 +1,36 @@
+graph AST {
+0 [label="EOLMODULE",color=black,fontcolor=black,style=filled,fillcolor=white]
+1 [label="BLOCK",color=black,fontcolor=black,style=filled,fillcolor=white]
+0 -- 1
+1 [label="BLOCK",color=black,fontcolor=black,style=filled,fillcolor=white]
+2 [label="if",color=black,fontcolor=black,style=filled,fillcolor=white]
+1 -- 2
+2 [label="if",color=black,fontcolor=black,style=filled,fillcolor=white]
+3 [label="true",color=black,fontcolor=black,style=filled,fillcolor=white]
+2 -- 3
+3 [label="true",color=black,fontcolor=black,style=filled,fillcolor=white]
+4 [label=".",color=black,fontcolor=black,style=filled,fillcolor=white]
+2 -- 4
+4 [label=".",color=black,fontcolor=black,style=filled,fillcolor=white]
+5 [label="Hello",color=black,fontcolor=black,style=filled,fillcolor=white]
+4 -- 5
+5 [label="Hello",color=black,fontcolor=black,style=filled,fillcolor=white]
+6 [label="println",color=black,fontcolor=black,style=filled,fillcolor=white]
+4 -- 6
+6 [label="println",color=black,fontcolor=black,style=filled,fillcolor=white]
+7 [label="PARAMETERS",color=black,fontcolor=black,style=filled,fillcolor=white]
+6 -- 7
+7 [label="PARAMETERS",color=black,fontcolor=black,style=filled,fillcolor=white]
+8 [label=".",color=black,fontcolor=black,style=filled,fillcolor=white]
+1 -- 8
+8 [label=".",color=black,fontcolor=black,style=filled,fillcolor=white]
+9 [label="Hello",color=black,fontcolor=black,style=filled,fillcolor=white]
+8 -- 9
+9 [label="Hello",color=black,fontcolor=black,style=filled,fillcolor=white]
+10 [label="println",color=black,fontcolor=black,style=filled,fillcolor=white]
+8 -- 10
+10 [label="println",color=black,fontcolor=black,style=filled,fillcolor=white]
+11 [label="PARAMETERS",color=black,fontcolor=black,style=filled,fillcolor=white]
+10 -- 11
+11 [label="PARAMETERS",color=black,fontcolor=black,style=filled,fillcolor=white]
+}

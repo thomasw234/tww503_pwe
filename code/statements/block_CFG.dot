@@ -1,0 +1,12 @@
+digraph testGraph {
+2[label=" START"]
+5[label="BLOCK:5"]
+2 -> 5[color=black]
+5[label=" BLOCK"]
+10[label="First Statement"]
+11[label="Second Statement"]
+5 -> 10
+10 -> 11
+3[label="END"]
+11 -> 3[color=black]
+}
