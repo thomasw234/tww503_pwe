@@ -1,5 +1,6 @@
-while (true) {
-    "Do something";
-}
+var i : Integer = 0;
 
-"Continue here";
+ while (i < 5) {
+	i.println();
+	i = i+1; 
+}

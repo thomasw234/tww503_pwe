@@ -8,19 +8,35 @@
 \usepackage{enumitem}
 %\usepackage{textcomp}
 \usepackage{graphviz}
+\usepackage{EOLFormat}
+\usepackage{color}
 
 % For code listings
 % For code listings
-\usepackage{listings}
-\lstloadlanguages{[LaTeX]TeX}
-\lstset{%
-  language=[LaTeX]TeX,%
-  keywordstyle={\sffamily\bfseries\upshape},%
-  identifierstyle={\sffamily\mdseries\upshape},%
-  commentstyle={\upshape},%
-  columns={fullflexible},%
-  captionpos={b},%
-  showspaces={false},%
-  gobble={2},%
-  frame=single
+%\usepackage{listings}
+%\lstloadlanguages{[LaTeX]TeX}
+%\lstset{%
+%  language=[LaTeX]TeX,%
+%  keywordstyle={\sffamily\bfseries\upshape},%
+%  identifierstyle={\sffamily\mdseries\upshape},%
+%  commentstyle={\upshape},%
+%  columns={fullflexible},%
+%  captionpos={b},%
+%  showspaces={false},%
+%  gobble={2},%
+%  frame=single
+%}
+
+\lstset{escapeinside={/*@}{@*/}}
+\definecolor{codebackground}{rgb}{0.95,0.95,0.95}
+\lstset{backgroundcolor=\color{codebackground}}
+
+\lstset{
+  captionpos=b,
+  numberstyle=\tiny,
+  basicstyle=\ttfamily\footnotesize,
+  columns=flexible,
+  tabsize=2,
+  numbers=left,
+  nolol=true
 }

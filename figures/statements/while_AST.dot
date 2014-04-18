@@ -1,0 +1,63 @@
+graph AST {
+0 [label="EOLMODULE",color=black,fontcolor=black,style=filled,fillcolor=white]
+1 [label="BLOCK",color=black,fontcolor=black,style=filled,fillcolor=white]
+0 -- 1
+1 [label="BLOCK",color=black,fontcolor=black,style=filled,fillcolor=white]
+2 [label="=",color=black,fontcolor=black,style=filled,fillcolor=white]
+1 -- 2
+2 [label="=",color=black,fontcolor=black,style=filled,fillcolor=white]
+3 [label="var",color=black,fontcolor=black,style=filled,fillcolor=white]
+2 -- 3
+3 [label="var",color=black,fontcolor=black,style=filled,fillcolor=white]
+4 [label="i",color=black,fontcolor=black,style=filled,fillcolor=white]
+3 -- 4
+4 [label="i",color=black,fontcolor=black,style=filled,fillcolor=white]
+5 [label="Integer",color=black,fontcolor=black,style=filled,fillcolor=white]
+3 -- 5
+5 [label="Integer",color=black,fontcolor=black,style=filled,fillcolor=white]
+6 [label="0",color=black,fontcolor=black,style=filled,fillcolor=white]
+2 -- 6
+6 [label="0",color=black,fontcolor=black,style=filled,fillcolor=white]
+7 [label="while",color=black,fontcolor=black,style=filled,fillcolor=white]
+1 -- 7
+7 [label="while",color=black,fontcolor=black,style=filled,fillcolor=white]
+8 [label="<",color=black,fontcolor=black,style=filled,fillcolor=white]
+7 -- 8
+8 [label="<",color=black,fontcolor=black,style=filled,fillcolor=white]
+9 [label="i",color=black,fontcolor=black,style=filled,fillcolor=white]
+8 -- 9
+9 [label="i",color=black,fontcolor=black,style=filled,fillcolor=white]
+10 [label="5",color=black,fontcolor=black,style=filled,fillcolor=white]
+8 -- 10
+10 [label="5",color=black,fontcolor=black,style=filled,fillcolor=white]
+11 [label="BLOCK",color=black,fontcolor=black,style=filled,fillcolor=white]
+7 -- 11
+11 [label="BLOCK",color=black,fontcolor=black,style=filled,fillcolor=white]
+12 [label=".",color=black,fontcolor=black,style=filled,fillcolor=white]
+11 -- 12
+12 [label=".",color=black,fontcolor=black,style=filled,fillcolor=white]
+13 [label="i",color=black,fontcolor=black,style=filled,fillcolor=white]
+12 -- 13
+13 [label="i",color=black,fontcolor=black,style=filled,fillcolor=white]
+14 [label="println",color=black,fontcolor=black,style=filled,fillcolor=white]
+12 -- 14
+14 [label="println",color=black,fontcolor=black,style=filled,fillcolor=white]
+15 [label="PARAMETERS",color=black,fontcolor=black,style=filled,fillcolor=white]
+14 -- 15
+15 [label="PARAMETERS",color=black,fontcolor=black,style=filled,fillcolor=white]
+16 [label="=",color=black,fontcolor=black,style=filled,fillcolor=white]
+11 -- 16
+16 [label="=",color=black,fontcolor=black,style=filled,fillcolor=white]
+17 [label="i",color=black,fontcolor=black,style=filled,fillcolor=white]
+16 -- 17
+17 [label="i",color=black,fontcolor=black,style=filled,fillcolor=white]
+18 [label="+",color=black,fontcolor=black,style=filled,fillcolor=white]
+16 -- 18
+18 [label="+",color=black,fontcolor=black,style=filled,fillcolor=white]
+19 [label="i",color=black,fontcolor=black,style=filled,fillcolor=white]
+18 -- 19
+19 [label="i",color=black,fontcolor=black,style=filled,fillcolor=white]
+20 [label="1",color=black,fontcolor=black,style=filled,fillcolor=white]
+18 -- 20
+20 [label="1",color=black,fontcolor=black,style=filled,fillcolor=white]
+}
