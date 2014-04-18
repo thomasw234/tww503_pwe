@@ -1,0 +1,14 @@
+digraph testGraph {
+9[label="START"]
+10[label="END"]
+12[label="BLOCK"]
+13[label="add1 BLOCK"]
+14[label=".println()"]
+
+// Main function
+9 -> 12
+12 -> 13
+13 -> 14
+14 -> 10
+}
+

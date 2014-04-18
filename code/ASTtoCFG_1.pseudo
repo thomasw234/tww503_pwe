@@ -1,0 +1,12 @@
+CFG last;
+
+depthFirstAST(AST current)
+	if whitelist.contains(current.type)
+		last.addChild(current.cfg)
+		last = current
+	end if
+	
+	foreach child in current
+		depthFirstAST(child)
+	end foreach
+end
