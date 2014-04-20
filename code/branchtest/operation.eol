@@ -1,0 +1,9 @@
+add2(add1(1)).println();
+
+operation add1(base : Integer) : Integer { 
+	return base + 1;
+}
+
+operation add2(base : Integer) : Integer { 
+	return base + 2;
+}

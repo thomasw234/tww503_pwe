@@ -1,9 +1,9 @@
 #!/bin/bash
 
-pdflatex main 
+pdflatex -shell-escape  main 
 bibtex main
-pdflatex main
-pdflatex main
+pdflatex -shell-escape main
+pdflatex -shell-escape main
 
 EXIT_STATE=$?
 

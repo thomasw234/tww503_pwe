@@ -52,7 +52,7 @@ Testing begins with the block vertex. This will be done by having a single line 
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testBlock})
 \end{description}
 \end{minipage}
-\begin{minipage}{.4\textwidth}
+\begin{minipage}{.39\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/block.eol}
@@ -70,7 +70,7 @@ Of note about this test is that the operation call \verb|println| is printed, bu
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testIf})
 \end{description}
 \end{minipage}
-\begin{minipage}{.4\textwidth}
+\begin{minipage}{.39\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/if.eol}
@@ -82,13 +82,13 @@ The if statement does not require any code in its block for this test, because l
 \begin{samepage}
 \begin{minipage}{.6\textwidth}
 \begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
-\item[\hspace*{0.3cm}Label] BT-02
+\item[\hspace*{0.3cm}Label] BT-03
 \item[\hspace*{0.3cm}Statement under Test] if .. else
 \item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:ifelse}
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testIfElse})
 \end{description}
 \end{minipage}
-\begin{minipage}{.4\textwidth}
+\begin{minipage}{.39\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/ifElse.eol}
@@ -98,13 +98,13 @@ The if statement does not require any code in its block for this test, because l
 \begin{samepage}
 \begin{minipage}{.6\textwidth}
 \begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
-\item[\hspace*{0.3cm}Label] BT-02
+\item[\hspace*{0.3cm}Label] BT-04
 \item[\hspace*{0.3cm}Statement under Test] for
 \item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:for}
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testFor})
 \end{description}
 \end{minipage}
-\begin{minipage}{.4\textwidth}
+\begin{minipage}{.39\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/for.eol}
@@ -133,38 +133,130 @@ The if statement does not require any code in its block for this test, because l
 \end{minipage}
 \begin{minipage}{.24\textwidth}
   \centering
-  \includedot[scale=0.3]{figures/branchtest/for}
+  \includedot[scale=0.3]{figures/branchtest/operation}
   \caption{}
-  \label{fig:testFor}
+  \label{fig:testOperation}
 \end{minipage}
 \end{figure}
 
 \begin{minipage}{.6\textwidth}
 \begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
-\item[\hspace*{0.3cm}Label] BT-02
+\item[\hspace*{0.3cm}Label] BT-05
 \item[\hspace*{0.3cm}Statement under Test] switch (with fallthrough, without a default statement)
 \item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:switch1}
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testSwitch1})
 \end{description}
 \end{minipage}
-\begin{minipage}{.4\textwidth}
+\begin{minipage}{.39\textwidth}
   \centering
   Code used for testing:
-  \lstinputlisting{code/branchtest/switch1.eol}
+  % This line breaks the document for some reason
+  \lstinputlisting[language=EOL]{code/branchtest/switch1.eol}
+  %\lstinputlisting{code/branchtest/switch1.eol}
 \end{minipage}
 
 \begin{minipage}{.6\textwidth}
 \begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
-\item[\hspace*{0.3cm}Label] BT-02
+\item[\hspace*{0.3cm}Label] BT-06
 \item[\hspace*{0.3cm}Statement under Test] switch (without fallthrough, with a default statement)
 \item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:switch2}
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testSwitch2})
 \end{description}
 \end{minipage}
-\begin{minipage}{.4\textwidth}
+\begin{minipage}{.39\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/switch2.eol}
 \end{minipage}
 
+Both context-free and context-type operations were tested in the following test. Using the example from The Epsilon Book \citep{epsilonBook} one operation of each type was defined, and then both operations called.
+
+\begin{minipage}{.6\textwidth}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-07
+\item[\hspace*{0.3cm}Statement under Test] Operation call
+\item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:testOperation}
+\item[\hspace*{0.3cm}Result] Pass (see right-hand CFG of Figure \ref{fig:operationOptions}). See below.
+\end{description}
+\end{minipage}
+\begin{minipage}{.39\textwidth}
+  \centering
+  Code used for testing:
+  \lstinputlisting[language=EOL,breaklines=true]{code/branchtest/operation.eol}
+\end{minipage}
+
+Notice that the operations are actually shown in the wrong order in the generated CFG. \verb|add1| would be executed first, because it is passed as a parameter to \verb|add2|. Looking at the AST for this code it is easy to see why. \verb|add1| is a child of \verb|add2|, because it is a parameter. When a depth-first traversal is performed, \verb|add2| is found before \verb|add1|, and so it is added to the CFG first. While this is technically incorrect, for purposes of calculating branch coverage it does not matter. However, for the more general purpose use, the operation call function would need to traverse its children to find any other operation call vertices, and add them to the CFG in reverse order. This could be done easily by recursively calling a function on the children of the AST vertex, and after the recursion checking to see if the type is an operation call. If so, then add it to the CFG and update the global last pointer to that vertex.
+
+\begin{figure}
+\centering
+\begin{minipage}{.25\textwidth}
+  \centering
+  \includedot[scale=0.3]{figures/branchtest/break}
+  \caption{}
+  \label{fig:testBreak}
+\end{minipage}%
+\begin{minipage}{.25\textwidth}
+  \centering
+  \includedot[scale=0.3]{figures/branchtest/breakAll}
+  \caption{}
+  \label{fig:testBreakAll}
+\end{minipage}%
+\begin{minipage}{.25\textwidth}
+  \centering
+    \includedot[scale=0.3]{figures/branchtest/continue}
+    \caption{}
+  	\label{fig:testContinue}
+\end{minipage}
+\end{figure}
+For the break, breakAll and continue statements, they were placed in an if statement so that the control flow was also created for when they are not executed. In separate testing that is not documented due to space constraints, they were also tested on their own and proved to work as expected.
+
+\begin{minipage}{.6\textwidth}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-08
+\item[\hspace*{0.3cm}Statement under Test] Break
+\item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:}
+\item[\hspace*{0.3cm}Result] Pass (see right-hand CFG of Figure \ref{fig:testBreak}). See below.
+\end{description}
+\end{minipage}
+\begin{minipage}{.39\textwidth}
+  \centering
+  Code used for testing:
+  \lstinputlisting[language=EOL,breaklines=true]{code/branchtest/break.eol}
+\end{minipage}
+
+For break, a nested while loop was used to prove that the break statement only breaks out of one while loop, unlike the breakAll statement.
+
+\begin{minipage}{.6\textwidth}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-09
+\item[\hspace*{0.3cm}Statement under Test] BreakAll
+\item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:}
+\item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testBreakAll}). See below.
+\end{description}
+\end{minipage}
+\begin{minipage}{.39\textwidth}
+  \centering
+  Code used for testing:
+  \lstinputlisting[language=EOL,breaklines=true]{code/branchtest/breakAll.eol}
+\end{minipage}
+
+For breakAll, a two while loops were used to prove that the breakAll statement can break out of more than just the one loop that the break statement does.
+
+\begin{minipage}{.6\textwidth}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-10
+\item[\hspace*{0.3cm}Statement under Test] Continue
+\item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:continue}
+\item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testContinue}). See below.
+\end{description}
+\end{minipage}
+\begin{minipage}{.39\textwidth}
+  \centering
+  Code used for testing:
+  \lstinputlisting[language=EOL,breaklines=true]{code/branchtest/continue.eol}
+\end{minipage}
+
+\subsection{Multiple Statements Testing}
+
+During the previous section I showed that individual statements are dealt with as they should be. Some of the tests also had multiple statements in, such as the break statement. Now that this has been proven, a small number of bigger test cases will be executed. During development of course many were tested, but once again due to the space constraints in this document I can only record a small subsection of them. The bigger test will be when EuGENia is used as a case study, but that is more about testing how well the coverage metrics work, rather than how well the AST to CFG conversion works.
 
