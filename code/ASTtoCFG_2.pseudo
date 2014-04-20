@@ -1,0 +1,19 @@
+CFG last;
+
+depthFirstAST(AST current)
+	if whitelist.contains(current.type)
+		last.addChild(current.cfg)
+		last = current
+	end if
+	
+	foreach child in current
+		depthFirstAST(child)
+	end foreach
+	
+	if current.type = EOL.IF
+		CFG endIF = new CFG("END IF")
+		current.cfg.addChild(endIF)
+		last.addChild(endIF)
+		last = endIF
+	end if	
+end

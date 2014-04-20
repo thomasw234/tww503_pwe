@@ -1,5 +1,6 @@
 \usepackage{graphicx}
-\usepackage{fullpage}
+%\usepackage{fullpage}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
 \usepackage{listings}
 \usepackage{subfig}
 \usepackage[parfill]{parskip}
@@ -11,6 +12,7 @@
 \usepackage{EOLFormat}
 \usepackage{color}
 \usepackage{setspace}
+\usepackage{wrapfig}
 
 % For code listings
 % For code listings

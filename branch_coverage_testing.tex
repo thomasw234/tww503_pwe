@@ -1,0 +1,170 @@
+\section{Testing}
+
+As with statement coverage, the solution must be tested. Each of the basic statements will be tested individually, and then some combinations of statements will be tested. Obviously there is an infinite number of input combinations, and only a small subsection of these can be tested. I will attempt to choose interesting inputs that require difficult to produce CFGs, rather than something less interesting, such as 10 sequential if statements. Automatic verification of the produced CFGs would be very difficult to perform, and so all CFGs will be checked by hand. This of course means that there is a risk of human error, but at this moment I can see no way to alleviate this risk.
+
+\subsection{Individual Statements}
+
+The criteria for a test to pass are as follows:
+
+\begin{itemize}[nolistsep]
+\item There is a START vertex at the top of the CFG which has no parents, and at least one child.
+\item There is an END vertex that has at least one parent, and no children.
+\item The produced CFG matches the one that was shown in the analysis section for that statement.
+\item Other than the end vertex, all vertices have at least one child
+\end{itemize}
+
+\begin{figure}
+\centering
+\begin{minipage}{.25\textwidth}
+  \centering
+  \includedot[scale=0.3]{figures/branchtest/block}
+  \caption{}
+  \label{fig:testBlock}
+\end{minipage}%
+\begin{minipage}{.25\textwidth}
+  \centering
+  \includedot[scale=0.3]{figures/branchtest/if}
+  \caption{}
+  \label{fig:testIf}
+\end{minipage}%
+\begin{minipage}{.25\textwidth}
+  \centering
+    \includedot[scale=0.3]{figures/branchtest/ifElse}
+    \caption{}
+  	\label{fig:testIfElse}
+\end{minipage}
+\begin{minipage}{.24\textwidth}
+  \centering
+  \includedot[scale=0.3]{figures/branchtest/for}
+  \caption{}
+  \label{fig:testFor}
+\end{minipage}
+\end{figure}
+
+Testing begins with the block vertex. This will be done by having a single line of code in a program, with no conditional statements.
+
+\begin{samepage}
+\begin{minipage}{.6\textwidth}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-01
+\item[\hspace*{0.3cm}Statement under Test] BLOCK
+\item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:block}
+\item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testBlock})
+\end{description}
+\end{minipage}
+\begin{minipage}{.4\textwidth}
+  \centering
+  Code used for testing:
+  \lstinputlisting[language=EOL]{code/branchtest/block.eol}
+\end{minipage}
+\end{samepage}
+
+Of note about this test is that the operation call \verb|println| is printed, but not the string that is to be printed. This is because the type string is not on the whitelist, but the operation call type is. If both were on the whitelist, then two vertices would be used to represent that line of code.
+
+\begin{samepage}
+\begin{minipage}{.6\textwidth}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-02
+\item[\hspace*{0.3cm}Statement under Test] if
+\item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:if}
+\item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testIf})
+\end{description}
+\end{minipage}
+\begin{minipage}{.4\textwidth}
+  \centering
+  Code used for testing:
+  \lstinputlisting[language=EOL]{code/branchtest/if.eol}
+\end{minipage}
+\end{samepage}
+
+The if statement does not require any code in its block for this test, because leaving the space between the parenthesis empty produces a block vertex, which is enough for this test. The if statement above will always execute because its parameter is \verb|true|, but again for testing this is not relevant because the generated CFG does not take this into account.
+
+\begin{samepage}
+\begin{minipage}{.6\textwidth}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-02
+\item[\hspace*{0.3cm}Statement under Test] if .. else
+\item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:ifelse}
+\item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testIfElse})
+\end{description}
+\end{minipage}
+\begin{minipage}{.4\textwidth}
+  \centering
+  Code used for testing:
+  \lstinputlisting[language=EOL]{code/branchtest/ifElse.eol}
+\end{minipage}
+\end{samepage}
+
+\begin{samepage}
+\begin{minipage}{.6\textwidth}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-02
+\item[\hspace*{0.3cm}Statement under Test] for
+\item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:for}
+\item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testFor})
+\end{description}
+\end{minipage}
+\begin{minipage}{.4\textwidth}
+  \centering
+  Code used for testing:
+  \lstinputlisting[language=EOL]{code/branchtest/for.eol}
+\end{minipage}
+\end{samepage}
+
+\begin{figure}
+\centering
+\begin{minipage}{.25\textwidth}
+  \centering
+  \includedot[scale=0.3]{figures/branchtest/while}
+  \caption{}
+  \label{fig:testWhile}
+\end{minipage}%
+\begin{minipage}{.25\textwidth}
+  \centering
+  \includedot[scale=0.3]{figures/branchtest/switch1}
+  \caption{}
+  \label{fig:testSwitch1}
+\end{minipage}%
+\begin{minipage}{.25\textwidth}
+  \centering
+    \includedot[scale=0.3]{figures/branchtest/switch2}
+    \caption{}
+  	\label{fig:testSwitch2}
+\end{minipage}
+\begin{minipage}{.24\textwidth}
+  \centering
+  \includedot[scale=0.3]{figures/branchtest/for}
+  \caption{}
+  \label{fig:testFor}
+\end{minipage}
+\end{figure}
+
+\begin{minipage}{.6\textwidth}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-02
+\item[\hspace*{0.3cm}Statement under Test] switch (with fallthrough, without a default statement)
+\item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:switch1}
+\item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testSwitch1})
+\end{description}
+\end{minipage}
+\begin{minipage}{.4\textwidth}
+  \centering
+  Code used for testing:
+  \lstinputlisting{code/branchtest/switch1.eol}
+\end{minipage}
+
+\begin{minipage}{.6\textwidth}
+\begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-02
+\item[\hspace*{0.3cm}Statement under Test] switch (without fallthrough, with a default statement)
+\item[\hspace*{0.3cm}Expected Output] See figure \ref{fig:switch2}
+\item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testSwitch2})
+\end{description}
+\end{minipage}
+\begin{minipage}{.4\textwidth}
+  \centering
+  Code used for testing:
+  \lstinputlisting[language=EOL]{code/branchtest/switch2.eol}
+\end{minipage}
+
+

@@ -46,7 +46,7 @@ Another approach that could be considered is to record which lines of the input 
 \centering
 \begin{minipage}{.5\textwidth}
   \centering
-  \lstinputlisting[language=EOL]{code/ifElse.eol}
+  \lstinputlisting[language=EOL,breaklines=true]{code/ifElse.eol}
   \caption{An if/else EOL program}
   \label{lst:ifElseEOL}
 \end{minipage}%
@@ -129,7 +129,7 @@ The core of the class is detailed in Figure \ref{lst:StatementCoverageHTMLCore}.
 
 At this stage the AST has been traversed, and it is known which characters are to be highlighted and which are not to be. Now the HTML file is written. This is started by writing the HTML header, then the page title. Then the coverage statistics are written so to satisfy requirement F-03. Next, the code from the input file is copied to the output file, and the code that has been executed is highlighted. Finally, the HTML page footers are written and the file is written to disk.
 
-\subsection{Testing}
+\section{Testing}
 Following the implementation of the solution, it must now be thoroughly tested for bugs, and of course if any bugs are found, then the fixes will be documented here.
 
 \begin{samepage}
