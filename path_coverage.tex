@@ -1,1 +1,38 @@
 \chapter{Path Coverage}
+
+\section{Introduction}
+
+This chapter will detail my implementation of path coverage analysis for EOL. As with the statement coverage and branch coverage chapters, an analysis will be performed, followed by design, implementation, testing and conclusions. This chapter will be more brief than the branch coverage chapter because a lot of the hard work (i.e. the AST to CFG conversion) does not need repeating.
+
+\section{Analysis}
+
+To measure the execution path through a program, every branch that is executed can be recorded as a series of steps. It is not useful to record what is executed between two branches, because that will always be the same. 
+
+Two recorded paths can then be compared by going through each step, and seeing whether the branch taken at each step was the same. There is a slight complexity that must be considered, however. Loops can be executed any number of times, as was discussed in the literature review. I have decided to go with the approach of recording whether a loop was executed zero, or more than zero times. This means that when comparing two paths and one has executed a loop 10 times and the other path has executed it 100 times, these will be considered the same.
+
+Another problem with loops is that they can contain break, breakAll or continue statements which take the control flow of the program outside of the loop, or back to the loop header. Consider the example in Figure \ref{fig:pathCoverageProblem}.
+29th august 14
+\begin{figure}
+\centering
+\begin{minipage}{.33\textwidth}
+  \centering
+  \lstinputlisting[language=EOL]{code/pathcoverageproblem.eol}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includedot[scale=0.3]{figures/pathloopproblem}
+\end{minipage}
+\caption{A problematic example}
+\label{fig:pathCoverageProblem}
+\end{figure}
+%http://books.google.co.uk/books?id=qVkgJYh47tEC&pg=PA144&lpg=PA144&dq=path+coverage+loops&source=bl&ots=xwwset1Z33&sig=F6zAK0i7TchDwQOYcvt4FM9wXA0&hl=en&sa=X&ei=ARlVU9uPCs3JOeW6gIAF&ved=0CE8Q6AEwBA#v=onepage&q=path%20coverage%20loops&f=false
+
+This is a difficult problem to solve, and with limited time and space I am going to put the problem to one side. An analysis of the EuGENia source code shows that there are no break or breakAll statements, and there is only a single continue statement, so this should not be a problem. 
+
+\section{Design}
+
+As with the two previous implementations, an execution listener will be implemented. This listener will use much of the same code as the branch listener, because it needs to determine when a branch has been executed. It will not extend the branch listener though, because most of the code is held within one function, and this function needs to be modified, so extending the branch listener would not be useful.
+
+When the branch is to be marked as executed, a the edge that was taken on the graph must be recorded. Because the CFG class doesn't actually contain a list of edge objects that have unique identifiers, recording which edges have been executed is slightly more difficult. As well as storing individual edges, there needs to be a way of storing a collection of executed edges, which will be the path that was taken through the program. 
+
+Two classes will be created then. The first will store the unique ID of the start CFG and the unique ID of the end CFG, which will allow unique identification of an edge. The second class will store a list of the first class, and will implement methods to compare itself to another instance of the same class, allowing for easy comparison of two paths. The comparison method will take into account that we only care whether a loop has been executed zero times or more than zero times.
