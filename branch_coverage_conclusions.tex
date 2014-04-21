@@ -1,0 +1,9 @@
+\section{Conclusions}
+
+The task of converting an abstract syntax tree to a control flow graph was difficult and took a lot of thought and planning. That the algorithm has not been detailed before (as far as could be found) is surprising as it seems like an algorithm that would be useful in a few situations.
+
+Requirement F-05 has been satisfied, as the branch analysis can be run on any EOL file. F-06 has been met because the number of branches that were executed out of the total number of branches, and F-07 has also been met because the user can also distinguish between branches that have been executed, and those that have not.
+
+NF-03 and NF-04 appear to have been satisfied, although during the case study in the next section that will be formally determined.
+
+The code for the conversion method is included in the Appendix. As was mentioned earlier, the structure of the code does not lend itself to future extensions, and ideally needs refactoring. If an interface was implemented that included methods for pre and post-recursion, then new statements could be added to the conversion process easily. The large switch statements that exists at the moment are too big to maintain easily, but were written initially with testing the designed algorithm out.

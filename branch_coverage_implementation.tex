@@ -19,3 +19,11 @@ Once the CFG has been created, a final pass is made to search for any END IF or 
 \subsection{Extensibility}
 
 The code as it is written at the moment is not particularly extensible. Within the pre and post recursion methods a switch statement is used so that different code can be executed on different types of statement. If time permits then I will look at refactoring the code in a way that allows easy modification and maintenance. This could be useful if the conversion is changed to work on another language, such as one of Epsilon's other languages. 
+
+\subsection{Execution Listener}
+
+The approach to recording which branches have been executed was discussed in the analysis section. Once execution of the EOL program has taken place, a depth first search is performed on the CFG (with a list of checked vertices to make sure that a vertex isn't visited twice, because a CFG can have loops). At each vertex, if the number of children is greater than one, then the number of children is counted, and the number of executed children is also counted. These figures are then printed to the standard output.
+
+When the DOT file is being generated to display the CFG, if a show branch boolean is set to true, then branches are coloured in green if they have been executed, or red otherwise.
+
+When a test is executed, most of the code will only be passed over once at most. Branch coverage is only useful if it works across multiple tests and combines the results into one graph, and so a class was created that contains stores which branches have been executed. These results can then be merged to create a CFG that contains all of the executed branches, which is used to produce the final output.

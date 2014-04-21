@@ -1,0 +1,39 @@
+calculatePi(0, 3).println();
+
+operation calculatePi(depth: Integer, estimate : Real) {
+	if (depth > 1)
+		return estimate;
+	else {
+		depth = depth + 1;
+		return estimate + sin(calculatePi(depth, estimate));
+	}
+}
+
+operation factorial(x : Real) {
+	var result : Integer = 1;
+	var i : Integer = 1;
+	while (result <= x) {
+		result = result * i;
+		i = i + 1;
+	}
+	return result;
+}
+
+operation power(a : Real, b : Real) {
+	var c : Real = 1;
+	var i : Integer = 0;
+	while (i < b) {
+		c = c * a;
+		i = i + 1;
+	}
+}
+
+operation sin(x : Real) {
+	var y : Real = x;
+	var s : Real = -1;
+	var i : Integer = 3;
+	while (i <= 100) {
+		y = y + (s * (power(x, i) / factorial(i)));
+	}
+	return y;
+}

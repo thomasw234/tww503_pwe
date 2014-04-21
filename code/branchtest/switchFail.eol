@@ -1,0 +1,6 @@
+var i : Integer = 2;
+
+switch (i) {
+	case 0: "Zero".println();
+	case 1: "One".println();
+}

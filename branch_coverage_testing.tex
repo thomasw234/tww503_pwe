@@ -258,5 +258,106 @@ For breakAll, a two while loops were used to prove that the breakAll statement c
 
 \subsection{Multiple Statements Testing}
 
-During the previous section I showed that individual statements are dealt with as they should be. Some of the tests also had multiple statements in, such as the break statement. Now that this has been proven, a small number of bigger test cases will be executed. During development of course many were tested, but once again due to the space constraints in this document I can only record a small subsection of them. The bigger test will be when EuGENia is used as a case study, but that is more about testing how well the coverage metrics work, rather than how well the AST to CFG conversion works.
+During the previous section I showed that individual statements are dealt with as they should be. Some of the tests also had multiple statements in, such as the break statement. Now that this has been proven, bigger test case will be executed. During development of course many were tested, but once again due to the space constraints in this document I can only record one of them. The even bigger test will be when EuGENia is used as a case study, but that is more about testing how well the coverage metrics work, rather than how well the AST to CFG conversion works.
 
+This test has been designed to use most of the statements that are covered in the analysis section. The code is highly contrived, and if code like this were seen in a real application then you would probably want to question the programmer's technique. However, that doesn't mean that my code shouldn't be able to handle it, and so in Figure \ref{fig:testComplex} is the generated CFG on the left, and the code used on the right.
+
+A manual walkthrough of the CFG confirms that it does as is expected. The only point of interest is at the bottom right, where there are two vertices labelled `i'. This maps to the \verb|i = i + 1;| statement on line 8 of the code. Analysis of the AST using the AST Explorer shows that the vertex i is of type Feature Call, which is the same as is used for operation calls. I could remove operation calls from the CFG whitelist, but I think that it is useful to have them in the CFG, and so I will leave it as is.
+
+\begin{figure}
+\begin{minipage}{.6\textwidth}
+\centering
+	\includedot[scale=0.35]{figures/branchtest/complex1}
+\end{minipage}
+\begin{minipage}{.39\textwidth}
+  \centering
+  Code used for testing:
+  \lstinputlisting[language=EOL]{code/branchtest/complex1.eol}
+\end{minipage}
+\caption{The test complex code and the generated CFG}
+\label{fig:testComplex}
+\end{figure}
+
+
+\subsection{Branch Coverage Testing}
+
+Now that I am satisfied that the CFG is correctly, it can be used to perform branch analysis.
+
+\begin{minipage}{0.6\textwidth}
+\begin{description}[style=sameline,leftmargin=3.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-11
+\item[\hspace*{0.3cm}Description] An if .. else statement that just executes the if's true block
+\item[\hspace*{0.3cm}Expected Output] if .. else CFG with the edge from the if vertex to the true block vertex coloured in green, and the other side in red.
+\item[\hspace*{0.3cm}Result] Pass
+\end{description}
+\end{minipage}
+\begin{minipage}{0.39\textwidth}
+\centering
+\includedot[scale=0.3]{figures/branchtest/colIf}
+\end{minipage}
+
+\begin{minipage}{0.6\textwidth}
+\begin{description}[style=sameline,leftmargin=3.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-12
+\item[\hspace*{0.3cm}Description] An if .. else statement that just executes the if's false block
+\item[\hspace*{0.3cm}Expected Output] if .. else CFG with the edge from the if vertex to the true block vertex coloured in red, and the other side in green.
+\item[\hspace*{0.3cm}Result] Pass
+\end{description}
+\end{minipage}
+\begin{minipage}{0.39\textwidth}
+\centering
+\includedot[scale=0.3]{figures/branchtest/colIfFalse}
+\end{minipage}
+
+\begin{minipage}{0.6\textwidth}
+\begin{description}[style=sameline,leftmargin=3.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-13
+\item[\hspace*{0.3cm}Description] A switch statement that only executed the default block
+\item[\hspace*{0.3cm}Expected Output] Switch CFG with the edge between the switch vertex and the default vertex coloured in green. 
+\item[\hspace*{0.3cm}Result] Fail
+\end{description}
+\end{minipage}
+\begin{minipage}{0.39\textwidth}
+\centering
+\includedot[scale=0.3]{figures/branchtest/switchFail}
+\end{minipage}
+
+Test BT-13 has failed because the default branch was not coloured in green, meaning that it has not been marked as executed. After some investigation, the bug was found and fixed. When a switch statement is executed, the first child of each case statement is executed. This initially caused every case statement to be marked as executed, and so an exception was added to prevent this. Unfortunately this code then broke the code that marked the default branch as being executed. A fix was implemented, and the switch statement thoroughly tested, as shown in Figure \ref{fig:testSwitch}
+
+\begin{figure}
+\begin{minipage}{0.19\textwidth}
+\includedot[scale=0.3]{figures/branchtest/switch1}
+\end{minipage}
+\begin{minipage}{0.19\textwidth}
+\includedot[scale=0.3]{figures/branchtest/switch2}
+\end{minipage}
+\begin{minipage}{0.19\textwidth}
+\includedot[scale=0.3]{figures/branchtest/switch3}
+\end{minipage}
+\begin{minipage}{0.19\textwidth}
+\includedot[scale=0.3]{figures/branchtest/switch4}
+\end{minipage}
+\begin{minipage}{0.19\textwidth}
+\includedot[scale=0.3]{figures/branchtest/switch5}
+\end{minipage}
+\caption{The thoroughly tested switch statement}
+\label{fig:testSwitch}
+\end{figure}
+
+\begin{description}[style=sameline,leftmargin=3.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-14
+\item[\hspace*{0.3cm}Description] A while loop that contains a break statement that will be executed.
+\item[\hspace*{0.3cm}Expected Output] The edge into the while block should be green, but because the break statement is called the other edge from the while vertex will be red.
+\item[\hspace*{0.3cm}Result] Pass
+\end{description}
+
+\begin{samepage}
+\begin{description}[style=sameline,leftmargin=3.5cm,nolistsep]
+\item[\hspace*{0.3cm}Label] BT-15
+\item[\hspace*{0.3cm}Description] A while loop that contains a break statement that will be executed.
+\item[\hspace*{0.3cm}Expected Output] The edge into the while block should be green, but because the break statement is called the other edge from the while vertex will be red.
+\item[\hspace*{0.3cm}Result] Pass
+\end{description}
+\end{samepage}
+
+Many more tests were carried out, but unfortunately due to space requirements they cannot be detailed here.

@@ -1,0 +1,22 @@
+while (true) {
+	if (true) {
+		var i : Integer = 0;
+		switch (i) {
+			case 0: "zero".println();
+			case 1: "one".println();
+		}
+		i = i + 1;
+	}
+	else {
+		while (true) {
+			if (true) {
+				break;
+			}
+			else {
+				if (true) {
+					breakAll;
+				}
+			}
+		}
+	}
+}
