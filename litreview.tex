@@ -2,7 +2,7 @@
 
 \section{Introduction}
 % This introduction is pretty poor, probably best to rewrite once the rest is finished
-In this chapter I will give an overview of the existing literature that is appropriate to my project. The chapter is split into two sections. The first section gives a review of Model Driven Engineering and tools that can be used for implementation. The second section investigates software testing methods and ways of assessing the quality of software tests.
+In this chapter an overview is given of the existing literature as well as an overview of topics that are relevant to this project. The chapter is split into two sections. The first section gives a review of Model Driven Engineering and tools that can be used for implementation. The second section investigates software testing methods and ways of assessing the quality of software tests.
 
 \section{Model Driven Engineering}
 
@@ -12,36 +12,32 @@ Model Driven Engineering is a development methodology that aims to reduce the am
 
 %Model Driven Engineering is a development methodology that aims to reduce the amount of time spent on code development by building models that can be transformed and used to generate code automatically. Bugs that would normally be in code (through developer error) will no longer be present, as all the code has been generated automatically from a model. Of course this assumes that the model is correct in the first place. Cross-platform implementation overheads are also reduced. The model can remain the same for all platforms, and only the model-to-code program has to be modified for different target platforms. \citep{mdseLano}.
 
-In the 1980's there was a software quality crisis that lead to the search for alternative approaches to developing software. Model Driven Engineering is one solution that was of interest at the time as it provided a way to visually represent a system architecture, and from that generate code automatically. However, the return on investment that companies were expecting from model driven engineering was far too high, causing much disappointment and disillusionment, and for a while the concept was sidelined. More recently, the Object Managment Group (OMG) have promoted and developed a Unified Modeling Language (UML), and tools such as Epsilon have further promoted the use of MDE \citep{mdeHistory}.  \citet{brambillaBook} believes that Model Driven Engineering is now past the `trough of disillusionment' and into the `slope of enlightenment' (see figure \ref{mde_pos}) \\
+In the 1980's there was a software quality crisis that lead to the search for alternative approaches to developing software. Model Driven Engineering is one solution that was of interest at the time as it provided a way to visually represent a system architecture, and from that generate code automatically. However, the return on investment that companies were expecting from model driven engineering was far too high, causing much disappointment and disillusionment, and for a while the concept was sidelined. More recently, the Object Managment Group (OMG) have promoted and developed a Unified Modeling Language (UML), and tools such as Epsilon have further promoted the use of MDE \citep{mdeHistory}.  \citet{brambillaBook} believes that Model Driven Engineering is now past the `trough of disillusionment' and into the `slope of enlightenment' (see figure \ref{mde_pos}) By this they mean that new technologies often make many promises that they ultimately cannot fulfil, which is represented by the peak of inflated expectations on the graph. From the disappointment that comes with broken promises, people become disillusioned with the technology and people tend to avoid using it. Researchers continue to work on improving and maturing the technology, which is represented by the slope of enlightenment. \\
 
 \begin{figure}
-\begin{center}
-	\includegraphics[width=4in]{figures/mde_pos.jpg}
-\end{center}
+\begin{minipage}{0.5\textwidth}
+	\includegraphics[width=0.9\linewidth]{figures/mde_pos.jpg}
 \caption{The technology hype cycle according to \citet{brambillaBook}}
 \label{mde_pos}
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+	\includegraphics[width=0.9\linewidth]{figures/sample_model.png}
+\caption{A sample model \citep{sampleModel}}
+%TODO: Create my own model to sample here?
+\label{uml_sample}
+\end{minipage}
 \end{figure}
 
 \subsection{Model}
 
-\begin{figure}
-\begin{center}
-	\includegraphics[width=4in]{figures/sample_model.jpg}
-\end{center}
-\caption{A sample model}
-%TODO: Create my own model to sample here?
-\label{uml_sample}
-\end{figure}
+A model is a representation of something that abstracts away many details that are not necessary for its use \citep{brambillaBook}. For example, the Utah Teapot \citep{utahTeapot} is a model of a teapot that is rendered by a 3D engine. However, many aspects of the teapot are not considered in its model, as they are not necessary for a simple render. An example is that the lid is not a removable component, because for the purpose of rendering the teapot, the lid never has to be removed. Another example is that the only physical property of the teapot that will be included in the model is its finish (texture), so that lighting and reflection can be calculated. Other details such as its weight will not be included in the model, because it is not necessary.
 
-A model is a representation of something that abstracts away many details that are not necessary for its use \citep{brambillaBook}. For example, the Utah Teapot \citep{utahTeapot} is a model of a teapot that is rendered by a 3D engine. However, many aspects of the teapot are not considered in its model, as they are not necessary for a simple render. An example is that the lid is not a removable component, because for the purpose of rendering the teapot, the lid never has to be removed. Another example is that the only physical property of the teapot that will be included in the model is it's finish (texture), so that lighting and reflection can be calculated. Other details such as its weight will not be included in the model, because it isnot necessary.
-
-UML (Unified Modeling Language) is a language that is designed specifically for representing models visually. It is ideal for object-oriented design, as it represents classes with boxes and links between classes with lines. Within the boxes there are definitions of the classes (spelling?) methods and fields. In figure \ref{uml_sample}, author is a class that has properties such as name, born, dead. The diagram also shows that there is a connection between author and book.
-%TODO: Write about the connection, or update to a better sample model
+UML (Unified Modeling Language) is a language that is designed specifically for representing models visually. It is ideal for object-oriented design, as it represents classes with boxes and links between classes with lines. Within the boxes there are definitions of the classes, methods and fields. In Figure \ref{uml_sample}, book is a class that has the properties pages and title. The diagram also shows that there is the association author between a writer object and a book object.
 
 \subsection{Metamodels}
 To have a modeling language, there must be a specification of that language that defines the valid syntax, constraints etc. In the case of UML, the Object Management Group provide a detailed specification \citep{umlSpec} of the language, and we can check that any diagram is a UML diagram by checking it against the UML specification.
 %Concrete, Abstract and semantic sections...
-A metamodel is the specification of a modeling language, in the form of a model \citep{brambillaBook}. A metamodel could be represented visually or textually, depending on the specification of the metamodeling language. As with many aspects of computer science, the metamodel is just another layer of abstraction, and we can continue to abstract to higher and higher levels. A metametamodel (known as M3) will define the specification of a metamodeling language, and the abstraction can continue as far as is required.
+A metamodel is the specification of a modeling language, in the form of a model \citep{brambillaBook}. A metamodel could be represented visually or textually (as can a model), depending on the specification of the metamodeling language. As with many aspects of computer science, the metamodel is just another layer of abstraction, and we can continue to abstract to higher and higher levels. A metametamodel (known as M3) will define the specification of a metamodeling language, and the abstraction can continue as far as is required.
 
 Going back to the example of The Utah Teapot, the metamodel in this case may define that the teapot is made up from interconnected polygons, and specify that each polygon has a location and size given in 3D space. 
 
@@ -50,7 +46,7 @@ Going back to the example of The Utah Teapot, the metamodel in this case may def
 When building a metamodel, both the abstract and concrete syntax must be defined. The abstract syntax of a language is a definition of how the language components interact. For an OO language, the abstract synatax would specify that a class can inherit the properties of another class, that a class must have a constructor, and that a class must be given a name. How these requirements are met by the user is specified by the concrete syntax. The concrete syntax for allowing class inheritance would state that the colon symbol must be used after the class name:
 
 \begin{lstlisting}
-class NewClass : ParentClass ;; Hello
+class NewClass : ParentClass
 \end{lstlisting}
 
 The concrete syntax does not necessarily need to be textual. To build a modeling language you require a metamodel, which is the abstract syntax. You also require a way to visually display the model. The concrete syntax could state that a class is represented as a rectangle with the name of the class in the middle, and that to show inheritence the NewClass must have an arrow coming out of it that goes to the ParentClass that it is inheriting from.
@@ -63,16 +59,8 @@ The concrete syntax does not necessarily need to be textual. To build a modeling
 \end{center}
 \end{figure}
 
-\subsection{Graphical Modeling Framework}
-
-The Eclipse graphical modeling framework (GMF) is part of the Eclipse Graphical Modeling Project \citep{gmpSite}. The Eclipse Wiki \cite{gmpFAQ} defines GMF as:
-
-\begin{quote} Using GMF, you can produce graphical editors for Eclipse. For example, a UML modeling tool, workflow editor, etc. Basically, a graphical editing surface for any domain model in EMF you would like. \end{quote}
-
-
-
 \subsection{Epsilon}
-To be able to perform Model Driven Engineering, we of course require some tools and languages to build and manipulate models. These tools could be built from scratch for each project, but that would be a waste of time.
+With the theory of model driven engineering covered, focus will now shift to covering the tools that can be used in model driven engineering, and that will be used in this project.
 
 Epsilon is a suite of languages and tools that provide all the necessary components to build and manipulate models. Epsilon stands for \textbf{E}xtensible \textbf{P}latform of Integrated \textbf{L}anguages for M\textbf{O}del Ma\textbf{N}agement \citep{epsilonWebsite}. It is part of the Eclipse Modeling Project \citep{ecliplseModelingProjectSite}, and includes tools for each of its languages that integrate with Eclipse. From the Epsilon Website \citep{epsilonWebsite}, the languages that are provided by Epsilon are:
 
@@ -87,50 +75,80 @@ Epsilon is a suite of languages and tools that provide all the necessary compone
 \item[Epsilon Flock] A rule
 \end{description}
 
-Together these languages provide a powerful framework for model driven engineering.
+For each of these languages Epsilon provides development tools for use in Eclipse, as well as interpreters for each of the languages. As well, ANT workflows are provided which are a way of automating tasks in a sequential manner \citep{epsilonBook}.
+
+\subsection{EUnit}
+EUnit is a unit testing framework that is included with Epsilon \citep{epsilonWebsite}. It allows systematic testing of model transformations by providing tools that can be used for checking that the output of model transformations meet certain requirements. \citep{epsilonBook} EUnit allows for different inputs and models, and could be considered as a JUnit for models.
+
+Notably, EUnit does not include test coverage analysis, which is the focus of this project.
+
+\subsection{Graphical Modeling Framework}
+
+The Eclipse graphical modeling framework (GMF) is part of the Eclipse Graphical Modeling Project \citep{gmpSite}. The Eclipse Wiki \cite{gmpFAQ} defines GMF as:
+
+\begin{quote} Using GMF, you can produce graphical editors for Eclipse. For example, a UML modeling tool, workflow editor, etc. Basically, a graphical editing surface for any domain model in EMF you would like. \end{quote}
+
+To create these graphical editors, GMF requires 6 different files \citep{gmfIntro}, including a metamodel of the models that the graphical editor will be used to create, graphics that will be used for representing models, and the tools that can be used to manipulate models.
 
 \subsection{EuGENia}
-EuGENia is one of the tools that is included with Epsilon. EuGENia takes an Ecore metamodel specification and generates a GMF editor \citep{eugeniaSite}. From the code in \ref{cha:EugSampCode}, the model editor shown in figure \ref{sampleGmf} is generated by EuGENia.
+EuGENia is one of the tools that is included with Epsilon. EuGENia takes an Ecore metamodel specification and generates a GMF editor \citep{eugeniaSite}. The purpose of EuGENia, as taken from its website, is to `shield you from the complexity of GMF and lower the entrance barrier for creating your first GMF editor.' \citep{eugeniaSite} From the code in \ref{App:SampleEuGENia}, the model editor shown in figure \ref{sampleGmf} is generated by EuGENia.
 
 \begin{figure}
 \begin{center}
-	\includegraphics[width=4in]{figures/gmfeditor.png}
+	\includegraphics[width=3in]{figures/gmfeditor.png}
 \end{center}
 \caption{A sample gmf editor generated by EuGENia \citep{eugeniaSite}}
 \label{sampleGmf}
 \end{figure}
 
-The generator editor provides the objects shown on the right hand side of figure \ref{sampleGmf}. These objects are then dragged to the left hand section of the editor by the user, where connections between objects can be intuitively created. 
+The generated editor provides the objects shown on the right hand side of figure \ref{sampleGmf}. These objects are then dragged to the left hand section of the editor by the user, where associations between objects can be intuitively created.
 
-\subsection{EuGENia Live}
+\subsection{Model Transformation Testing}
 
-EuGENia Live is a web-based version of EuGENia that removes some of the complexity of getting started with EuGENia. The EuGENia Live Paper \citep{eugeniaLivePaper} describes EuGENia Live as: \begin{quote}... a tool for designing graphical DSLs  \end{quote}
+To bring model-driven-engineering out of the `trough of disillusionment' it has been necessary to perform testing on model transformations before they are deployed to users. Much research has been done in this area, and \citet{mttBarriers} describe the three stages to model transformation testing:
 
-However, unlike EuGENia, EuGENia  Live is a visual tool that allows you to switch back and forth between graphical editing of a DSL and the code for the DSL. Figure \ref{eugeniaLiveGraphical} shows EuGENia Live graphically editing a DSL, and Figure \ref{eugeniaLiveCode} shows the same DSL's code being edited in EuGENia Live.
+\begin{enumerate}
+	\item Generate test data: As with any type of test, there needs to be some input to the system. In this case it will be a set of models that are to be transformed. These models will conform to the metamodel that specifies input to the model transformation, and will either be manually created by the tester, or automatically generated in the form of graphs of metamodel instances \citep{mttBarriers}.
+	\item Define test adequacy criteria: For any modeling language beyond the very basic there will be a very large number of possible inputs. This rules out running every possible model through the transformer in to test it as it would take too long. Instead a test adequacy criteria must be defined that allows the effective seletion of test models. According to \citet{mttBarriers}, there is no well-defined criteria for model transformation testing.
+	\item Construct an oracle: The oracle gets the output of the system and determines if it is correct (based on the test input model).
+\end{enumerate}
 
-\begin{figure}[h]
-\begin{center}
-	\includegraphics[width=4in]{figures/eugenia_live_graphical.png}
-\end{center}
-\caption{EuGENia Live's Graphical Editor \citep{eugeniaLiveDocumentation}}
-\label{eugeniaLiveGraphcal}
-\end{figure}
+\citet{fleureyMTInputs} propose a general framework for assessing the quality of model transformations. Their paper begins by discussing the possibility of finding `partitions' of the transformation's input meta-model. A partition is where the model could be one of a range of values, so for example if the metamodel specifies a boolean, there is a partition as the boolean could be either true or false. With these partitions, we could check that the input test set covers each possible combination of partitions. \citet{fleureyMTInputs} then go on to state why this isn't necessarily the most useful approach: first the complexity rises quickly with each additional partition. Secondly some of combinations of partitions will not be relevant for testing, and the tester would have to find these and remove them. Finally, some relevant combinations could be missing. Generating every single combination of partition will `not ensure the existence of more than one composite state' they state.
 
-\begin{figure}[h]
-\begin{center}
-	\includegraphics[width=4in]{figures/eugenia_live_code.png}
-\end{center}
-\caption{EuGENia Live's Code Editor \citep{eugeniaLiveDocumentation}}
-\label{eugeniaLiveCode}
-\end{figure}
+What \citet{fleureyMTInputs} propose is the idea of model and object fragments that `define specific combinations of ranges for properties that should be covered by test models'. Their paper suggests that one of the more important aspects of model transformation testing is ensuring that input models cover the correct criteria - that they thoroughly test the transformation, while avoiding having many very similar inputs that don't test anything that has not already been tested by another input. This is of course an important aspect to consider, but for the purposes of testing EuGENia may be slightly excessive. EuGENia is not a huge transformation, and so when I decide on my test inputs I will keep this framework in mind, although I will not follow it strictly. More important I believe is the oracle aspect of testing.
 
+The oracle can be difficult to create for any complex model transformation. \citet{mttOracleIssue} propose six ways that an oracle could be implemented for model transformation testing:
+
+\begin{enumerate}
+	\item Compare the output to a reference model (i.e. the expected output model for the particular input). Unfortunately this requires that the tester has to create the expected models for each test. For a large test set this could be incredibly time consuming.
+	\item Perform an inverse transformation on the output. This would give the original input model, if the model transformation was correct. This requires that the tester implement a reverse transformation, and also requires that the transformation is an injective function (i.e. a function that preserves distinctness). According to \citet{mttOracleIssue}, this is unfortunately unlikely.
+	\item Compare the output with that from a reference model transformation. This reference model transformation can produce the reference model from the test model. 
+	\item A generic contract is a list of constraints on the output of the model transformation based on the input. Once the model transformation has completed the output model is checked against the constraints defined in the generic contract.
+	\item The tester could provide a list of assertions in OCL (or EVL) that can be checked on the output model. Not every detail about the output model must be provided. Doing so would be a waste of time as providing the expected output model would be quicker.
+	\item Model snippets could be provided by the tester. Each snippet is associated with a cardinality and logical operator so that the expected number of occurrences of each snippet can be calculated. The oracle would check that the expected number of each snippet appears in the output. 
+\end{enumerate}
 
 \section{Quality of Software Testing}
 \subsection{Introduction}
-Software testing is a crucial part of the development cycle of any serious piece of software. Developers can make changes to code that make it do what they want, but could break another part of the program that uses the same code. Suites of tests can be implemented that \emph{should} notice if a developer breaks the code, but there is the possibility that the correct tests have not been implemented to catch a certain fault.
 
-The Ariane 5 rocket cost \$7 billion to develop, and so of course any software on board would have had test suites to ensure that it did not fail. Unfortunately, 37 seconds after launch, \$500 million of rocket and cargo exploded because of an integer overflow \citep{ariane5}. Despite having software tests, the test `coverage' must have not been sufficient, leading to such a disaster. This is of course an extreme example, but it highlights the need for not only software testing, but good quality software testing.
+Users expect software to work without issues, and so when a bug is found the user will at best be annoyed. At worst, the bug may be in a critical piece of software that the failure of which could result in the loss of millions of dollars, or even human lives. The need for the testing of software before it is released then hardly requires justification. But how do we know when software has been tested thoroughly enough? This section will look at different approaches to determining the quality of a test suite. 
 
+\subsection{The Need for Test Quality Metrics}
+
+To try and further justify the need for thorough software tests, I discuss two rather serious cases where software has failed where testing should have caught the bugs.
+
+The Ariane 5 rocket cost \$7 billion to develop, and so of course any software on board would have had test suites to ensure that it did not fail. Unfortunately in 1996, 37 seconds after launch, \$500 million of rocket and cargo exploded because of an integer overflow \citep{ariane5}. Despite having software tests, the tests were clearly insufficient as they did not find the integer overflow problem prior to the software being put into use. The software turned the rocket in the wrong direction, and to minimise the risk of fatalities the decision was quickly made to destruct the rocket. Thankfully there was no-one on board, and no-one on the ground was injured.
+
+In 1991 though, a software error lead to the death of 28 people. The Patriot missile system was supposed to track incoming ballistic missiles and launch a rocket to destroy them before they hit their target \citep{patriotMissile}. In one instance the system lost track of an incoming missile and decided that it must have been a false reading, and so no rocket was launched. The incoming missile hit a US barrack, killing 28 American soldiers. The software for the Patriot missile lost time after being switched on for too long, meaning that it was looking in the wrong place for the incoming missile.
+
+The final example is more recent. In February 2014 Apple issued a security update that fixed a bug in their SSL software. The bug was contained in the code in Figure \ref{fig:AppleBug}. Notice that there is a duplicated \verb|goto| statement, but because no braces were used on the above \verb|if| statement, the duplicated statement is not conditional, and will be always executed. This is another case of insufficient testing. In this particular case, some analysis of which lines of code are executed by the test suite (i.e. line coverage analysis) would have shown that the final if statement in that block of code was never executed, because the above goto is always called.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.4]{figures/appleBug.png}
+	\caption{Apple's SSL bug}
+	\label{fig:AppleBug}
+\end{figure}
 
 % Section about testing requrements
 \subsection{Coverage}
@@ -182,11 +200,18 @@ The example provided by \citet{Myers:2004:AST:983238} gives the code as shown in
 Before branch coverage can be introduced, the concept of a program control flow graph must be explained. A control flow graph shows the potential paths through a piece of code. Figure \ref{cfg} shows the control flow graph for the code listed in Figure \ref{codeCoverage}. At the top of the control flow graph is the entry point to the graph. From there, the first conditional statement is represented as a vertex of the graph. From that vertex there are two outward arrows. One represents the case when the conditional statement evaluates to true, and the other to false \citep{Myers:2004:AST:983238}
 
 \begin{figure}
-	\begin{center}
-		\includegraphics[scale=0.5]{figures/cfg.pdf}
-	\end{center}
+\begin{minipage}{0.5\textwidth}
+\centering
+		\includegraphics[scale=0.3]{figures/cfg.pdf}
 \caption{A simple control flow graph for the function foo}
 \label{cfg}
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=3in]{figures/coverage_reliability.png}
+\caption{\citet{497650}'s results of testing various coverage approaches on Grep}
+\label{coverageReliability}
+\end{minipage}
 \end{figure}
 
 \subsubsection{Branch Coverage}
@@ -194,14 +219,6 @@ Before branch coverage can be introduced, the concept of a program control flow 
 Branch coverage then is the number of branches that have been executed within the control flow graph. In Figure \ref{cfg} there are two branching points - both of the conditional statements. For 100\% branch coverage it is necessary for every edge to have been executed at least once by the test set. An alternative way to think of this is that at every decision point in the program, the outcome of each decision has been executed at least once. At an \verb+if+ statement, the case where the outcome is true has been executed as well as the case where the outcome is false. If branch coverage is 100\%, then so should statement coverage \citep{Myers:2004:AST:983238}.
 
 However, \citet{Myers:2004:AST:983238} also argue that branch coverage can be a weak test quality metric. Going back to the code listed in Figure \ref{codeCoverage}, branch coverage can be satisfied with the two following test cases: \verb+A=2, B=0, X=1+ and \verb+A=3, B=1, X=1+. However, if the second conditional statement was supposed to check that X < 1 instead of X > 1, then this will not be picked up by any tests, despite the branch coverage being 100\%. \citet{497650} have done a comparison of the effectiveness of decision coverage (i.e. branch coverage) and block coverage (i.e. statement coverage) after they inserted some random faults in the Unix utility Grep. Their results show in Figure \ref{coverageReliability} that block coverage analysis requires a higher percentage of coverage to find the same number of faults when compared to decision coverage.
-
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=5in]{figures/coverage_reliability.png}
-	\end{center}
-\caption{\citet{497650}'s results of testing various coverage approaches on Grep}
-\label{coverageReliability}
-\end{figure}
 
 \subsection{Path Coverage}
 
@@ -274,36 +291,9 @@ According to \citet{softwareTestingIntro}, in addition to being used to determin
 \item[BSR] Bomb Statement Replacement - Each statement is replaced by a bomb statement that causes the program to fail.
 \end{description}
 
-\citet{softwareTestingIntro} 
 \subsection{Coverage Analysis Software}
 
-\subsection{Model Transformation Testing}
-
-EuGENia is a model transformation written in ETL. It takes an Ecore metamodel as an input and generates gmf models as an output\citep{eugeniaSite}. One approach to verifying and possibly improving the consistency between EuGENia and EuGENia Live is to ensure that both applications have a good quality test suite.
-
-\citet{mttBarriers} describe the three stages to model transformation testing:
-
-\begin{enumerate}
-	\item Generate test data: As with any type of test, there needs to be some input to the system. In this case it will be a set of models that are to be transformed. These models will conform to the metamodel that specifies input to the model transformation, and will either be manually created by the tester, or automatically generated in the form of graphs of metamodel instances \citep{mttBarriers}.
-	\item Define test adequacy criteria: For any modeling language beyond the very basic there will be a very large number of possible inputs. This rules out running every possible model through the transformer in to test it as it would take too long. Instead a test adequacy criteria must be defined that allows the effective seletion of test models. According to \citet{mttBarriers}, there is no well-defined criteria for model transformation testing.
-	\item Construct an oracle: The oracle gets the output of the system and determines if it is correct (based on the test input model).
-\end{enumerate}
-
-\citet{fleureyMTInputs} propose a general framework for assessing the quality of model transformations. Their paper begins by discussing the possibility of finding `partitions' of the transformation's input meta-model. A partition is where the model could be one of a range of values, so for example if the metamodel specifies a boolean, there is a partition as the boolean could be either true or false. With these partitions, we could check that the input test set covers each possible combination of partitions. \citet{fleureyMTInputs} then go on to state why this isn't necessarily the most useful approach: first the complexity rises quickly with each additional partition. Secondly some of combinations of partitions will not be relevant for testing, and the tester would have to find these and remove them. Finally, some relevant combinations could be missing. Generating every single combination of partition will `not ensure the existence of more than one composite state' they state.
-
-What \citet{fleureyMTInputs} propose is the idea of model and object fragments that `define specific combinations of ranges for properties that should be covered by test models'. Their paper suggests that one of the more important aspects of model transformation testing is ensuring that input models cover the correct criteria - that they thoroughly test the transformation, while avoiding having many very similar inputs that don't test anything that has not already been tested by another input. This is of course an important aspect to consider, but for the purposes of testing EuGENia may be slightly excessive. EuGENia is not a huge transformation, and so when I decide on my test inputs I will keep this framework in mind, although I will not follow it strictly. More important I believe is the oracle aspect of testing.
-
-The oracle can be difficult to create for any complex model transformation. \citet{mttOracleIssue} propose six ways that an oracle could be implemented for model transformation testing:
-
-\begin{enumerate}
-	\item Compare the output to a reference model (i.e. the expected output model for the particular input). Unfortunately this requires that the tester has to create the expected models for each test. For a large test set this could be incredibly time consuming.
-	\item Perform an inverse transformation on the output. This would give the original input model, if the model transformation was correct. This requires that the tester implement a reverse transformation, and also requires that the transformation is an injective function (i.e. a function that preserves distinctness). According to \citet{mttOracleIssue}, this is unfortunately unlikely.
-	\item Compare the output with that from a reference model transformation. This reference model transformation can produce the reference model from the test model. 
-	\item A generic contract is a list of constraints on the output of the model transformation based on the input. Once the model transformation has completed the output model is checked against the constraints defined in the generic contract.
-	\item The tester could provide a list of assertions in OCL (or EVL) that can be checked on the output model. Not every detail about the output model must be provided. Doing so would be a waste of time as providing the expected output model would be quicker.
-	\item Model snippets could be provided by the tester. Each snippet is associated with a cardinality and logical operator so that the expected number of occurrences of each snippet can be calculated. The oracle would check that the expected number of each snippet appears in the output. 
-\end{enumerate}
-
+There are numerous tools that can assist in calculating coverage metrics for a test suite. A selection of these are detailed in this section, and their general features will be taken into consideration during the design phase of this project.
 
 
 
