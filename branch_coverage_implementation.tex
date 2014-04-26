@@ -22,7 +22,9 @@ The code as it is written at the moment is not particularly extensible. Within t
 
 \subsection{Execution Listener}
 
-The approach to recording which branches have been executed was discussed in the analysis section. Once execution of the EOL program has taken place, a depth first search is performed on the CFG (with a list of checked vertices to make sure that a vertex isn't visited twice, because a CFG can have loops). At each vertex, if the number of children is greater than one, then the number of children is counted, and the number of executed children is also counted. These figures are then printed to the standard output.
+The approach to recording which branches have been executed was discussed in the analysis section. There were some additional complications however that had to be catered for, and so the code is not quite as straightforward as was suggested in the analysis. One example complication is the switch statement. When a switch statement is reached, the \verb|aboutToExecute| function in the execution listener is fired for each of the case statements. This means that with the algorithm outlined in the analysis, each of the case statements is marked as executed, despite that not being true. To counter this, the code was modified to ignore case statements, and when a block was executed it was checked if it is the child of a case statement, and if so, that case statement is marked as executed.
+
+Once execution of the EOL program has taken place, a depth first search is performed on the CFG (with a list of checked vertices to make sure that a vertex isn't visited twice, because a CFG can have loops). At each vertex, if the number of children is greater than one, then the number of children is counted, and the number of executed children is also counted. These figures are then printed to the standard output.
 
 When the DOT file is being generated to display the CFG, if a show branch boolean is set to true, then branches are coloured in green if they have been executed, or red otherwise.
 
