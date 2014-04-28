@@ -1,4 +1,18 @@
 \chapter{Introduction}
 
-Welcome to the best project write-up ever.
+\section{Motivation}
+
+Many code coverage tools exist for mainstream languages. Some of these tools are free, and others sell for many thousands of dollars. The difference between them is that paid-for tools may produce nicer reports, or guarantee continued support for new language features. However, the fundamental use for each of the tools is to determine which code was executed during the testing process, and which was not.
+
+Epsilon is a suite of tools and languages developed primarily at The University of York that can be used for model driven engineering (MDE).It includes a testing framework, but there is currently no way to analyse the code coverage of the test units. Existing testing tools cannot be used as the programs under test are written in the languages designed specifically for MDE in Epsilon.
+
+While MDE is not a new concept, tools such as Epsilon still lack all of the features necessary for them to be seriously considered for large software projects by commercial organisations. Martin Fowler explains that he is sceptical of MDE's future because the tools that are necessary just aren't available \cite{fowlerMDE}. Proponents of MDE would counter this by saying that continuing development of MDE tools will solve those problems with time.
+
+The motivation behind this project then is to further the development of a Model Driven Engineering tool (Epsilon) so that it may one day be considered suitable for full-scale commercial projects. There are many enhancements that could be made (Fowler explicitly mentions source control needing work \cite{fowlerMDE}), and I have chosen to go down the route of test coverage. The two reasons for this are that firstly having test coverage available in Epsilon's languages will hopefully lead to higher quality programs being written by developers using Epsilon. The second reason is that there are existing programs that are included with Epsilon (such as EuGENia) that have a test suite, but it is not known how well tested EuGENia is. With test coverage it will be possible to evaluate EuGENia's test suite, and possibly find existing bugs that can be fixed before users encounter them.
+
+\section{Objectives}
+
+The objectives of this project are to implement test coverage in Epsilon. There are different types of test coverage, and these will be detailed in the literature review, and then a decision will be made about which types of coverage are going to be implemented. This report will detail the process of adding Epsilon, and note any challenges that were encountered. It is the hope that the contents of this report could prove useful to someone else who either wishes to build on the work done in this project, or implement code coverage for another language. To achieve the latter aim, where possible the report will be general enough that it could be applied to any language, unless a feature that is specific to an Epsilon language is encountered.
+
+\section{Project Structure}
 
