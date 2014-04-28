@@ -1,0 +1,12 @@
+digraph testGraph {
+1389[label=" getLabelName()"]
+1391[label="BLOCK"]
+1389 -> 1391[color=black]
+1391[label=" BLOCK"]
+1392[label="return"]
+1391 -> 1392[color=black]
+1392[label=" return"]
+1390[label="END"]
+1392 -> 1390[color=black]
+1390[label=" END"]
+}

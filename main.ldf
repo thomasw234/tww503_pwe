@@ -13,6 +13,7 @@
 \usepackage{color}
 \usepackage{setspace}
 \usepackage{wrapfig}
+\usepackage{pdfpages}
 
 % For code listings
 % For code listings

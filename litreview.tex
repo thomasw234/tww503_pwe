@@ -295,11 +295,32 @@ According to \citet{softwareTestingIntro}, in addition to being used to determin
 
 There are numerous tools that can assist in calculating coverage metrics for a test suite. A selection of these are detailed in this section, and their general features will be taken into consideration during the design phase of this project.
 
+\subsubsection{JaCoCo}
 
+JaCoCo is a free Java code coverage library that works with Java 7 \cite{JaCoCo}. The library can be used to record statement and branch coverage of executed Java code, and will then produce a report in HTML, CSV or XML format. It provides a public API and thorough documentation with the intention that plugins make use of it for measuring coverage.
 
-% Close chapter with testing of model transformations
-% Barriers to systematic model transformation testing 2010
-% Qualifying input test data for model transformations
-% Model transformation testing : Oracle Issue
+\subsubsection{EclEmma}
 
-% 
+\begin{figure}
+\begin{minipage}[b]{0.44\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth]{figures/EclEmma}
+\end{minipage}
+\begin{minipage}[b]{0.1\textwidth}
+\vspace{3.00mm}
+\end{minipage}
+\begin{minipage}[b]{0.44\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth]{figures/EclEmmaHTML}
+\end{minipage}
+\caption{Left: EclEmma as an Eclipse plugin. Right: Output of EclEmma in HTML format}
+\label{fig:eclemma}
+\end{figure}
+
+EclEmma is an Eclipse plugin that uses JaCoCo \cite{EclEmma}, and was developed alongside JaCoCo by the same developers. As shown in Figure \ref{fig:eclemma} it highlights executed code in green, branches that have been partially executed in yellow, and non-executed code in red. To the left of the yellow statements is an icon, which when hovered over with the mouse tells the user how many branches there are in total, and how many of those branches were executed.
+
+EclEmma can also export coverage reports to various formats. One option is a HTML document, as shown in Figure \ref{fig:eclemma}.
+
+\subsubsection{NCover}
+
+NCover is a suite of commercial code coverage tools written for use with .NET \citep{NCover}. Like EclEmma, NCover offers an IDE plugin tool (for Visual Studio) that will highlight code statements to indicate the level of coverage of unit tests. NCover can output reports to HTML, and there is also a standalone desktop application that provides an `interactive view of your coverage data so you can reduce errors, keep down your costs and deliver applications on-time' \citep{NCover}. 

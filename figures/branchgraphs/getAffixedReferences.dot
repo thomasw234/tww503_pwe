@@ -1,0 +1,12 @@
+digraph testGraph {
+632[label=" getAffixedReferences()"]
+634[label="BLOCK"]
+632 -> 634[color=black]
+634[label=" BLOCK"]
+635[label="return"]
+634 -> 635[color=black]
+635[label=" return"]
+633[label="END"]
+635 -> 633[color=black]
+633[label=" END"]
+}

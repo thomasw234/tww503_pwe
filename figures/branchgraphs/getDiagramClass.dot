@@ -1,0 +1,12 @@
+digraph testGraph {
+464[label=" getDiagramClass()"]
+466[label="BLOCK"]
+464 -> 466[color=black]
+466[label=" BLOCK"]
+467[label="return"]
+466 -> 467[color=black]
+467[label=" return"]
+465[label="END"]
+467 -> 465[color=black]
+465[label=" END"]
+}

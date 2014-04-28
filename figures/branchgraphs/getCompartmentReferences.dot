@@ -1,0 +1,12 @@
+digraph testGraph {
+614[label=" getCompartmentReferences()"]
+616[label="BLOCK"]
+614 -> 616[color=black]
+616[label=" BLOCK"]
+617[label="return"]
+616 -> 617[color=black]
+617[label=" return"]
+615[label="END"]
+617 -> 615[color=black]
+615[label=" END"]
+}

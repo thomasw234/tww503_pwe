@@ -1,0 +1,8 @@
+digraph sampleGraph {	
+	A [label="Vertex A",fillcolor=blue,shape=box,style="striped",fontcolor="white"]
+	B [label="Vertex B"]
+	C [label="Vertex C"]
+	A -> B [label="A to B", style=dashed,color="red"]
+	B -> C [label="B to C"]
+	C -> A [label="C to A"]	
+}

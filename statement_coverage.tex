@@ -13,12 +13,20 @@ The package \verb+org.eclipse.epsilon.eol.execute+ unsurprisingly contains the c
 Some analysis of the execute package and its sub-packages has uncovered the interface \verb+IExecutionListener+, as shown in Figure \ref{lst:IExecutionListener}. An instance of a class that implements this interface can be added to a list of execution listeners. When a statement is about to execute, each object in the list has its \verb+aboutToExecute+ method called, and similarly after each statement has executed, each object in the list has its \verb+finishedExecuting+ method called.
 
 \begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{figures/AST.png}
+\caption{The expression b*b - 4*a*c as an AST. Taken from \citep{grune2000modern}}
+\label{fig:AST}
+\end{figure}
+\begin{figure}
 	\lstinputlisting[language=java]{code/IExecutionListener.java}
 	\caption{The public interface IExecutionListener}
 	\label{lst:IExecutionListener}
 \end{figure}
 
-In the literature review the purpose of an Abstract Syntax Tree (AST) was described. The first parameter of both methods in \verb+IExecutionListener+ is an abstract syntax tree object. The Abstract Syntax Tree class in Epsilon is designed in such a way that each vertex is an object of type AST, and each vertex has a list of children vertices, as well as a pointer back to the parent vertex. The parent vertex will have a null pointer in place of a pointer to a parent vertex, and leaf of the tree will have an empty list of children.
+An Abstract Syntax Tree (AST) object is provided to the execution listener. A syntax tree is the result of parsing the program text, and gives a data structure that is convenient for further processing \citep{grune2000modern}. Vertices of the AST contain a statement, and often also contain other relevant information. The EOL parser in Epsilon includes information in an AST vertex such as the type of vertex, and the line and line position of the statement that the vertex represents.
+
+The first parameter of both methods in \verb+IExecutionListener+ is an abstract syntax tree object. The Abstract Syntax Tree class in Epsilon is designed in such a way that each vertex is an object of type AST, and each vertex has a list of children vertices, as well as a pointer back to the parent vertex. The parent vertex will have a null pointer in place of a pointer to a parent vertex, and leaf of the tree will have an empty list of children.
 
 The AST object that is passed as a parameter into both functions is a pointer to the vertex in the program's abstract syntax tree that is about to be executed or has just been executed, depending on the method being called. 
 
@@ -44,13 +52,16 @@ Another approach that could be considered is to record which lines of the input 
 
 \begin{figure}
 \centering
-\begin{minipage}{.5\textwidth}
+\begin{minipage}[b]{.44\textwidth}
   \centering
   \lstinputlisting[language=EOL,breaklines=true]{code/ifElse.eol}
   \caption{An if/else EOL program}
   \label{lst:ifElseEOL}
 \end{minipage}%
-\begin{minipage}{.5\textwidth}
+\begin{minipage}[b]{.1\textwidth}
+\hspace{3.00mm}
+\end{minipage}
+\begin{minipage}[b]{.44\textwidth}
   \centering
   \includegraphics[scale=0.5]{figures/ifElseAST.pdf}
   \caption{The AST of the program in Figure \ref{lst:ifElseEOL}}
@@ -147,13 +158,16 @@ At this stage there are a few solutions available. The first is that some code c
 
 \begin{figure}
 \centering
-\begin{minipage}{.5\textwidth}
+\begin{minipage}[b]{.44\textwidth}
   \centering
   \includegraphics[width=0.6\linewidth]{figures/ST01HTML.png}
   \caption{The HTML output from test ST-01, shown in Google Chrome}
   \label{fig:ST01HTML}
 \end{minipage}%
-\begin{minipage}{.5\textwidth}
+\begin{minipage}[b]{.1\textwidth}
+\hspace{3.00mm}
+\end{minipage}
+\begin{minipage}[b]{.44\textwidth}
   \centering
   \includegraphics[width=0.6\linewidth]{figures/ST01AST.pdf}
   \caption{The AST for the program run in test ST-01}
@@ -173,13 +187,16 @@ The results from re-running test ST-01 are shown in Figure \ref{fig:ST01HTMLfixe
 
 \begin{figure}
 \centering
-\begin{minipage}{.5\textwidth}
+\begin{minipage}[b]{.44\textwidth}
   \centering
   \includegraphics[width=0.6\linewidth]{figures/ST01HTML_fixed.png}
   \caption{The output after re-running test ST-01}
   \label{fig:ST01HTMLfixed}
 \end{minipage}%
-\begin{minipage}{.5\textwidth}
+\begin{minipage}[b]{.1\textwidth}
+\hspace{3.00mm}
+\end{minipage}
+\begin{minipage}[b]{.4\textwidth}
   \centering
   \includegraphics[width=0.6\linewidth]{figures/ST01AST_fixed.pdf}
   \caption{The AST for the program run in test ST-01}
@@ -235,13 +252,16 @@ Anecdotal evidence suggests that NF-01 and NF-02 have also been satisfied. Furth
 
 \begin{figure}
 \centering
-\begin{minipage}{.5\textwidth}
+\begin{minipage}[b]{.44\textwidth}
   \centering
   \includegraphics[width=0.6\linewidth]{figures/ST05HTML.png}
-  \caption{The output after from test ST-05}
+  \caption{The output after from test ST-05\\}
   \label{fig:ST05HTML}
 \end{minipage}%
-\begin{minipage}{.5\textwidth}
+\begin{minipage}[b]{.1\textwidth}
+\hspace{3.00mm}
+\end{minipage}
+\begin{minipage}[b]{.44\textwidth}
   \centering
   \includegraphics[width=\linewidth]{figures/ST05AST.pdf}
   \caption{The AST for the program run in test ST-05}

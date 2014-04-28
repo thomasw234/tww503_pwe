@@ -1,0 +1,12 @@
+digraph testGraph {
+1407[label=" getReadOnly()"]
+1409[label="BLOCK"]
+1407 -> 1409[color=black]
+1409[label=" BLOCK"]
+1410[label="return"]
+1409 -> 1410[color=black]
+1410[label=" return"]
+1408[label="END"]
+1410 -> 1408[color=black]
+1408[label=" END"]
+}

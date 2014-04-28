@@ -1,0 +1,12 @@
+digraph testGraph {
+1768[label=" isLabelled()"]
+1770[label="BLOCK"]
+1768 -> 1770[color=black]
+1770[label=" BLOCK"]
+1771[label="return"]
+1770 -> 1771[color=black]
+1771[label=" return"]
+1769[label="END"]
+1771 -> 1769[color=black]
+1769[label=" END"]
+}

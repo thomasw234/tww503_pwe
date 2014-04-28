@@ -1,5 +1,25 @@
 \chapter{Conclusions}
 
+Calculating code coverage for unit tests is not a new idea. This project has introduced two new things. The first is a framework for statement and branch coverage for EOL programs. The second is a general algorithm for converting an Abstract Syntax Tree to a Control Flow Graph. The algorithm is tailored for EOL syntax, but the descriptions are abstract enough that the process could be applied to any language with a similar syntax. 
+
+A very high level algorithm was provided by \citet{grune2000modern} in the book `Modern Compiler Design', but this was the only literature that could be found that even mentioned the conversion process. The algorithm given in the book is very high level, and does not provide any level of detail, except for an example about an if statement. In this project I have detailed each statement and explained the considerations that must be made. 
+
+\section{Further Work}
+
+\subsection{Conversion Algorithm}
+
+An attempt has been made to detail the conversion algorithm so that it is applicable to any language with a syntax that uses statements common to most programming languages (if, else, switch etc.). Despite this, it has designed around EOL, and therefore may require some modification before it can be used in other languages. One notable case of this is the switch statement that implements fallthrough in a different way to Java and most other modern object-oriented languages. Therefore before the algorithm could be used for Java, how the switch statement should be represented as a CFG would need to be considered. 
+
+Some statements that are common across most OO languages are not included in EOL. One prime example is the do .. while statement. The CFG of a do .. while statement would be unlike any other loop because flow would immediately go to the block of the loop, and then at the end the evaluation of the conditional statement would take place.
+
+\subsection{Languages}
+
+Epsilon has many languages for performing operations on models. EOL is the core language, upon which the other languages are built atop \citep{epsilonBook}. It should not be difficult then to extend the conversion algortihm to work with the other languages and provide coverage for all Epsilon languages.
+
+To adapt the algorithm to work with non-EOL based languages, all that is required is the ability to perform a traversal of the AST for the program, and the ability to identify different types of statements in the tree.
+
+\subsection{Output}
+The implementation of the conversion algorithm currently only outputs DOT files that can be rendered in GraphViz. Likewise for statement coverage, the only available output is a HTML file. From a user-perspective, an Eclipse plugin similar to EclEmma that provides a quick visual overview of coverage would be useful. Currently my code provides no public API for getting coverage information, but it could be easily adapted to have one like JaCoCo \citep{JaCoCo}, and tools could be created that generate more useful outputs.
 % Further work:
 
 % * fallthrough switch statements

@@ -1,0 +1,12 @@
+digraph testGraph {
+1509[label=" getLabelViewPattern(ann:String)"]
+1511[label="BLOCK"]
+1509 -> 1511[color=black]
+1511[label=" BLOCK"]
+1512[label="return"]
+1511 -> 1512[color=black]
+1512[label=" return"]
+1510[label="END"]
+1512 -> 1510[color=black]
+1510[label=" END"]
+}

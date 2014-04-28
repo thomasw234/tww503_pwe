@@ -1,0 +1,12 @@
+digraph testGraph {
+923[label=" getLinkIncoming()"]
+925[label="BLOCK"]
+923 -> 925[color=black]
+925[label=" BLOCK"]
+926[label="return"]
+925 -> 926[color=black]
+926[label=" return"]
+924[label="END"]
+926 -> 924[color=black]
+924[label=" END"]
+}

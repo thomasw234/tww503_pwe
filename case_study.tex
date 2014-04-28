@@ -6,3 +6,54 @@ Testing so far has comprised of using small contrived programs to test that stat
 
 \section{Implementation}
 
+All tests up to this point have been executed by creating an instance of EolParserWorkbench, and then calling functions that parse and execute a test file. However, we now need to execute EuGENia's test suite which is a bit more difficult. To do this, the class EugeniaActionDelegate was modified to include code that adds the execution listeners for statement and branch analysis before execution occurs, but after the EuGENia source has been parsed so that the AST of the program is available.
+
+The EuGENia source code has two import statement at the top. These import statements were removed, and the files that they referred to were appended to the main source code file. This is because both statement and branch coverage have both been designed with only one source file in mind, which is a shortcoming that will be discussed in the further work section.
+
+\section{Problems}
+
+Statement coverage worked as expected, but branch coverage had two major problems that were spotted after some inspection of the output. 
+
+\subsection{Conditional Branches}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{figures/caseStudyProblem1}
+\caption{The first problem with branch analysis of EuGENia}
+\label{fig:caseStudyProblem1}
+\end{figure}
+
+The first problem was that when a conditional statement contained an operation call as part of the condition statement, this executing was causing the branch from the conditional statement to be marked as executed, regardless of whether the block of the conditional statement was actually being executed. An example of this is shown in Figure \ref{fig:caseStudyProblem1}. The for loop header contains the code \verb|class.getCompartmentReferences()| which is split into 3 vertices immediately following the for loop vertex. These are evaluated every time the for loop is reached, and if they return true then the for loop block is executed, and if not the loop is skipped. However, the branch execution listener code was noting that when any of the three vertices were executed that they satisfied the criteria:
+
+\begin{enumerate}
+\item The executed vertex is a child of the last executed vertex
+\item The CFG of the executed vertex is a child of the CFG of the last executed vertex
+\item The executed vertex is a valid type (i.e. whitelisted)
+\end{enumerate}
+
+With these conditions satisfied, the branch was being marked as having been executed. Two possible solutions were available. The first is to modify the AST to CFG conversion so that the vertices in the conditional statement are not executed. An attempt was made to implement this solution, but because of how the conversion algorithm deals with the case where there is no code following a loop block, it was not possible to do this `cleanly' (i.e. without lots of nasty conditional statements that would likely introduce bugs). Instead, the branch execution listener was modified so that the extra condition was included:
+
+\begin{enumerate}
+\setcounter{enumi}{3}
+\item If the parent vertex is of type HELPERMETHOD then this vertex must be of type BLOCK
+\end{enumerate}
+
+The additional condition ensures that only the execution of a block under a conditional statement will cause the branch to be marked as executed.
+
+\subsection{Operations}
+
+Simple operation calls were covered during testing, and were thought to work correctly. However, while studying the output of branch analysis on the EuGENia source code, it was apparent that something was not working correctly as some branches were showing that no children had been executed, despite the fact that there definitely should have been at least one child executed (such as at an if .. else statement). An investigation of the cause showed that the problem was limited to when there was an operation call just prior to the problem conditional statement. In the branch execution listener there is a pointer to the last executed vertex that is used when calculating which two branches have been executed. When an operation is called, the pointer will be updated within that operation. When control returns to the code that called the operation, the pointer will still be pointing to a vertex within the previously called operation. So when a branch is executed, the branch execution listener will decide that there is no connection between the last executed vertex pointer and the branch that has been executed, and not mark the branch as been executed as it should do.
+
+To solve this problem, a stack was introduced. The idea was that when an operation call is executed the last executed vertex pointer is pushed to the stack, and when the operation call has completed, the stack is popped and stored in the last executed vertex pointer. The implementation was not quite as easy as it could have been. A function had to be implemented that calculated whether an operation call had been executed by looking at the relative positions of the last executed vertex and the current executed vertex in the AST. The contents of the stack also have to be checked at each vertex execution because it seems that sometimes the execution listener doesn't always fire the end of an operation call vertex, and it can be necessary to pop more than one pointer from the stack on some occasions. 
+
+\section{Results}
+
+\subsection{Statement Coverage}
+
+The results of the statement coverage are found in Appendix \ref{App:StatementCoverage}. The coverage of the existing test suite for EuGENia is 49\%. The output from the analysis clearly shows which section of the code have not been executed, and what needs to be tested in new test suites. For example, the for loop that `Processes EAttributes' (according to the comment above it) is never executed, and so none of the tests must contain models with EAttributes.
+
+A lot of the non-executed statements are those in functions that were originally in the includes, Formatting.eol and ECoreUtil.eol. 
+
+\subsection{Branch Coverage}
+
+Out of 235 branches in EuGENia, 143 were executed (60.9\%). The graph that is produced is very large, too big to include as a whole graph. Instead the output code was modified to print operations as separate graphs so that they can be included more easily in Appendix.

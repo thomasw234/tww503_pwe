@@ -1,0 +1,12 @@
+digraph testGraph {
+944[label=" getLinkTargetFeature()"]
+946[label="BLOCK"]
+944 -> 946[color=black]
+946[label=" BLOCK"]
+947[label="return"]
+946 -> 947[color=black]
+947[label=" return"]
+945[label="END"]
+947 -> 945[color=black]
+945[label=" END"]
+}

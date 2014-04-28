@@ -1,0 +1,12 @@
+digraph testGraph {
+1488[label=" getLabelParser(ann:String)"]
+1490[label="BLOCK"]
+1488 -> 1490[color=black]
+1490[label=" BLOCK"]
+1491[label="return"]
+1490 -> 1491[color=black]
+1491[label=" return"]
+1489[label="END"]
+1491 -> 1489[color=black]
+1489[label=" END"]
+}

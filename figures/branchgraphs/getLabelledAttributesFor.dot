@@ -1,0 +1,12 @@
+digraph testGraph {
+374[label=" getLabelledAttributesFor(class:ECore!EClass)"]
+376[label="BLOCK"]
+374 -> 376[color=black]
+376[label=" BLOCK"]
+377[label="return"]
+376 -> 377[color=black]
+377[label=" return"]
+375[label="END"]
+377 -> 375[color=black]
+375[label=" END"]
+}

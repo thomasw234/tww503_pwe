@@ -1,0 +1,12 @@
+digraph testGraph {
+1756[label=" isAnnotatedAs(name:String)"]
+1758[label="BLOCK"]
+1756 -> 1758[color=black]
+1758[label=" BLOCK"]
+1759[label="return"]
+1758 -> 1759[color=black]
+1759[label=" return"]
+1757[label="END"]
+1759 -> 1757[color=black]
+1757[label=" END"]
+}
