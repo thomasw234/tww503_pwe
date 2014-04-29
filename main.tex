@@ -7,10 +7,18 @@
 \date{\today}
 \SWE
 \supervisor{Dr. Louis M. Rose}
-\abstract{Something...}
+\abstract{Testing is absolutely critical on any piece of software, but being sure that the tests are comprehensive is not easy. Test coverage is one way of increasing confidence in a test suite by monitoring which statements, branches, paths etc. have been executed to ensure that no parts of the code have been missed by the test suite.
+
+In this project I have implemented statement and branch coverage for EOL, a language that is included with Epsilon and is used for model driven engineering projects.
+
+Throughout the project I have kept extensibility in mind. When designing and implementing branch coverage I opted to convert the Abstract Syntax Tree (AST) to a Control Flow Graph (CFG) because this will make path analysis a lot easier to implement in a future project, and may also be useful for other types of program analysis.
+
+The conversion proved to be challenging because there is no in depth documentation of the algorithm. I therefore had to perform analysis for each type of statement, and justify any design deicions that were made.
+
+A case study was performed on EuGENia, a piece of software that is included with Epsilon. The study showed that there were significant gaps in the test coverage of EuGENia, which can now be addressed by the Epsilon developers.}
 %\dedication{Dedication: To be decided}
 %\acknowledgements{I would like to acknowledge that this dissertation would probably be a lot better without Tommy Fong, whose nighclub The Willow provided far too many cheap drinks that have rotted my brain over the last 4 years.}
-\wordcount{0}
+\wordcount{24410}
 \begin{document}
 \maketitle
 %\listoffigures
@@ -37,8 +45,10 @@
 
 \bibliography{bibliography}
 
+\addcontentsline{toc}{chapter}{Appendices}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
 \appendix
 
-%\input{./appendix.tex}
+\input{./appendix.tex}
 
 \end{document}

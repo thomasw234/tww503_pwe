@@ -4,32 +4,31 @@ As detailed in the literature review, branch coverage is how many conditional st
 
 \begin{figure}
 \centering
-\begin{minipage}{.33\textwidth}
+\begin{minipage}{.4\textwidth}
   \centering
   \lstinputlisting[language=EOL]{code/branch_example.java}
   %\caption{Some sample pseudocode}
-  \label{lst:branchingExample}
 \end{minipage}%
 \begin{minipage}{.5\textwidth}
   \centering
-  \includegraphics[scale=0.5]{figures/branchSampleAST.pdf}
+  \includegraphics[scale=0.3]{figures/branchSampleAST.pdf}
   %\caption{The AST of the program in Figure \ref{lst:branchingExample}}
-  \label{fig:branchExampleAST}
 \end{minipage}
 \caption{On the left is some sample pseudocode, and on the right is the AST for the sample pseudocode}
+  \label{lst:branchingExample}
 \end{figure}
 
 Branch coverage can counter this by looking at how many of the possible paths after all conditional statements have been executed. So in the code in Figure \ref{lst:branchingExample}, only 50\% of possible paths from that \verb|if| statement have been executed, and so the branch coverage is 50\%.
 
-By looking at the AST (Figure \ref{fig:branchExampleAST}) of the sample code, it would appear that by counting the number of blocks below the \verb|if| vertex, we could determine how many branches in the code there are, and after execution we could see how many of those branches have been executed.
+By looking at the AST (Figure \ref{lst:branchingExample}) of the sample code, it would appear that by counting the number of blocks below the \verb|if| vertex, we could determine how many branches in the code there are, and after execution we could see how many of those branches have been executed.
 
 Unfortunately this approach is not perfect. The blocks only appear when curly braces are used. If just a single statement is placed under the \verb|if| statement, then the block is skipped and just a vertex for the single statement appears. So this means that the code is now more complex than it was previously thought to be. Furthermore, \verb|if| statements can have children that never need to be executed (because they just contain information about the conditional), and so my algorithm would need to include details of this. If these were the only drawbacks then I would still choose this approach. However, this kind of caveat occurs for many conditional statements, and so the code that would be produced would be rather unwieldy and difficult to maintain.
 
-The approach therefore that I have chosen to take is actually quite difficult to justify. I suggest that the AST be converted to a Control Flow Graph (CFG), at which point the branches from each vertex will be clear. A record will be made on which edges between vertices have been executed, and the total number of edges will be counted. The edges that have not been recorded will map to the branches that were not taken. The reason that this is difficult to justify is that an extensive search has not come up with any explicit instructions on how to go about generating a control flow graph from an abstract syntax tree.\citet{grune2000modern} very briefly discuss the process of `threading' an AST to produce a CFG, but only state that there must be a subroutine that deals with each statement.
+The approach therefore that I have chosen to take is actually quite difficult to justify. I suggest that the AST be converted to a Control Flow Graph (CFG), at which point the branches from each vertex will be clear. A record will be made on which edges between vertices have been executed, and the total number of edges will be counted. The edges that have not been recorded will map to the branches that were not taken. The reason that this is difficult to justify is that an extensive search has not come up with any explicit instructions on how to go about generating a control flow graph from an abstract syntax tree. \citet{grune2000modern} very briefly discuss the process of `threading' an AST to produce a CFG, but only state that there must be a subroutine that deals with each statement. Likewise, a set of lecture slides by \citet{compilersIntro} provide some brief details on a high level algorithm, but nowhere enough to implement it from scratch.
 
 Some forward thinking means that the conversion from AST to CFG will be necessary when performing the path coverage because of the formula detailed in the literature review's path coverage section to calculate cyclomatic complexity, and so this effort will solve two problems, and will have a quicker overall development time.
 
-Before beginning development, a list was made of the statements that need to be included. This was done by going through the Epsilon book \citep{epsilonBook} which is a complete source of EOL syntax, but also as well by going through the EuGENia source to see which statements are actually used in real EOL code. The list was then loosely ordered in priority based on the number of uses within the EuGENia source. The list as as follows:
+Before beginning development, a list was made of the statements that need to be included. This was done by going through the Epsilon book \citep{epsilonBook} which is a complete source of EOL syntax, but also as well by going through the EuGENia source to see which statements are actually used in real EOL code. The list was then ordered loosely in priority based on the number of uses within the EuGENia source. The list as as follows:
 
 \begin{enumerate}[nolistsep]
 \item block
@@ -58,11 +57,11 @@ As discussed in the literature review, a CFG start with a START vertex, and ends
 \subsection{The Block}
 Block is not actually a statement, but refers to a block of statements. Within a block can be any other set of statements, including other blocks. The contents of a block are often contained within \{ \} braces, but not always (see the case statement).
 
-The block is not conditional in any way. It can have a number of children, which are executed in order of first child (left-most) to last child (right-most). During the conversion of AST to CFG, when a block is encountered it should simply be a case of joining a block vertex from the last statement that was encountered, and joining it to the the block's first child.
+The block is not conditional in any way. When represented in the AST, it can have a number of children, which are executed in order of first child (left-most) to last child (right-most). During the conversion of AST to CFG, when a block is encountered it should simply be a case of joining a block vertex from the last statement that was encountered, and joining it to the the block's first child.
 
 The code in Figure \ref{fig:block} is a whole EOL program. The whole program is inside a block statement, as can be seen by the AST in the same figure. There are two statements in the block, and in the AST each statement is represented as a child. In the CFG, each of the children are represented sequentially, so the first child is represented after the block, and then the second child after the first child.
 
-The block could be left out of the CFG, as arguably it does not provide any more information about control flow. For the time being this will be ignored, but at a later stage I will discuss and decide on this. For the rest of this analysis, the block statement may be used to represent any subset of vertices that does not add to the analysis. The input to the block vertex will represent input to the first vertex of the subset, and the output from the block will represent the output from any possible exit vertices from the subset.
+The block could be left out of the CFG, as arguably it does not provide any more information about control flow. However it is valid syntax for a block to exist as a pair of parenthesis with no statements in, and so not including the block statement could cause problems in this case. For the rest of this analysis, the block statement may be used to represent any subset of vertices that does not add to the analysis. The input to the block vertex will represent input to the first vertex of the subset, and the output from the block will represent the output from any possible exit vertices from the subset.
 
 \begin{figure}
 \centering
@@ -92,11 +91,11 @@ The block could be left out of the CFG, as arguably it does not provide any more
 
 The if statement is going to be treated as a separate statement to the if .. else statement, because when it comes to designing and implementing the algorithm, different code will be required for each.
 
-The if statement evaluates its parameter, and if it evaluates to true then it executes the code in the parenthesis that follow it, or if there are no parenthesis, it executes the statement that directly follows it. While the outcome of execution is the same (when there is only one statement executed following an if statement that evaluates to true), the use of parenthesis following the if statement changes the structure of the AST in a way that must be considered during the conversion. Figure \ref{fig:if} shows the if statement that uses parenthesis, and figure \ref{fig:ifnoparen} shows the statement that does not use parenthesis.
+The \verb|if| statement evaluates its parameter, and if it evaluates to true then it executes the code in the parenthesis that follow it, or if there are no parenthesis, it executes the statement that directly follows it. While the outcome of execution is the same (when there is only one statement executed following an \verb|if| statement that evaluates to true), the use of parenthesis following the if statement changes the structure of the AST in a way that must be considered during the conversion. Figure \ref{fig:if} shows the \verb|if| statement that uses parenthesis, and figure \ref{fig:ifnoparen} shows the statement that does not use parenthesis.
 
-When the parenthesis are used, if the if statement evaluates to false then the statement that immediately follows the block must be the next statement to be executed. This will be the sibling of the if statement in the AST. If the if statement evaluates to true, then once it has finished executing the block it must move on to the next statement after the block, which again will be the next sibling of the if statement in the AST. This of course is assuming that a statement within either of the blocks does not divert program flow away from the next statement. A simple example would be to imagine that the contents of the block shown in Figure \ref{fig:if} are modified to include a \verb|return| statement. This is not uncommon in a program, and so must be considered. In this case the the final statement will not be executed, because return will end the current program (or sub-routine).
+When the parenthesis are used, if the \verb|if| statement evaluates to false then the statement that immediately follows the block must be the next statement to be executed. This will be the sibling of the if statement in the AST. If the if statement evaluates to true, then once it has finished executing the block it must move on to the next statement after the block, which again will be the next sibling of the if statement in the AST. This of course is assuming that a statement within either of the blocks does not divert program flow away from the next statement. A simple example would be to imagine that the contents of the block shown in Figure \ref{fig:if} are modified to include a \verb|return| statement. This is not uncommon in a program, and so must be considered. In this case the the final statement will not be executed, because return will end the current program (or sub-routine).
 
-When no parenthesis are used, the same rules almost apply. Except that rather than looking for the next statement after the block, it will be the second statement following the if statement. This will still be represented in the AST as the next sibling of the if statement.
+When no parenthesis are used, the same rules almost apply. Except that rather than looking for the next statement after the block, it will be the second statement in the statements that follow the \verb|if| statement. This will still be represented in the AST as the next sibling of the if statement.
 
 Another consideration must be made about program flow. Within the conditional part of the if statement, any number of subroutines can exist. It could be viewed as another block of code, and this is why it appears as the first child of the if statement in the AST. For the purpose of control flow, this will be ignored. Any code within the conditional will not modify the flow of the program, as it should only evaluate to either true or false.
 
@@ -152,7 +151,7 @@ Another consideration must be made about program flow. Within the conditional pa
 
 The if .. else statement differs from the if statement in two ways. The first is that control flow will always go down one of two paths (see Figure \ref{fig:ifelse}), rather than potentially going down one or skipping around it. Secondly, the if statement in the AST now has three children rather than just two. The additional child is the block (or single statement if no parenthesis are used) for the else statement.
 
-When implementing the conversion a check will need to be included to see how many children the if statement has. While the EOL language defines an else statement, it is never featured in the AST that is generated and therefore cannot be used to distinguish between an if statement and an if .. else statement. 
+When implementing the conversion a check will need to be included to see how many children the if statement has. While the EOL language parser defines an else statement, it is never featured in the AST that is generated and therefore cannot be used to distinguish between an if statement and an if .. else statement. 
 
 Because control flow is forced down one of two paths, the final statement of both paths will now need to link to the next statement that follows the whole if .. else statement. As with the if statement, this makes the assumption that neither of the if or else blocks divert control flow. If they do, then the CFG will need to show this accordingly.
 
@@ -214,11 +213,11 @@ A decision that must be made is whether the final vertex of the for loop always 
 
 After some consideration (and discussion with my supervisor) I have decided to go for the option that is shown on the left in Figure \ref{fig:forOptions}. My argument is that returning to the for loop after the final iteration more accurately reflects what happens, because the program will return to the for loop to check if there are any more iterations to perform, and if not, continue on to the next statement after the for loop.
 
-Once again statements that alter the control flow must be considered. As with the if statement, if a \verb|return| can be called within the for loop, then this must be reflected in the CFG that is generated. There are also some additional statements that must be considered. These are: \verb|break|, \verb|breakAll| and \verb|continue|. However, these will be discussed later.
+Once again statements that alter the control flow must be considered. As with the if statement, if a \verb|return| can be called within the for loop, then this must be reflected in the CFG that is generated. There are also some additional statements that must be considered. These are: \verb|break|, \verb|breakAll| and \verb|continue|, and will be discussed later.
 
-Also to be considered with the for loop is the possibility of multiple final statements within the for statement's block. In the example in Figure \ref{fig:for}, there is an if statement that may or may not execute. If it does execute, then the final statement is the final statement within the if block. However, if it does not executed, the final statement is the if statement, which is why I have added an edge from the if vertex back to the for vertex. The actual implementation of this may prove to be difficult, but this will be investigated at a later time.
+Also to be considered with the for loop is the possibility of multiple final statements within the for statement's block. In the example in Figure \ref{fig:for}, there is an if statement that may or may not execute. If it does execute, then the final statement is the final statement within the if block. However, if it does not execute, the final statement is the \verb|if| statement, which is why I have added an edge from the if vertex back to the \verb|for| vertex. The actual implementation of this may prove to be difficult, but this will be investigated at a later time.
 
-Up to this point, each statement has only been considered on its own. But the example in Figure \ref{fig:for} actually has an if statement within a for loop. It would be a very easy problem to solve if nested statements weren't allowed, but unfortunately it would make programs very difficult to write. Therefore the algorithm that I implement must be able to deal with any number of different types of nested statements, at any level of depth.
+Up to this point, each statement has only been considered on its own. But the example in Figure \ref{fig:for} actually has an if statement within a for loop. It would be a very easy problem to solve if nested statements weren't allowed, but unfortunately it would make programs very difficult to write. Therefore the algorithm that I implement must be able to deal with any number of different types of nested statements, at any level of nesting.
 
 \begin{figure}
 \centering
@@ -272,9 +271,9 @@ When it comes to designing the algorithm to perform the conversion, it will make
 
 \subsection{The switch statement}
 
-The switch statement is probably one of the most complex statements in EOL in terms of control flow. The EOL switch case is similar to the Pascal switch statement. The switch statement takes a value as an argument, and then the case statements within the switch statement's block are examined. If one is matched, then the block that follows that case statement is executed, and control is passed to the statement that follows the block of the switch statement.
+The switch statement is probably one of the most complex statements in EOL in terms of control flow. The EOL switch case is similar to the Pascal switch statement \citep{pascalSwitch}. The switch statement takes a value as an argument, and then the case statements within the switch statement's block are examined. If one is matched, then the block that follows that case statement is executed, and control is passed to the statement that follows the block of the switch statement.
 
-This differs from the Java switch statement, where every single case statement is examined, and if it matches the switch statement's parameter, then it is executed. This allows for multiple case statement blocks to be executed potentially in a single case statement.
+This differs from the Java switch statement, where every single case statement is examined, and if it matches the switch statement's parameter, then it is executed \citep{pascalSwitch}. This allows for multiple case statement blocks to be executed potentially in a single case statement.
 
 At this point, it sounds like EOL's switch statement is easier for generating a CFG, because coming out of a switch vertex is a link to each of the case vertices, and one that bypasses to the next vertex after the switch block (in case none of the case statements are executed). However, I now look at the continue statement.
 
@@ -294,7 +293,7 @@ Two
 
 So unlike Java's fallthrough that just checks every other case statement, it actually executes every following case statement, regardless of the case values. This complicates control flow quite a bit, because if a continue statement is contained in any of the case statements, then edges have to be added from the end that case statement and every subsequent case statement block to the start of the following case statement block.
 
-As well as case, switch can also have the default statement within its block. The default statement is always after all of the case statement, and is executed when none of the case statements were executed (or when a continue statement was called in one of the case statements). In terms of program flow, this will remove the edge from the switch vertex to the statement following the switch block, because the default statement forces the execution of something within the switch block. As with all of the case statements, the final statement of the default block moves on the execute the next statement after the switch block.
+As well as case, switch can also have the default statement within its block. The default statement is always after all of the case statements, and is executed when none of the case statements were executed (or when a continue statement was called in one of the case statements). In terms of program flow, this will remove the edge from the switch vertex to the statement following the switch block, because the default statement forces the execution of something within the switch block. As with all of the case statements, the final statement of the default block moves on the execute the next statement after the switch block.
 
 The switch statement requires two examples to fully demonstrate possible flow. Figure \ref{fig:switch1} shows a switch statement that does not have a default statement. That means that it is possible for none of the case statements to be executed, and so there should be an edge from the switch vertex straight to the statement that follows the switch block (which in this case happens to be the end vertex because there are no more statements following the switch block). Then notice that the continue statement on the left-most case joins to the block of the next case statement, and that a vertex has been added from the end of the second case statement to the block of the third case statement.
 
@@ -321,7 +320,7 @@ Figure \ref{fig:switch2} shows a switch statement that does not contain a contin
 
 \begin{figure}
 \centering
-\begin{minipage}{.3\textwidth}
+\begin{minipage}{.4\textwidth}
   \centering
   \lstinputlisting[breaklines=true,language=EOL]{code/statements/switch2.java}
   %\caption{}
@@ -333,7 +332,7 @@ Figure \ref{fig:switch2} shows a switch statement that does not contain a contin
    % \caption{}
   %\label{fig:blockAST}
 \end{minipage}
-\begin{minipage}{.3\textwidth}
+\begin{minipage}{.29\textwidth}
   \centering
   \includedot[scale=0.3]{figures/statements/switch2_CFG}
    % \caption{}
@@ -345,7 +344,7 @@ Figure \ref{fig:switch2} shows a switch statement that does not contain a contin
 
 \subsection{Operations}
 
-EOL allows users to define their own operations \citep{epsilonBook}. This is a standard feature of most languages, but EOL allows two different type of operations: context and context-less. Context-less operations are the closest to what is found in an object-oriented language like Java. An example adapted from The Epsilon Book \citet{epsilonBook} is shown in Figure \ref{lst:contextlessOp}. The alternative is a context-type operation that extends classes with new functions. The example shown in Figure \ref{lst:contexttypeOp} shows that the operation \verb|add1()| extends the Integer class, and can be called on any object of type Integer.
+EOL allows users to define their own operations \citep{epsilonBook}. This is a standard feature of most languages, but EOL allows two different type of operations: context and context-less. Context-less operations are the closest to what is found in an object-oriented language like Java. An example adapted from The Epsilon Book \citep{epsilonBook} is shown in Figure \ref{lst:contextlessOp}. The alternative is a context-type operation that extends classes with new functions. The example shown in Figure \ref{lst:contexttypeOp} shows that the operation \verb|add1()| extends the Integer class, and can be called on any object of type Integer.
 
 This is not too important in terms of control flow, however. Both types of objects can be treated in the same way, as their AST representations are very similar, and in either case the operation is called, which is all that is important for control flow. There are three options on how these operations could be included in a CFG:
 
@@ -389,8 +388,8 @@ Figure \ref{fig:operationOptions} gives a visual representation of the options.
    % \caption{}
   %\label{fig:blockCFG}
 \end{minipage}
-\label{fig:operationOptions}
 \caption{Choices of how to represent an operation in a CFG. Left: option 1, where the contents of the operation's CFG are added into the main CFG each time the operation is called, so the add1 block has been included in the main CFG. The middle CFG shows option 2, that when the operation is called, edges are added to the start and end operation vertices to the call location. Finally on the right is option 3, where operations are listed as separate CFG's. }
+\label{fig:operationOptions}
 \end{figure}
 
 \subsection{break, breakAll, continue and return}
@@ -405,7 +404,7 @@ return ends execution of the current operation, or the main program if it is not
 
 continue when used in the context of a loop has a different meaning to continue when used in a switch statement's block. In a loop, continue ends the current iteration within the loop and returns control to the loop conditional statement. 
 
-The Epsilon Book \citet{epsilonBook} gives a nice example that uses break, breakAll and continue all in one small program. This is shown in Figure \ref{fig:break}. Notice that in the CFG, the continue statement only has an edge back to the for loop that it is contained within, ending the current loop iteration. The break statement also breaks the control out of the inner for loop, and returns control to the outer for loop. Finally, the breakAll statement breaks out of both for loops, and execution is taken to the end of the program (because there are no statements after the outer for loop). No return statement is included in the example, but if it were at any point, then its only outbound edge would be to the end vertex, because it ends the current procedure or program.
+The Epsilon Book \citep{epsilonBook} gives a nice example that uses break, breakAll and continue all in one small program. This is shown in Figure \ref{fig:break}. Notice that in the CFG, the continue statement only has an edge back to the for loop that it is contained within (i.e. the inner for loop), ending the current loop iteration. The break statement also breaks the control out of the inner for loop, and returns control to the outer for loop. Finally, the breakAll statement breaks out of both for loops, and execution is taken to the end of the program (because there are no statements after the outer for loop). No return statement is included in the example, but if it were at any point, then its only outbound edge would be to the end vertex, because it ends the current procedure or program.
 
 \begin{figure}
 \centering

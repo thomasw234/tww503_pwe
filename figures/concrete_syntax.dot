@@ -1,0 +1,6 @@
+digraph concSyntax {
+	rankdir=LR
+	A [label="NewClass", shape=box]
+	B [label="ParentClass", shape=box]
+	A -> B
+}

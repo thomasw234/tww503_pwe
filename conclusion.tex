@@ -12,6 +12,8 @@ An attempt has been made to detail the conversion algorithm so that it is applic
 
 Some statements that are common across most OO languages are not included in EOL. One prime example is the do .. while statement. The CFG of a do .. while statement would be unlike any other loop because flow would immediately go to the block of the loop, and then at the end the evaluation of the conditional statement would take place.
 
+As previously discussed, the conversion algorithm as it stands is not easily maintainable, with large switch statements and complex if statements that deal with specific difficult cases. Before a future project was to convert the code to work with another language, it would be advisable to consider how the code could first be refactored. My suggestion would be to implement an interface that defines pre-recursion, recursion and post-recursion functions. Each statement in the language would then be dealt with in a class that implements this interface. A core class would hold a list of known implementations of the described interface, and for each statement that was discovered during the depth first traversal of the AST it would check the type of statement against the list, and if there was a match, the functions in the class for that statement would be called.
+
 \subsection{Languages}
 
 Epsilon has many languages for performing operations on models. EOL is the core language, upon which the other languages are built atop \citep{epsilonBook}. It should not be difficult then to extend the conversion algortihm to work with the other languages and provide coverage for all Epsilon languages.
@@ -24,3 +26,15 @@ The implementation of the conversion algorithm currently only outputs DOT files 
 
 % * fallthrough switch statements
 % * proper path analysis on loops
+
+\subsection{Performance}
+
+While the performance is probably acceptable (branch coverage makes execution take 23\% longer) because coverage analysis is not going to be performed every time the code is executed, it would be nice if the code ran a bit faster. As I explained in the results section, I believe that the operation to determine whether the statement that is currently being executed is in the same operation as the previously executed statement is causing a large slowdown. This could be confirmed by performing some code profiling, and then an attempt to come up with a more efficient algorithm could be implemented. One possible approach would be for every statement to be marked as being in a particular function before execution begins. At the moment, if a statement is executed a million times, the slow function will be called a million times, which is un-necessary.
+
+\subsection{Programs}
+
+During the evaluation of EuGENia, it was noted that the EuGENia source had to be merged from 3 files into 1 so that the statement and branch coverage would work correctly. A small modification to the statement coverage would allow it to deal with split files. For the branch coverage, it would likely be a more difficult task to fix. I suspect that there may be a way in Epsilon to get the list of ASTs for every parsed file, in which case each AST could be parsed and added to a single CFG. However, this would require some further investigation.
+
+\subsection{Path Coverage}
+
+Path coverage is not too far from being completed. Implementing the AST to CFG conversion took a lot longer than hoped, but because of that it is now a fairly straightforward task to implement path coverage. The biggest challenge will be recording the path that has been taken by the program while bearing in mind that there is no need to record every iteration of a loop, and then comparing it to other classes. Some of the code that was written for branch coverage to determine whether or not a branch has been executed will be very useful in completing path coverage.

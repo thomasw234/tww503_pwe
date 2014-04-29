@@ -1,12 +1,12 @@
 Object someObject = null;
 
 if (someBoolean) {
-someObject = new Object();
+    someObject = new Object();
 
-//...............///
-// 500 statements///
-//...............///
+    //...............///
+    // 500 statements///
+    //...............///
 }
 else {
-println("someBoolean was false");
+    println("someBoolean was false");
 }

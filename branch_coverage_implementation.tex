@@ -10,7 +10,7 @@ There are two main classes. The first is the class that does the conversion, and
 
 The conversion class can be broken down into three parts: Pre-recursion, recursion and post-recursion. To begin with, the recursive function is called with the root of the AST to be converted. Within the recursive function, a check is done to see if the node type is whitelisted. If so, it adds it as a child to the last whitelisted vertex (if there is one, if not, the start vertex is used). Then the \verb|handleAST| procedure is called with three parameters. The first is the current AST, the next is the CFG associated with the current AST (if it is whitelisted, otherwise the previously found whitelisted CFG is passed in). Finally, a list of CFG objects is passed in. Sometimes the \verb|handleAST| needs to store pointers to relevant CFG objects, and so this list is used to do that.
 
-Once the pre-recursion methods have finished, the recursive method is called with every child of the current AST vertex. The recursive method return a list of CFG objects that may be of use in the post-recursive method of the parent, although it may also return an empty list. 
+Once the pre-recursion methods have finished, the recursive method is called with every child of the current AST vertex. The recursive method returns a list of CFG objects that may be of use in the post-recursive method of the parent, although it may also return an empty list. 
 
 Finally, the post recursive method is called. This ties up any loose ends, such as joining the end of each case statement to an END SWITCH vertex or adding the END IF statement and joining the branches of the IF statement to it.
 

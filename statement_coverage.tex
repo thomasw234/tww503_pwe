@@ -10,7 +10,7 @@ The Epsilon source is broken into many well-organised packages. The packages \ve
 
 The package \verb+org.eclipse.epsilon.eol.execute+ unsurprisingly contains the code to execute an EOL program. To perform statement coverage, it is necessary to determine which statements have been executed. 
 
-Some analysis of the execute package and its sub-packages has uncovered the interface \verb+IExecutionListener+, as shown in Figure \ref{lst:IExecutionListener}. An instance of a class that implements this interface can be added to a list of execution listeners. When a statement is about to execute, each object in the list has its \verb+aboutToExecute+ method called, and similarly after each statement has executed, each object in the list has its \verb+finishedExecuting+ method called.
+Some analysis of the execute package and its sub-packages has uncovered the interface \verb+IExecutionListener+, as shown in Figure \ref{lst:IExecutionListener}. An instance of a class that implements this interface can be added to a list of execution listeners. When a statement is about to execute, each object in the list of registered execution listeners has its \verb+aboutToExecute+ method called, and similarly after each statement has executed, each object in the list has its \verb+finishedExecuting+ method called.
 
 \begin{figure}
 \centering
@@ -32,13 +32,16 @@ The AST object that is passed as a parameter into both functions is a pointer to
 
 \begin{figure}
 \centering
-\begin{minipage}{.5\textwidth}
+\begin{minipage}[b]{.47\textwidth}
   \centering
   \lstinputlisting[language=EOL]{code/HelloWorld.eol}
   \caption{A simple EOL program}
   \label{lst:helloWorldEOL}
 \end{minipage}%
-\begin{minipage}{.5\textwidth}
+\begin{minipage}{0.04\textwidth}
+\hspace{1.00mm}
+\end{minipage}
+\begin{minipage}[b]{.47\textwidth}
   \centering
   \includegraphics[scale=0.5]{figures/HelloWorldAST.pdf}
   \caption{The AST of the program in Figure \ref{lst:helloWorldEOL}}
@@ -69,7 +72,7 @@ Another approach that could be considered is to record which lines of the input 
 \end{minipage}
 \end{figure}
 
-Thankfully another option is available. The AST class has a method called \verb|isImaginary()| which returns true when the current vertex is `imaginary'. While no documentation is available, it appears that vertices that can be directly mapped back to some text from the input file are not imaginary, and those that cannot be mapped back to some text are not. Figure \ref{fig:ifElseASTreal} shows the AST again, but this time with imaginary vertices left white, while non-imaginary vertices are filled in yellow. Quickly it becomes apparent that the definition of the method \verb+isImaginary()+ is not perfect as the vertex labelled EOLMODULE is coloured in yellow, despite not being directly mappable to a single statement in the input code. 
+Thankfully another option is available. The AST class has a method called \verb|isImaginary()| which returns true when the current vertex is `imaginary'. While no documentation is available, it appears that vertices that can be directly mapped back to some text from the input file are not imaginary, and those that cannot be mapped back to some text are not. Figure \ref{fig:ifElseASTreal} shows the AST again, but this time with imaginary vertices left white, while non-imaginary vertices are filled in yellow. Quickly it becomes apparent that the definition of the method \verb+isImaginary()+ is not perfect as the vertex labelled EOLMODULE is coloured in yellow, despite not being directly mappable to a single statement in the input code because it instead maps to the whole program.
 
 \begin{figure}
 	\centering
@@ -84,7 +87,7 @@ When the EOL executor calls the execution listener's pre or post execute methods
 
 An obvious way of doing this would be to have a list of references to the AST. When one of the pre or post-execute methods is fired, a check would be performed on the list to see if a reference to that particular AST vertex was already stored, and if not, it would be added to the list.
 
-Once the program has completed execution, in order to satisfy requirements F-03 and F-04, an analysis must then be performed to determine which vertices have been executed, and which have not. To do this, each vertex in the AST must be checked against the list of visited vertices. The AST can either be traversed by a depth or breadth-first algorithm. I have chosen to use a depth-first algorithm purely because it is easier to implement, and uses less storage space than the breadth-first (as no queue has to be stored).
+Once the program has completed execution, in order to satisfy requirements F-03 and F-04, an analysis must then be performed to determine which vertices have been executed, and which have not. To do this, each vertex in the AST must be checked against the list of visited vertices. The AST can either be traversed by a depth or breadth-first algorithm. I would choose to use a depth-first algorithm purely because it is easier to implement, and uses less storage space than the breadth-first (as no queue has to be held in memory and updated).
 
 At each recursion in the depth-first traversal, the list of visited vertices must be checked against the current vertex. This is therefore a O($n^2$) algorithm, which is not ideal as any sizeable programme can quickly slow down, which goes against requirement NF-01. 
 
@@ -92,11 +95,11 @@ A way around this problem then is to use a hashmap to store the visited vertices
 
 This approach better fits the requirement NF-02, although NF-01 could potentially still not be met. If the default hashing function is poor and causes many collisions then the performance could degrade to a similar level of the previously described approach using a list of references. A solution could be to implement a better hashing function, but it seems like a lot of effort for what may not even be a problem.
 
-Both of the above solutions work around the Epsilon source code by storing information in new objects. However this is not actually a requirement - it is perfectly acceptable to modify the Epsilon code as long as it is justifiable. The most simple solution then is to modify the AST class so that it contains a boolean that stores whether or not that particular vertex has been executed. When initialised of course this boolean will be set to false, but when the post-execute function in the execution listener is called and it is passed an AST as a parameter, we can just change the value of the executed boolean within the AST. This has the advantage of meaning that recording that a vertex has been visited is guaranteed to be a O(1) operation (unlike the hashmap or list based solutions). Better still, when the analysis is performed after execution has completed, the lookup time to determine whether a vertex has been executed is also guaranteed to be O(1). Again this is unlike the hashmap or linked list based solutions, which were worst case O(n) lookup time.
+Both of the above solutions work around the Epsilon source code by storing information in new objects. However this is not actually a requirement - it is perfectly acceptable to modify the existing Epsilon code, as long as it is justifiable. The most simple solution then is to modify the AST class so that it contains a boolean that stores whether or not that particular vertex has been executed. When initialised of course this boolean will be set to false, but when either the pre or post-execute function in the execution listener is called and it is passed an AST as a parameter, we can just change the value of the executed boolean within the AST. This has the advantage of meaning that recording that a vertex has been visited is guaranteed to be a O(1) operation (unlike the hashmap or list based solutions). Better still, when the analysis is performed after execution has completed, the lookup time to determine whether a vertex has been executed is also guaranteed to be O(1). Again this is unlike the hashmap or linked list based solutions, which were worst case O(n) lookup time.
 
-With the core algorithms decided on, the structure of the actual code has yet to be decided upon, as well as the output from the code. There of course needs to be a class that implements the \verb|IExecutionListener| interface. As the AST is directly being modified, then there is no need to transfer any data out of the execution listener (the AST will be available through another module). There therefore needs to be a class that takes the AST as input, and produces output of some sort. So to summarise, there will be two classes implemented. One called \verb|StatementCoverageListener| that implements the execution listener interface, and another called \verb|StatementCoverageAnalyser| that analyses and outputs some information.
+With the core algorithms decided on, the structure of the actual code has yet to be designed, as well as the output from the code. There of course needs to be a class that implements the \verb|IExecutionListener| interface. As the AST is directly being modified, then there is no need to transfer any data out of the execution listener (the AST will be available through another module). Therefore there needs to be a class that takes the AST as input, and produces output of some sort. So to summarise, there will be two classes implemented. One called \verb|StatementCoverageListener| that implements the execution listener interface, and another called \verb|StatementCoverageAnalyser| that analyses and outputs some information.
 
-The format of the output must satisfy requirements F-03 and F-04, that is that it will tell the user how many statements were executed, and it will also tell the user which statements were executed, and which were not. For the latter, research detailed in the literature review of other coverage tools shows that a popular way to do this is by highlighting the statements that were executed, and either leaving statements unhighlighted that have not been executed, or highlighting them in a different colour. Most of these tools worked as plugins to the Eclipse user interface. However, this is a lot of work and time is limited, so initially I will find a quicker approach. If time permits, then I will create the plugin after all other work is finished.
+The format of the output must satisfy requirements F-03 and F-04, that is that it will tell the user how many statements were executed, and it will also tell the user which statements were executed, and which were not. For the latter, research detailed in the literature review of other coverage tools shows that a popular way to do this is by highlighting the statements that were executed, and either leaving statements unhighlighted that have not been executed, or highlighting them in a different colour. Most of these tools worked as plugins to an IDE such as Eclipse. However, this is a lot of work and time is limited, so initially I will find a quicker approach. If time permits, then I will create the plugin after all other work is finished.
 
 An easy way to output formatted text is to use HTML. HTML is easy to generate programmatically, and rendering the text is outsourced to a web browser. It would be possible to build my own text viewer, but it seems overly complicated when there are no disadvantages to generating a HTML page.
 
@@ -126,7 +129,7 @@ Following that, a class that implements the execution listener interface was cre
 	\label{lst:StatementCoverageListener}
 \end{figure}
 
-Finally, the HTML outputter class was implemented. The whole class is too large to include here, so certain interesting parts are documented. The whole class can be found in the source that is included with this project, in the folder ?
+Finally, the HTML outputter class was implemented. The whole class is too large to include here, so certain interesting parts are documented. The whole class can be found in the source that is included with this project.
 
 % TODO add folder!
 
@@ -177,7 +180,7 @@ At this stage there are a few solutions available. The first is that some code c
 
 The code that was previously listed in Figure \ref{lst:StatementCoverageListener} has now been modified with the code shown in Figure \ref{lst:StatementCoverageST01Mod}.
 
-\begin{figure}[h]
+\begin{figure}
 	\lstinputlisting[language=java]{code/statement_ST01_mod.java}
 	\caption{The updated post-execution method}
 	\label{lst:StatementCoverageST01Mod}
@@ -248,7 +251,7 @@ Furthermore, F-04 is satisfied as it is easy to distinguish which code has been 
 
 Requirement F-02 has been satisfied, as the main method in the HTML output class takes in an EOL file and executes it. 
 
-Anecdotal evidence suggests that NF-01 and NF-02 have also been satisfied. Further analysis of this may be required at a later date however.
+Anecdotal evidence suggests that NF-01 and NF-02 have also been satisfied, but formal analysis of this will be completed in the conclusion at the end of this report.
 
 \begin{figure}
 \centering

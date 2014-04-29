@@ -14,6 +14,7 @@
 \usepackage{setspace}
 \usepackage{wrapfig}
 \usepackage{pdfpages}
+\usepackage{pgfgantt}
 
 % For code listings
 % For code listings
