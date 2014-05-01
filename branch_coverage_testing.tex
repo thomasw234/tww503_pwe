@@ -52,7 +52,10 @@ Testing begins with the block vertex. This will be done by having a single line 
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testBlock})
 \end{description}
 \end{minipage}
-\begin{minipage}{.39\textwidth}
+\begin{minipage}{.1\textwidth}
+\hspace{1.0mm}
+\end{minipage}
+\begin{minipage}{.29\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/block.eol}
@@ -70,7 +73,10 @@ Of note about this test is that the operation call \verb|println| is printed, bu
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testIf})
 \end{description}
 \end{minipage}
-\begin{minipage}{.39\textwidth}
+\begin{minipage}{.1\textwidth}
+\hspace{1.0mm}
+\end{minipage}
+\begin{minipage}{.29\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/if.eol}
@@ -88,7 +94,10 @@ The if statement does not require any code in its block for this test, because l
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testIfElse})
 \end{description}
 \end{minipage}
-\begin{minipage}{.39\textwidth}
+\begin{minipage}{.1\textwidth}
+\hspace{1.0mm}
+\end{minipage}
+\begin{minipage}{.29\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/ifElse.eol}
@@ -104,7 +113,10 @@ The if statement does not require any code in its block for this test, because l
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testFor})
 \end{description}
 \end{minipage}
-\begin{minipage}{.39\textwidth}
+\begin{minipage}{.1\textwidth}
+\hspace{1.0mm}
+\end{minipage}
+\begin{minipage}{.29\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/for.eol}
@@ -147,11 +159,14 @@ The if statement does not require any code in its block for this test, because l
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testSwitch1})
 \end{description}
 \end{minipage}
-\begin{minipage}{.39\textwidth}
+\begin{minipage}{.1\textwidth}
+\hspace{1.0mm}
+\end{minipage}
+\begin{minipage}{.29\textwidth}
   \centering
   Code used for testing:
   % This line breaks the document for some reason
-  \lstinputlisting[language=EOL]{code/branchtest/switch1.eol}
+  \lstinputlisting[language=EOL,breaklines=true]{code/branchtest/switch1.eol}
   %\lstinputlisting{code/branchtest/switch1.eol}
 \end{minipage}
 
@@ -163,7 +178,10 @@ The if statement does not require any code in its block for this test, because l
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testSwitch2})
 \end{description}
 \end{minipage}
-\begin{minipage}{.39\textwidth}
+\begin{minipage}{.1\textwidth}
+\hspace{1.0mm}
+\end{minipage}
+\begin{minipage}{.29\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/switch2.eol}
@@ -179,7 +197,10 @@ Both context-free and context-type operations were tested in the following test.
 \item[\hspace*{0.3cm}Result] Pass (see right-hand CFG of Figure \ref{fig:operationOptions}). See below.
 \end{description}
 \end{minipage}
-\begin{minipage}{.39\textwidth}
+\begin{minipage}{.1\textwidth}
+\hspace{1.0mm}
+\end{minipage}
+\begin{minipage}{.29\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL,breaklines=true]{code/branchtest/operation.eol}
@@ -214,11 +235,14 @@ For the break, breakAll and continue statements, they were placed in an if state
 \begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
 \item[\hspace*{0.3cm}Label] BT-08
 \item[\hspace*{0.3cm}Statement under Test] Break
-\item[\hspace*{0.3cm}Expected Output] See Figure \ref{fig:}
+\item[\hspace*{0.3cm}Expected Output] An edge from break to while.
 \item[\hspace*{0.3cm}Result] Pass (see right-hand CFG of Figure \ref{fig:testBreak}). See below.
 \end{description}
 \end{minipage}
-\begin{minipage}{.39\textwidth}
+\begin{minipage}{.1\textwidth}
+\hspace{1.0mm}
+\end{minipage}
+\begin{minipage}{.29\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL,breaklines=true]{code/branchtest/break.eol}
@@ -230,11 +254,14 @@ For break, a nested while loop was used to prove that the break statement only b
 \begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
 \item[\hspace*{0.3cm}Label] BT-09
 \item[\hspace*{0.3cm}Statement under Test] BreakAll
-\item[\hspace*{0.3cm}Expected Output] See Figure \ref{fig:}
+\item[\hspace*{0.3cm}Expected Output] An edge from breakAll to END.
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testBreakAll}). See below.
 \end{description}
 \end{minipage}
-\begin{minipage}{.39\textwidth}
+\begin{minipage}{.1\textwidth}
+\hspace{1.0mm}
+\end{minipage}
+\begin{minipage}{.29\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL,breaklines=true]{code/branchtest/breakAll.eol}
@@ -246,11 +273,14 @@ For breakAll, two while loops were used to prove that the breakAll statement can
 \begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
 \item[\hspace*{0.3cm}Label] BT-10
 \item[\hspace*{0.3cm}Statement under Test] Continue
-\item[\hspace*{0.3cm}Expected Output] See Figure \ref{fig:continue}
+\item[\hspace*{0.3cm}Expected Output] An edge from continue to while.
 \item[\hspace*{0.3cm}Result] Pass (see Figure \ref{fig:testContinue}). See below.
 \end{description}
 \end{minipage}
-\begin{minipage}{.39\textwidth}
+\begin{minipage}{.1\textwidth}
+\hspace{1.0mm}
+\end{minipage}
+\begin{minipage}{.29\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL,breaklines=true]{code/branchtest/continue.eol}

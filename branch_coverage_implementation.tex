@@ -6,19 +6,26 @@ All of the code is included in the appendices. Where appropriate, small sections
 
 \subsection{Code Structure}
 
-There are two main classes. The first is the class that does the conversion, and the second is the class CFG that represents a vertex in a CFG.
+There are two main classes. The first is the class that does the conversion called \verb|AST2CFG|, and the second is the class \verb|CFG| that represents a vertex in a CFG. There is also an interface called \verb|IStatementConversion| that defines three methods. 
 
-The conversion class can be broken down into three parts: Pre-recursion, recursion and post-recursion. To begin with, the recursive function is called with the root of the AST to be converted. Within the recursive function, a check is done to see if the node type is whitelisted. If so, it adds it as a child to the last whitelisted vertex (if there is one, if not, the start vertex is used). Then the \verb|handleAST| procedure is called with three parameters. The first is the current AST, the next is the CFG associated with the current AST (if it is whitelisted, otherwise the previously found whitelisted CFG is passed in). Finally, a list of CFG objects is passed in. Sometimes the \verb|handleAST| needs to store pointers to relevant CFG objects, and so this list is used to do that.
+For each statement that must be dealt with there is a class that implements \verb|IStatementConversion|. Every class that implements \verb|IStatementConversion| has an instance added to a Hashtable, with the statement type as a key.
 
-Once the pre-recursion methods have finished, the recursive method is called with every child of the current AST vertex. The recursive method returns a list of CFG objects that may be of use in the post-recursive method of the parent, although it may also return an empty list. 
+As earlier discussed, the core idea is a depth search algorithm, with extra code to deal with each type of statement. The main class performs a depth first search of the AST. The interface \verb|IStatementConversion| has a method defined that is called prior to the recursive depth-first search for each statement, and then another method defined that is called once the recursion has completed. 
+%The conversion class can be broken down into three parts: Pre-recursion, recursion and post-recursion. To begin with, the recursive function is called with the root of the AST to be converted. Within the recursive function, a check is done to see if the node type is whitelisted. If so, it adds it as a child to the last whitelisted vertex (if there is one, if not, the start vertex is used). Then the \verb|handleAST| procedure is called with three parameters. The first is the current AST, the next is the CFG associated with the current AST (if it is whitelisted, otherwise the previously found whitelisted CFG is passed in). Finally, a list of CFG objects is passed in. Sometimes the \verb|handleAST| needs to store pointers to relevant CFG objects, and so this list is used to do that.
 
-Finally, the post recursive method is called. This ties up any loose ends, such as joining the end of each case statement to an END SWITCH vertex or adding the END IF statement and joining the branches of the IF statement to it.
+%Once the pre-recursion methods have finished, the recursive method is called with every child of the current AST vertex. The recursive method returns a list of CFG objects that may be of use in the post-recursive method of the parent, although it may also return an empty list. 
+
+%Finally, the post recursive method is called. This ties up any loose ends, such as joining the end of each case statement to an END SWITCH vertex or adding the END IF statement and joining the branches of the IF statement to it.
 
 Once the CFG has been created, a final pass is made to search for any END IF or END SWITCH statements. If any are found, then they are removed and their parent CFGs are connected to their child CFGs. If any CFGs are found that don't have a child, they are linked to the program end vertex.
 
 \subsection{Extensibility}
 
-The code as it is written at the moment is not particularly extensible. Within the pre and post recursion methods a switch statement is used so that different code can be executed on different types of statement. If time permits then I will look at refactoring the code in a way that allows easy modification and maintenance. This could be useful if the conversion is changed to work on another language, such as one of Epsilon's other languages. 
+%The code as it is written at the moment is not particularly extensible. Within the pre and post recursion methods a switch statement is used so that different code can be executed on different types of statement. If time permits then I will look at refactoring the code in a way that allows easy modification and maintenance. This could be useful if the conversion is changed to work on another language, such as one of Epsilon's other languages. 
+
+The initial implementation had all of the code in the main class, and just one pre- and post-recursive method that contained the code to deal with every type of statement. Once the algorithm was implemented, this was refactored so that the code is more maintainable and extensible.
+
+To add a new statement, it should be nearly as easy as writing a new class for that statement that implements \verb|IStatementConversion|. In this class should be the code for dealing with adding the statement to the CFG correctly. Hopefully this extensibility will make it reasonably easy to extend the conversion process to other Epsilon languages.
 
 \subsection{Execution Listener}
 

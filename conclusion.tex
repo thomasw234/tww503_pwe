@@ -12,8 +12,6 @@ An attempt has been made to detail the conversion algorithm so that it is applic
 
 Some statements that are common across most OO languages are not included in EOL. One prime example is the do .. while statement. The CFG of a do .. while statement would be unlike any other loop because flow would immediately go to the block of the loop, and then at the end the evaluation of the conditional statement would take place.
 
-As previously discussed, the conversion algorithm as it stands is not easily maintainable, with large switch statements and complex if statements that deal with specific difficult cases. Before a future project was to convert the code to work with another language, it would be advisable to consider how the code could first be refactored. My suggestion would be to implement an interface that defines pre-recursion, recursion and post-recursion functions. Each statement in the language would then be dealt with in a class that implements this interface. A core class would hold a list of known implementations of the described interface, and for each statement that was discovered during the depth first traversal of the AST it would check the type of statement against the list, and if there was a match, the functions in the class for that statement would be called.
-
 \subsection{Languages}
 
 Epsilon has many languages for performing operations on models. EOL is the core language, upon which the other languages are built atop \citep{epsilonBook}. It should not be difficult then to extend the conversion algortihm to work with the other languages and provide coverage for all Epsilon languages.
