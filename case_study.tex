@@ -1,4 +1,5 @@
 \chapter{Evaluation}
+\label{chap:evaluation}
 
 \section{Introduction}
 
@@ -110,3 +111,7 @@ It is interesting to note that both statement and branch coverage increase the r
 On the other hand, the speed of the branch analysis does not come as a surprise. As each statement is executed, a partial traversal of the AST is performed to determine if the executed statement is in the same operation as the previously executed statement, and this will cause a slowdown.
 
 While it is purely subjective, I am going to say that the core requirements for statement and branch coverage have been satisfied. I will discuss possible further work to speed up the code in the next chapter. Because path coverage has not been completely implemented, I am counting the related core non-functional requirements as not satisfied.
+
+The conversion algorithm provides an interface for new statements to be included in the conversion, making the framework easily extensible. For the other components of the framework, I can not think of a reason why they would need modification to work with other languages, as none have any EOL specific dependencies, and so the requirement is satisfied.
+
+Finally, there was requirement that the output is simple to understand. For statement coverage I have followed what was commonly seen in other coverage tools. With branch coverage, the graph that is output clearly shows which branches have been executed, and which have not, and I am happy that the requirement has been satisfied.

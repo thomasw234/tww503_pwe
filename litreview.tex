@@ -1,4 +1,5 @@
 \chapter{Literature Review}
+\label{chap:LitReview}
 
 \section{Introduction}
 % This introduction is pretty poor, probably best to rewrite once the rest is finished
@@ -158,7 +159,11 @@ Test sets have a \emph{coverage criterion} that measures how good a collection o
 
 In addition to coverage, coverage level is also defined by \citep{softwareTestingIntro} as:
 
-\begin{quote}Given a set of test requirements $TR$ and a test set $T$, the coverage level is simply the ratio of the number of test requirements satisfied by $T$ to the size of $TR$\end{quote}.
+\begin{quote}Given a set of test requirements $TR$ and a test set $T$, the coverage level is simply the ratio of the number of test requirements satisfied by $T$ to the size of $TR$\end{quote}
+
+Finally, a test requirement is defined as \cite{softwareTestingIntro}:
+
+\begin{quote}A test requirement is a speciﬁc element of a software artifact that a test case must satisfy or cover.\end{quote}
 
 There are different approaches to determining the test coverage level of a program. Below I discuss each of these.
 
@@ -227,13 +232,13 @@ However, \citet{Myers:2004:AST:983238} also argue that branch coverage can be a 
 
 \begin{figure}%
     \centering
-    \subfloat[Path 1]{{\includegraphics[scale=0.25]{figures/cfg_path1.pdf} }}%
+    \subfloat[Path 1]{{\includegraphics[scale=0.3]{figures/cfg_path1.pdf} }}%
     \qquad
-    \subfloat[Path 2]{{\includegraphics[scale=0.25]{figures/cfg_path2.pdf} }}%
+    \subfloat[Path 2]{{\includegraphics[scale=0.3]{figures/cfg_path2.pdf} }}%
     \qquad
-    \subfloat[Path 3]{{\includegraphics[scale=0.25]{figures/cfg_path3.pdf} }}%
+    \subfloat[Path 3]{{\includegraphics[scale=0.3]{figures/cfg_path3.pdf} }}%
     \qquad
-    \subfloat[Path 4]{{\includegraphics[scale=0.25]{figures/cfg_path4.pdf} }}%
+    \subfloat[Path 4]{{\includegraphics[scale=0.3]{figures/cfg_path4.pdf} }}%
     \caption{The possible paths through the program}%
     \label{programPaths}%
 \end{figure}
@@ -280,25 +285,19 @@ y := 10x + 6 - i;
 
 The mutants all compile, but alter the outcome of executing the function. So the quality of a test set can be determined by running the set on each of the mutants and checking how many of the mutants are rejected. The perfect test set would reject all of the mutants \citep{softwareTestingIntro}. The example above is greatly simplified, and in reality it is unlikely that all of the mutants would be caught by the test set.
 
-According to \citet{softwareTestingIntro}, in addition to being used to determine the quality of test sets, mutation testing (and path coverage and code coverage) can be used to help develop a high quality test set. He claims that there are 11 mutation operations that should be used, regardless of the programming language in question:
+According to \citet{softwareTestingIntro}, in addition to being used to determine the quality of test sets, mutation testing (and path coverage and code coverage) can be used to help develop a high quality test set. He claims that there are 11 mutation operations that should be used, regardless of the programming language in question. Some of the core ones are:
 
 \begin{description}
 \item[ABS] Absolute Value Insertion - Forces the tester to have at least one positive, one 0 and one negative value for the variable that has the \verb+abs+ function applied to it.
 \item[AOR] Arithmetic Operator Replacement - Swapping between addition, subtraction, multiplication, division and modulus operators.
-\item[ROR] Relational Operator Replacement - $<, \leq, ==, \geq, >, \neq$ operators are interchanged.
 \item[COR] Conditional Operator Replacement - AND, OR, true and false are interchanged.
-\item [SOR] Shift Operator Replacement - The shift operators $<<, >> $and $>>>$ are interchanged.
-\item[LOR] Logical Operator Replacement - Bitwise operators AND (\&), OR ($\mid$) and exclusive OR (\^{}).
-\item[ASR] Assignment Operator Replacement - The operators $+=, -=, *=, /=, \%=, \&=, |=, $\^{}$=, <<=, >>=, >>>=$ are replaced with one of the other operators.
-\item[UOI] Unary Operator Insertion - One of the unary operators $+, -, !, ~ $ is inserted in a valid position.
-\item[UOD] Unary Operator Deletion - One of the unary operators $+, -, !, ~ $ is deleted from a position where a deletion will leave the statement valid.
 \item[SVR] Scalar Variable Replacement - Each reference to a variable is replaced by another variable in scope of an appropriate type.
 \item[BSR] Bomb Statement Replacement - Each statement is replaced by a bomb statement that causes the program to fail.
 \end{description}
 
 \subsection{Coverage Analysis Software}
 
-There are numerous tools that can assist in calculating coverage metrics for a test suite. A selection of these are detailed in this section, and their general features will be taken into consideration during the design phase of this project.
+There are numerous tools that can assist in calculating coverage metrics for a test suite. These tools have to interface with the compiler of the particular language, and so every tool is written for a specific language and cannot be used with EOL. A selection of these are detailed in this section, and their general features will be taken into consideration during the design phase of this project.
 
 \subsubsection{JaCoCo}
 

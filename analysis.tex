@@ -1,4 +1,5 @@
 \chapter{Analysis}
+\label{chap:Analysis}
 
 \section{Introduction}
 In this chapter an analysis of the problem is presented, along with an outline and justification of what will be implemented.
@@ -17,7 +18,9 @@ In the book by \citet{Myers:2004:AST:983238}, he states that statement analysis 
 
 Again, \citet{Myers:2004:AST:983238} is critical of branch analysis, and suggests that path coverage is a better metric of coverage. However, it is more difficult to implement than branch analysis. I will aim to implement path analysis in Epsilon for EOL files only, for the same reasons as statement and branch analysis.
 
-If time permits then I will attempt to implement mutation testing. However, research suggests that this is an incredibly difficult problem that may take longer to solve than the time that I have available, and as a compromise I may investigate how it could be implemented in EOL, and suggest the way forward for a future project.
+Mutation testing is a strong form of testing, but is difficult to implement and I would argue that it would be not as useful to developers as statement, branch and path coverage. With this in mind, I have decided to not develop mutation testing for EOL at this time. 
+
+%If time permits then I will attempt to implement mutation testing. However, research suggests that this is an incredibly difficult problem that may take longer to solve than the time that I have available, and as a compromise I may investigate how it could be implemented in EOL, and suggest the way forward for a future project.
 
 For each of the above forms of analysis I have not yet specified how exactly the coverage metric will be presented to the user. In the literature review I looked at some software packages that were plugins to Eclipse that highlighted statements and branches that were covered or not covered. If time permits then I will look into creating an Eclipse plugin. However, the main focus of my project is to actually produce various coverage metrics, and so most of my time will be focused on getting those values. If I do not have much time towards the end of the project, then I will simply output a text or HTML file of some sort that details the results of the analysis.
 
