@@ -106,11 +106,13 @@ The execution time of the EuGENia test suite was recorded with no coverage analy
     \label{tab:runTimes}
 \end{table}
 
-It is interesting to note that both statement and branch coverage increase the run time quite significantly (15\% and 23\%, respectively). A more careful analysis showed that the slowdown was not in the analysis and output of the statistics, but in the execution listener code. I find it to be surprising that the statement coverage code slows the execution down by such a lot, because the execution listener really does not do a great deal.
+It is interesting to note that both statement and branch coverage increase the run time quite significantly (15\% and 23\%, respectively). A more careful analysis showed that the slowdown was not in the analysis and output of the statistics, but in the execution listener code. I find it to be surprising that the statement coverage code slows the execution down by such a lot, because the execution listener really does not do a great deal. More detailed profiling is required to understand why this is the case. It may be that some inefficient code can be changed to speed up the listener.
 
 On the other hand, the speed of the branch analysis does not come as a surprise. As each statement is executed, a partial traversal of the AST is performed to determine if the executed statement is in the same operation as the previously executed statement, and this will cause a slowdown.
 
-While it is purely subjective, I am going to say that the core requirements for statement and branch coverage have been satisfied. I will discuss possible further work to speed up the code in the next chapter. Because path coverage has not been completely implemented, I am counting the related core non-functional requirements as not satisfied.
+%While it is purely subjective, I am going to say that the core requirements for statement and branch coverage have been satisfied. I will discuss possible further work to speed up the code in the next chapter. Because path coverage has not been completely implemented, I am counting the related core non-functional requirements as not satisfied.
+
+Through extensive testing of small programs, and the case study that was detailed in this chapter, I can conclude that the core requirements for statement and branch coverage have been satisfied.
 
 The conversion algorithm provides an interface for new statements to be included in the conversion, making the framework easily extensible. For the other components of the framework, I can not think of a reason why they would need modification to work with other languages, as none have any EOL specific dependencies, and so the requirement is satisfied.
 

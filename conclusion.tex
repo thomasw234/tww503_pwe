@@ -1,7 +1,7 @@
 \chapter{Conclusions}
 \label{chap:conclusions}
 
-Calculating code coverage for unit tests is not a new idea. This project has introduced two new things. The first is a framework for statement and branch coverage for EOL programs. The second is a general algorithm for converting an Abstract Syntax Tree to a Control Flow Graph. The algorithm is tailored for EOL syntax, but the descriptions are abstract enough that the process could be applied to any language with a similar syntax. 
+Calculating code coverage for unit tests is not a new idea. This project has made two primary contributions. The first is a framework for statement and branch coverage for EOL programs which has been tested on a large program written in EOL - EuGENia. This testing showed that EuGENia's existing test suite is insufficient, and highlighted the areas that require further testing. The second is a general algorithm for converting an Abstract Syntax Tree to a Control Flow Graph. The algorithm is tailored for EOL syntax, but the descriptions are abstract enough that the process could be applied to any language with a similar syntax. 
 
 A very high level algorithm was provided by \citet{grune2000modern} in the book `Modern Compiler Design', but this was the only literature that could be found that even mentioned the conversion process. The algorithm given in the book is very high level, and does not provide any level of detail, except for an example about an if statement. In this project I have detailed each statement and explained the considerations that must be made. 
 
@@ -15,7 +15,7 @@ Some statements that are common across most OO languages are not included in EOL
 
 \subsection{Languages}
 
-Epsilon has many languages for performing operations on models. EOL is the core language, upon which the other languages are built atop \citep{epsilonBook}. It should not be difficult then to extend the conversion algortihm to work with the other languages and provide coverage for all Epsilon languages.
+Epsilon has many languages for performing operations on models. EOL is the core language, upon which the other languages are built atop \citep{epsilonBook}. From the beginning the framework was designed with extensibility in mind, and so it should not be difficult to extend the conversion algorithm to work with the other languages and provide coverage for all Epsilon languages.
 
 To adapt the algorithm to work with non-EOL based languages, all that is required is the ability to perform a traversal of the AST for the program, and the ability to identify different types of statements in the tree.
 
@@ -28,7 +28,7 @@ The implementation of the conversion algorithm currently only outputs DOT files 
 
 \subsection{Performance}
 
-While the performance is probably acceptable (branch coverage makes execution take 23\% longer) because coverage analysis is not going to be performed every time the code is executed, it would be nice if the code ran a bit faster. As I explained in the results section, I believe that the operation to determine whether the statement that is currently being executed is in the same operation as the previously executed statement is causing a large slowdown. This could be confirmed by performing some code profiling, and then an attempt to come up with a more efficient algorithm could be implemented. One possible approach would be for every statement to be marked as being in a particular function before execution begins. At the moment, if a statement is executed a million times, the slow function will be called a million times, which is un-necessary.
+While the performance is arguably acceptable (branch coverage makes execution take 23\% longer) because coverage analysis is not going to be performed every time the code is executed, it would be nice if the code ran a bit faster. As I explained in the results section, I believe that the operation to determine whether the statement that is currently being executed is in the same operation as the previously executed statement is causing a large slowdown. This could be confirmed by performing some code profiling, and then an attempt to come up with a more efficient algorithm could be implemented. One possible approach would be to cache the results of the operation in question. This would be fairly trivial to implement, and should improve performance quite significantly. %One possible approach would be for every statement to be marked as being in a particular function before execution begins. At the moment, if a statement is executed a million times, the slow function will be called a million times, which is un-necessary.
 
 \subsection{Programs}
 
@@ -37,3 +37,11 @@ During the evaluation of EuGENia, it was noted that the EuGENia source had to be
 \subsection{Path Coverage}
 
 Path coverage is not too far from being completed. Implementing the AST to CFG conversion took a lot longer than hoped, but because of that it is now a fairly straightforward task to implement path coverage. The biggest challenge will be recording the path that has been taken by the program while bearing in mind that there is no need to record every iteration of a loop, and then comparing it to other classes. Some of the code that was written for branch coverage to determine whether or not a branch has been executed will be very useful in completing path coverage.
+
+\section{Reflection}
+
+The lack of a detailed algorithm for the conversion from AST to CFG was a surprise. The existing coverage tools that were found did not implement path coverage, which could be explained by the difficult task of building a CFG from an AST.
+
+I hope that the contribution to Epsilon that this project provides will help to justify the case for using Model Driven Engineering for large projects. It is not the only feature that is required, again going back to Martin Fowler's comment about the lack of source control \cite{fowlerMDE}. However, it is definitely a step in the right direction.
+
+I have enjoyed this project and learned a lot about model driven engineering and test coverage. Designing the conversion algorithm was an incredibly difficult challenge, and rather infuriating at times. It took a lot longer to implement the conversion than I had hoped, and I am disappointed that I did not manage to complete the path analysis section. I will complete the path analysis section in my own time, and make it available from the Git repository (\url{https://github.com/thomasw234/EpsilonCodeCoverage}), where the rest of the code is available.
