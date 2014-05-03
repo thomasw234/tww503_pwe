@@ -11,7 +11,7 @@ As detailed in the literature review, branch coverage is how many conditional st
 \end{minipage}%
 \begin{minipage}{.5\textwidth}
   \centering
-  \includegraphics[scale=0.3]{figures/branchSampleAST.pdf}
+  \includegraphics[scale=0.4]{figures/branchSampleAST.pdf}
   %\caption{The AST of the program in Figure \ref{lst:branchingExample}}
 \end{minipage}
 \caption{On the left is some sample pseudocode, and on the right is the AST for the sample pseudocode}
@@ -26,9 +26,9 @@ Unfortunately this approach is not perfect. The blocks only appear when curly br
 
 The approach therefore that I have chosen to take is actually quite difficult to justify. I suggest that the AST be converted to a Control Flow Graph (CFG), at which point the branches from each vertex will be clear. A record will be made on which edges between vertices have been executed, and the total number of edges will be counted. The edges that have not been recorded will map to the branches that were not taken. The reason that this is difficult to justify is that an extensive search has not come up with any explicit instructions on how to go about generating a control flow graph from an abstract syntax tree. \citet{grune2000modern} very briefly discuss the process of `threading' an AST to produce a CFG, but only state that there must be a subroutine that deals with each statement. Likewise, a set of lecture slides by \citet{compilersIntro} provide some brief details on a high level algorithm, but nowhere enough to implement it from scratch.
 
-Some forward thinking means that the conversion from AST to CFG will be necessary when performing the path coverage because of the formula detailed in the literature review's path coverage section to calculate cyclomatic complexity, and so this effort will solve two problems, and will have a quicker overall development time.
+Some forward thinking means that the conversion from AST to CFG will be necessary when performing the path coverage because of the formula detailed in the literature review's path coverage section to calculate cyclomatic complexity, and so this effort will solve two problems, and will have a quicker overall development time. Designing this algorithm and detailing it will be one of the large contributions of this project because of the lack of other detailed literature about the AST to CFG conversion process.
 
-Before beginning development, a list was made of the statements that need to be included. This was done by going through the Epsilon book \citep{epsilonBook} which is a complete source of EOL syntax, but also as well by going through the EuGENia source to see which statements are actually used in real EOL code. The list was then ordered loosely in priority based on the number of uses within the EuGENia source. The list as as follows:
+Before beginning development, a list was made of the statements that need to be included. This was done by going through the Epsilon book \citep{epsilonBook} which is a complete source of EOL syntax, but also as well by going through the EuGENia source (the software used in the case study in Chapter \ref{chap:evaluation}) to see which statements are actually used in real EOL code. The list was then ordered loosely in priority based on the number of uses within the EuGENia source. The list as as follows:
 
 \begin{enumerate}[nolistsep]
 \item block
