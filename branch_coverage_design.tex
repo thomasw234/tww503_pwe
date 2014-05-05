@@ -86,7 +86,7 @@ So why is this useful? At this point we now know that we're dealing with an if s
 
 \begin{figure}
 \centering
-\begin{minipage}{.6\textwidth}
+\begin{minipage}[b]{.6\textwidth}
   \centering
   	\lstinputlisting{code/ASTtoCFG_2.pseudo}
     %\caption{The target CFG for the Hello World program}
@@ -94,7 +94,7 @@ So why is this useful? At this point we now know that we're dealing with an if s
     \caption{}
     \label{lst:ast2cfg2}
 \end{minipage}%
-\begin{minipage}{.4\textwidth}
+\begin{minipage}[b]{.4\textwidth}
   \centering
   \includedot[width=0.75\linewidth]{figures/ifElseNoEnd}
   \caption{An incomplete if .. end CFG}
@@ -132,7 +132,7 @@ The break statement breaks out of the current loop. An edge must be added to the
 
 The code is rather contrived, but still valid. When the first break statement is found, it could be added to a list of discovered break statements with the intention that the the recursive function at the first statement after that while loop could check the list for any break statements, and if there were any it could remove them and add an edge from the listed break statement to the current vertex. This is fine, except that then the while loop on line 7 would be the first to check this list after the break statement on line 6 had been added. So a check could be added to see if the global last pointer points to a loop vertex. If it does, then the list is checked. However this does not work, because the increment operator statement on line 8 now satisfies that condition, and so an edge from the break on line 6 is added to the assignment on line 8! 
 
-Unfortunately the actual solution is not a tidy one. Thinking about the position of a break statement in the AST, first of all the loop that contains the break statement must be found, which can be done by looking at the parent, then the parent's parent, the parent's parent's parent etc, until a loop is discovered. Once that happens, a check can be done to see if the loop has a sibling, and if not then the parent can be checked. If the parent is a loop then that is the statement to link the break statement to. If not, then if there is a sibling of that parent then that is the statement to link the break statement to. If not, then the checking of parents and their siblings continues until a suitable candidate is found, or until there is nothing more to check, in which case the break statement is linked to the program's end statement. This is a difficult procedure to explain, but it should become clear in the implementation section when there is some code to explain.
+Unfortunately the actual solution is not a tidy one. Thinking about the position of a break statement in the AST, first of all the loop that contains the break statement must be found, which can be done by looking at the parent, then the parent's parent, the parent's parent's parent etc, until a loop is discovered. Once that happens, a check can be done to see if the loop has a sibling, and if not then the parent can be checked. If the parent is a loop then that is the statement to link the break statement to. If not, then if there is a sibling of that parent then that is the statement to link the break statement to. If not, then the checking of parents and their siblings continues until a suitable candidate is found, or until there is nothing more to check, in which case the break statement is linked to the program's end statement.
 
 For the breakAll statement the process is similar, except that the outermost loop must be discovered. This is done by going through all the parents of the breakAll statement, recording the position of the last discovered for or while loop, until the root of the AST is found. Then the statement that follows the outermost loop's block is found by looking at the sibling of the loop. Again if this does not exist, then an edge is added from the breakAll statement to the end vertex of the CFG.
 
@@ -161,9 +161,9 @@ One small change must be made to the AST that is passed into the new instance of
 
 \subsection{Branch Coverage}
 
-Once the CFG has been generated, it can be used to perform branch coverage analysis. As with statement coverage a class that implements \verb|IExecutionListener| will be implemented. A record needs to be kept about which branches have been taken. This information can be stored either in the execution listener class, or the CFG class could be modified to store it.
+Once the CFG has been generated, it can be used to perform branch coverage analysis. As with statement coverage, a class that implements \verb|IExecutionListener| will be implemented. A record needs to be kept about which branches have been taken. This information can be stored either in the execution listener class, or the CFG class could be modified to store it.
 
-If the information about which branches have been executed is stored in the execution listener, then a new class will need to be defined that stores which vertex the execution started at and which one it went to. It is going to be a lot tidier to modify the CFG class to also include which branches have been executed. When the execution listener is fired on a statement, the associated CFG and parent CFG will be found, and the parent CFG will store that the child was executed.
+If the information about which branches have been executed is stored in the execution listener, then a new class will need to be defined that stores which vertex the execution started at and which one it went to. It is going to be a lot neater to modify the CFG class to also include which branches have been executed. When the execution listener is fired on a statement, the associated CFG and parent CFG will be found, and the parent CFG will store that the child was executed.
 
 There is a slight complication that must be considered, which is that unlike an AST, a CFG vertex can have multiple parents, but only one of them will need to store that the child has been executed. To solve this problem, a pointer to the last executed AST vertex will be stored in a global variable. The parent CFG will be accessed through the last executed AST vertex.
 

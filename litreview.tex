@@ -3,17 +3,17 @@
 
 \section{Introduction}
 % This introduction is pretty poor, probably best to rewrite once the rest is finished
-In this chapter an overview is given of the existing literature as well as an overview of topics that are relevant to this project. The chapter is split into two sections. The first section gives a review of Model Driven Engineering and tools that can be used for implementation. The second section investigates software testing methods and ways of assessing the quality of software tests.
+In this chapter an overview is given of the existing literature as well as an overview of topics that are relevant to this project. The chapter is split into two sections. The first section gives a review of Model Driven Engineering and tools that can be used for implementation. The second section investigates ways of assessing the quality of software test sets.
 
 \section{Model Driven Engineering}
 
 \subsection{Introduction}
 % The Oxford English dictionary defines Model Driven Engineering as... just kidding
-Model Driven Engineering is a development methodology that aims to reduce the amount of time spent on projects, as well as increasing the consistency and quality of the item or system under development. Model driven engineering can be useful when developing software. A model of the software architecture can be created, and from that a code generation tool can be run. Assuming that the model is correct, human typing errors are avoided and precious development time can be spent on more important aspects than hunting for trivial bugs. Maintenance is also easier, as changes can be applied to the model, and the updated code will be generated automatically from the model. Finally, the code generation can be to a multitude of languages and platforms, further reducing time spent on development \cite{mdseLano}.
+\ac{MDE} is a development methodology that aims to reduce the amount of time spent on projects, as well as increasing the consistency and quality of the item or system under development. \ac{MDE} can be used in many fields, but this project is about \ac{MDE} for software development. A model of the software architecture can be created, and from that a code generation tool can be run. Assuming that the model is correct, human typing errors are avoided and precious development time can be spent on more important aspects than hunting for trivial bugs. Maintenance is also easier, as changes can be applied to the model, and the updated code will be generated automatically from the model. Finally, the code generation can be to a multitude of languages and platforms, further reducing time spent on development \cite{mdseLano}.
 
 %Model Driven Engineering is a development methodology that aims to reduce the amount of time spent on code development by building models that can be transformed and used to generate code automatically. Bugs that would normally be in code (through developer error) will no longer be present, as all the code has been generated automatically from a model. Of course this assumes that the model is correct in the first place. Cross-platform implementation overheads are also reduced. The model can remain the same for all platforms, and only the model-to-code program has to be modified for different target platforms. \citep{mdseLano}.
 
-In the 1980's there was a software quality crisis that lead to the search for alternative approaches to developing software. Model Driven Engineering is one solution that was of interest at the time as it provided a way to visually represent a system architecture, and from that generate code automatically. However, the return on investment that companies were expecting from model driven engineering was far too high, causing much disappointment and disillusionment, and for a while the concept was sidelined. More recently, the Object Managment Group (OMG) have promoted and developed a Unified Modeling Language (UML), and tools such as Epsilon have further promoted the use of MDE \citep{mdeHistory}.  \citet{brambillaBook} believes that Model Driven Engineering is now past the `trough of disillusionment' and into the `slope of enlightenment' (see Figure \ref{mde_pos}). By this they mean that new technologies often make many promises that they ultimately cannot fulfil, which is represented by the peak of inflated expectations on the graph. From the disappointment that comes with broken promises, people become disillusioned with the technology and people tend to avoid using it, as shown by the trough of disillusionment. Researchers continue to work on improving and maturing the technology, which is represented by the slope of enlightenment. \\
+In the 1980's there was a software quality crisis that lead to the search for alternative approaches to developing software. Model Driven Engineering is one solution that was of interest at the time as it provided a way to visually represent a system architecture, and from that generate code automatically. However, the return on investment that companies were expecting from model driven engineering was far too high, causing much disappointment and disillusionment, and for a while the concept was sidelined. More recently, the \ac{OMG} have promoted and developed a \ac{UML}, and tools such as Epsilon have further promoted the use of \ac{MDE} \citep{mdeHistory}.  \citet{brambillaBook} believes that \ac{MDE} is now past the `trough of disillusionment' and into the `slope of enlightenment' (see Figure \ref{mde_pos}). By this they mean that new technologies often make many promises that they ultimately cannot fulfil, which is represented by the peak of inflated expectations on the graph. From the disappointment that comes with broken promises, people become disillusioned with the technology and people tend to avoid using it, as shown by the trough of disillusionment. Researchers continue to work on improving and maturing the technology, which is represented by the slope of enlightenment. \\
 
 \begin{figure}
 \begin{minipage}{0.5\textwidth}
@@ -33,10 +33,10 @@ In the 1980's there was a software quality crisis that lead to the search for al
 
 A model is a representation of something that abstracts away many details that are not necessary for its use \citep{brambillaBook}. For example, the Utah Teapot \citep{Crow:1987:OT} is a model of a teapot that is rendered by a 3D engine. However, many aspects of the teapot are not considered in its model, as they are not necessary for a simple render. An example is that the lid is not a removable component, because for the purpose of rendering the teapot, the lid never has to be removed. Another example is that the only physical property of the teapot that will be included in the model is its finish (texture), so that lighting and reflection can be calculated. Other details such as its weight will not be included in the model, because it is not necessary.
 
-UML (Unified Modeling Language) is a language that is designed specifically for representing models visually. It is ideal for object-oriented design, as it represents classes with boxes and associations between classes with lines. Within the boxes there are definitions of the classes, methods and fields. In Figure \ref{uml_sample}, book is a class that has the properties pages and title. The diagram also shows that there is the association author between a writer object and a book object.
+\ac{UML} is a language that is designed specifically for representing models visually. It is ideal for object-oriented design, as it represents classes with boxes and associations between classes with lines. Within the boxes there are definitions of the classes, methods and fields. In Figure \ref{uml_sample}, book is a class that has the properties pages and title. The diagram also shows that there is the association author between a writer object and a book object.
 
 \subsection{Metamodels}
-To have a modeling language, there must be a specification of that language that defines the valid syntax, constraints etc. In the case of UML, the Object Management Group provide a detailed specification \citep{umlSpec} of the language, and we can check that any diagram is a UML diagram by checking that it complies with the UML specification.
+To have a modeling language, there must be a specification of that language that defines the valid syntax, constraints etc. In the case of \ac{UML}, \ac{OMG} provide a detailed specification \citep{umlSpec} of the language, and we can check that any diagram is a \ac{UML} diagram by checking that it complies with the \ac{UML} specification.
 %Concrete, Abstract and semantic sections...
 A metamodel is the specification of a modeling language, in the form of a model \citep{brambillaBook}. A metamodel could be represented visually or textually (as can a model), depending on the specification of the metamodeling language. As with many aspects of computer science, the metamodel is just another layer of abstraction, and we can continue to abstract to higher and higher levels. A metametamodel (known as M3) will define the specification of a metamodeling language, and the abstraction can continue as far as is required.
 
@@ -63,7 +63,7 @@ The concrete syntax does not necessarily need to be textual. To build a modeling
 \subsection{Epsilon}
 With the theory of model driven engineering covered, the focus will now turn to covering the tools that can be used in model driven engineering, and that will be used in this project.
 
-Epsilon is a suite of languages and tools that provide all the necessary components to build and manipulate models. Epsilon stands for \textbf{E}xtensible \textbf{P}latform of Integrated \textbf{L}anguages for M\textbf{O}del Ma\textbf{N}agement \citep{epsilonWebsite}. It is part of the Eclipse Modeling Project \citep{ecliplseModelingProjectSite}, and includes tools for each of its languages that integrate with Eclipse. From the Epsilon Website \citep{epsilonWebsite}, the languages that are provided by Epsilon are:
+Epsilon is a suite of languages and tools that provide all the necessary components to build and manipulate models. Epsilon stands for \textbf{E}xtensible \textbf{P}latform of Integrated \textbf{L}anguages for M\textbf{O}del Ma\textbf{N}agement \citep{epsilonWebsite}. It is part of the Eclipse Modeling Project \citep{eclipseModelingProjectSite}, and includes tools for each of its languages that integrate with Eclipse. From the Epsilon Website \citep{epsilonWebsite}, the languages that are provided by Epsilon are:
 
 \begin{description}
 \item[EOL] Epsilon Object Language is an expression language that is used to create, query and model EMF models. All other languages included in Epsilon are based on EOL \citep{epsilonBook}
@@ -76,10 +76,10 @@ Epsilon is a suite of languages and tools that provide all the necessary compone
 \item[Epsilon Flock] A rule based transformation language.
 \end{description}
 
-For each of these languages Epsilon provides development tools for use in Eclipse, as well as interpreters for each of the languages. As well, ANT workflows are provided which are a way of automating tasks in a sequential manner \citep{epsilonBook}.
+For each of these languages Epsilon provides development tools for use in Eclipse, as well as interpreters for each of the languages. ANT workflows are also provided, which are a way of automating tasks in a sequential manner \citep{epsilonBook}.
 
 \subsection{EUnit}
-EUnit is a unit testing framework that is included with Epsilon \citep{epsilonWebsite}. It allows systematic testing of model transformations by providing tools that can be used for checking that the output of model transformations meet certain requirements. \citep{epsilonBook} EUnit allows for different inputs and models, and could be considered as a JUnit for models. Notably, EUnit does not include test coverage analysis, which is the focus of this project.
+EUnit is a unit testing framework that is included with Epsilon \citep{epsilonWebsite}. It allows systematic testing of model transformations by providing tools that can be used for checking that the output of model transformations meet certain requirements \citep{epsilonBook}. EUnit allows for different inputs and models, and could be considered as a JUnit for models. Notably, EUnit does not include test coverage analysis, which is the focus of this project.
 
 \subsection{Graphical Modeling Framework}
 
@@ -90,7 +90,7 @@ The Eclipse graphical modeling framework (GMF) is part of the Eclipse Graphical 
 To create these graphical editors, GMF requires 6 different files \citep{gmfIntro}, including a metamodel of the models that the graphical editor will be used to create, graphics that will be used for representing models, and the tools that can be used to manipulate models.
 
 \subsection{EuGENia}
-EuGENia is one of the tools that is included with Epsilon. EuGENia takes an Ecore metamodel specification and generates a GMF editor \citep{eugeniaSite}. The purpose of EuGENia, as taken from its website, is to `shield you from the complexity of GMF and lower the entrance barrier for creating your first GMF editor.' \citep{eugeniaSite} From the code listed in Appendix \ref{App:SampleEuGENia}, the model editor shown in Figure \ref{sampleGmf} is generated by EuGENia.
+EuGENia is one of the tools that is included with Epsilon. EuGENia takes an Ecore metamodel specification and generates a GMF editor \citep{eugeniaSite}. The purpose of EuGENia, as taken from its website, is to `shield you from the complexity of GMF and lower the entrance barrier for creating your first GMF editor' \citep{eugeniaSite}. From the code listed in Appendix \ref{App:SampleEuGENia}, the model editor shown in Figure \ref{sampleGmf} is generated by EuGENia.
 
 \begin{figure}
 \begin{center}
@@ -140,13 +140,13 @@ The Ariane 5 rocket cost \$7 billion to develop, and so of course any software o
 
 In 1991 though, a software error lead to the death of 28 people. The Patriot missile system was supposed to track incoming ballistic missiles and launch a rocket to destroy them before they hit their target \citep{patriotMissile}. In one instance the system lost track of an incoming missile and decided that it must have been a false reading, and so no rocket was launched. The incoming missile hit a US barrack, killing 28 American soldiers. The software for the Patriot missile lost time after being switched on for too long, meaning that it was looking in the wrong place for the incoming missile. There is no doubt that the system was tested before it was deployed, but clearly testing was not comprehensive enough. 
 
-The final example is more recent. In February 2014 Apple issued a security update that fixed a bug in their SSL software. The bug was contained in the code in Figure \ref{fig:AppleBug}. Notice that there is a duplicated \verb|goto| statement, but because no braces were used on the above \verb|if| statement, the duplicated statement is not conditional, and will be always executed. This is another case of insufficient testing. In this particular case, some analysis of which lines of code are executed by the test suite (i.e. line coverage analysis) would have shown that the final if statement in that block of code was never executed, because the above goto is always called.
+The final example is more recent. In February 2014 Apple issued a security update that fixed a bug in their SSL software \cite{appleBug}. The bug was contained in the code in Figure \ref{fig:AppleBug}. Notice that there is a duplicated \verb|goto| statement, but because no braces were used on the above \verb|if| statement, the duplicated statement is not conditional, and will be always executed. This is another case of insufficient testing. In this particular case, some analysis of which lines of code are executed by the test suite (i.e. line coverage analysis) would have shown that the final if statement in that block of code was never executed, because the above goto is always called.
 
 \begin{figure}
 	\centering
 	%\includegraphics[scale=0.4]{figures/appleBug.png}
 	\lstinputlisting[language=java]{code/appleBug.java}
-	\caption{Apple's SSL bug}
+	\caption{Apple's SSL bug \cite{appleBug}}
 	\label{fig:AppleBug}
 \end{figure}
 
@@ -163,15 +163,15 @@ In addition to coverage, coverage level is also defined by \citep{softwareTestin
 
 Finally, a test requirement is defined as \cite{softwareTestingIntro}:
 
-\begin{quote}A test requirement is a speciﬁc element of a software artifact that a test case must satisfy or cover.\end{quote}
+\begin{quote}A test requirement is a specific element of a software artifact that a test case must satisfy or cover.\end{quote}
 
 There are different approaches to determining the test coverage level of a program. Below I discuss each of these.
 
 \subsection{Statement Coverage}
 
-Arguably the most simple approach to determining the quality of a test set is to analyse the number of lines of code that execute when the tests are run. If all lines of code are executed at least once when all tests have been run, then statement coverage is said to be 100\% \citep{softwareTestingIntro}.
+Arguably the most simple approach to determining the quality of a test set is to analyse the number of lines of code that execute when the tests are run. If all lines of code are executed at least once when all tests have been run, then line coverage is said to be 100\% \citep{softwareTestingIntro}.
 
-While simple to implement, line coverage suffers from a serious downfall. In most programming languages it is perfectly valid to have as many operations on one line as the developer chooses. In an extreme case it would be possible for the developer to have the whole program on one line. A contrived example of this is shown in Figure \ref{lineCoverage}. If a test was created that executed that program, the coverage should come back as 100\%, regardless of whether the test tried to run the program with different date's set on the test machine or not.
+While simple to implement, line coverage suffers from a serious downfall. In most programming languages it is perfectly valid to have as many operations on one line as the developer chooses. In an extreme case it would be possible for the developer to have the whole program on one line. A contrived example of this is shown in Figure \ref{lineCoverage}. If a test was created that executed that program, the coverage should come back as 100\%, regardless of whether the test tried to run the program with different dates set on the test machine or not.
 
 \begin{figure}
 	\begin{center}
@@ -183,7 +183,7 @@ While simple to implement, line coverage suffers from a serious downfall. In mos
 
 An easy but non-ideal solution to this is to require that developers only place one statement on each line. Alternatively, a more complex coverage analysis tool could be used that takes this into account.
 
-Statement coverage is the term used when talking about the number of program statements that are executed by testing \citep{Myers:2004:AST:983238}. \citet{Myers:2004:AST:983238} argue that statement coverage is `generally useless' as a metric of test quality because of the number of problems that it can potentially miss.
+Statement coverage is the term used when talking about the number of program statements that are executed by testing \citep{Myers:2004:AST:983238}. \citet{Myers:2004:AST:983238} argue that statement coverage is `generally useless' as a metric of test quality because of the number of problems that it can potentially miss. However, a contrasting argument from \citep{bullsEyeBranchDecision} is that `Broad, shallow testing finds gross deficiencies in a test suite quickly'. What this means is that even though coverage metrics like statement coverage don't prove a good level of testing, if there are any areas of testing that have not been tested at all, then they will be found quickly.
 
 The example provided by \citet{Myers:2004:AST:983238} gives the code as shown in Figure \ref{codeCoverage}. They argue that a single test can provide 100\% statement coverage for the code by passing in the values \verb+A=2, B=0, X=3+, even though the code could be logically incorrect. The example that they provide is that if the first decision should be an \verb+or+ instead of an \verb+and+, then the single test will not notice, despite providing 100\% statement coverage.
 
@@ -195,7 +195,7 @@ The example provided by \citet{Myers:2004:AST:983238} gives the code as shown in
 \label{codeCoverage}
 \end{figure}
 
-Despite the flaws of statement coverage, it is popular because it quickly allows developers to see which parts of their code has gone completely untested. No great amount of calculation is required, so measurement and analysis should be quick to execute. For more a more thorough inspection of code coverage, branch coverage is now introduced.
+Despite the flaws of statement coverage, it is popular because it quickly allows developers to see which parts of their code has gone completely untested. No great amount of calculation is required, so measurement and analysis should be quick to execute. A more thorough type of code coverage, branch coverage, is now introduced.
 
 \subsection{Branch Coverage}
 
@@ -204,13 +204,16 @@ Despite the flaws of statement coverage, it is popular because it quickly allows
 Before branch coverage can be introduced, the concept of a program control flow graph must be explained. A control flow graph shows the potential paths through a piece of code. Figure \ref{cfg} shows the control flow graph for the code listed in Figure \ref{codeCoverage}. At the top of the control flow graph is the entry point to the program. From there, the first conditional statement is represented as a vertex of the graph. From that vertex there are two outward arrows. One represents the case when the conditional statement evaluates to true, and the other to false \citep{Myers:2004:AST:983238}
 
 \begin{figure}
-\begin{minipage}{0.5\textwidth}
+\begin{minipage}[b]{0.4\textwidth}
 \centering
 		\includegraphics[scale=0.3]{figures/cfg.pdf}
 \caption{A simple control flow graph for the function foo}
 \label{cfg}
 \end{minipage}
-\begin{minipage}{0.49\textwidth}
+\begin{minipage}{0.1\textwidth}
+\hspace{1.00mm}
+\end{minipage}
+\begin{minipage}[b]{0.49\textwidth}
 \centering
 \includegraphics[width=3in]{figures/coverage_reliability.png}
 \caption{\citet{497650}'s results of testing various coverage approaches on Grep}
@@ -243,7 +246,7 @@ However, \citet{Myers:2004:AST:983238} also argue that branch coverage can be a 
     \label{programPaths}%
 \end{figure}
 
-Path coverage is a stronger test quality metric. Branch coverage covers all possible decisions at a program branch, but path coverage considers every possible path through the program \citep{Myers:2004:AST:983238, softwareTestingIntro}. Using the example again given by \citet{Myers:2004:AST:983238} in Figure \ref{codeCoverage}, there are four possible paths through the code. Each \verb+if+ statement can evaluate to true or false. Every path through the program therefore is when the \verb+if+ statements evaluate as follows: \verb+false, true+, \verb+false, false+, \verb+true, false+ and \verb+true, true+. Figure \ref{programPaths} colours in red the possible paths through the program.
+Path coverage is a stronger test quality metric. Branch coverage covers all possible decisions at a program branch, but path coverage considers every possible path through the program \citep{Myers:2004:AST:983238, softwareTestingIntro}. Using the example again given by \citet{Myers:2004:AST:983238} in Figure \ref{codeCoverage}, there are four possible paths through the code. Each \verb+if+ statement can evaluate to true or false. Every path through the program therefore is when the \verb+if+ statements evaluate as follows: \verb+(false, true)+, \verb+(false, false)+, \verb+(true, false)+ and \verb+(true, true)+. Figure \ref{programPaths} colours in red the possible paths through the program.
 
 Because \verb+if+ statements only have two possible outcomes - true or false - the number of paths through a program that only contains $n$ sequential \verb+if+ decisions is $2^n$. However, the complexity is increased with statements such as \verb+switch+ that can have any number of paths. This is known as the cyclomatic complexity of the program, and the calculation to calculate this complexity from a control flow graph was given by \citet{1702388}:
 
@@ -251,7 +254,7 @@ Because \verb+if+ statements only have two possible outcomes - true or false - t
 M = E - N + 2P
 \end{equation}
 
-Where M is the cyclomatic complexity, E is the number of edges in the graph, N is the number of nodes in the graph and P is the number of exit nodes. With this formula we can verify that the number of paths through the code in Figure \ref{codeCoverage} is 4. There are 7 edges, 5 nodes, and one exit point (the return statement).
+Where M is the cyclomatic complexity, E is the number of edges in the graph, N is the number of nodes in the graph and P is the number of exit nodes. With this formula we can verify that the number of paths through the code in Figure \ref{codeCoverage} is 4. There are 7 edges, 5 nodes, and 1 exit point (the return statement).
 
 \begin{equation}
 M = 7 - 5 + (2*1)
@@ -265,7 +268,7 @@ M = 7 - 5 + (2*1)
 \item Even with each possible path through the code covered, there is no guarantee that the inputs used by the tests will find every problem with the code.
 \end{enumerate}
 
-In her early work on the effectiveness of path analysis, \citet{1658851} found that while the data used by tests will cause path coverage to be completed, it may not actually find bugs that are present.  therefore recommends that tests that have good path coverage are used in conjunction with boundary input data tests.
+In her early work on the effectiveness of path analysis, \citet{1658851} found that while the data used by tests will cause path coverage to be completed, it may not actually find bugs that are present. She therefore recommends that tests that have good path coverage are used in conjunction with boundary input data tests.
 
 \subsection{Mutation Testing}
 
@@ -294,6 +297,14 @@ According to \citet{softwareTestingIntro}, in addition to being used to determin
 \item[SVR] Scalar Variable Replacement - Each reference to a variable is replaced by another variable in scope of an appropriate type.
 \item[BSR] Bomb Statement Replacement - Each statement is replaced by a bomb statement that causes the program to fail.
 \end{description}
+
+%\subsection{Other Coverage Methods}
+%
+%There are a few test quality assessments that are less well known, but still worth considering.
+%
+%Function coverage is a measure of how many functions have been called out of all of the functions in the software being tested \cite{bullsEyeBranchDecision}. This is of course not an in-depth coverage measure, but quickly provides developers with feedback about which functions have not been tested.
+
+
 
 \subsection{Coverage Analysis Software}
 
@@ -333,7 +344,7 @@ NCover is a suite of commercial code coverage tools written for use with .NET \c
 
 dotCover is another .NET code coverage tool \cite{dotCover}. It is quite significantly cheaper than NCover, but offers many of the same features, including full Visual Studio integration and output to HTML, XML and JSON reports. However, the only method of coverage analysis that it offers is statement coverage, which as discussed before is not a particularly strong form of coverage.
 
-Some of the common features across all of these tools that should be considered in any tools that I implement are IDE integration, syntax highlighting and generated reports that include syntax highlighting and statistics about coverage levels.
+Some of the common features across all of these tools that should be considered in any tools when I design my solution are IDE integration, syntax highlighting and generated reports that include syntax highlighting and statistics about coverage levels.
 \section{Conclusion}
 
-This literature review has introduced the concepts that are necessary for this project. Where appropriate it has compared and contrasted information from various sources. The introduction of model driven engineering has given some context about the project, and the helped to justify the reason for continuing to develop MDE tools. The second half of the literature review has looked at test coverage, looking at some of the different types of coverage and the tools that can be used to analyse coverage.
+This literature review has introduced the concepts that are necessary for this project. Where appropriate it has compared and contrasted information from various sources. The introduction of model driven engineering has given some context to the project, and the helped to justify the reason for continuing to develop MDE tools. The second half of the literature review has looked at test coverage, and looked at some of the different types of coverage and the tools that can be used to analyse coverage.

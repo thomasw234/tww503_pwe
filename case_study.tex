@@ -24,7 +24,7 @@ Statement coverage worked as expected, but branch coverage had two major problem
 \label{fig:caseStudyProblem1}
 \end{figure}
 
-The first problem was that when a conditional statement contained an operation call as part of the condition statement, this executing was causing the branch from the conditional statement to be marked as executed, regardless of whether the block of the conditional statement was actually being executed. An example of this is shown in Figure \ref{fig:caseStudyProblem1}. The for loop header contains the code \verb|class.getCompartmentReferences()| which is split into 3 vertices immediately following the for loop vertex. These are evaluated every time the for loop is reached, and if they return true then the for loop block is executed, and if not the loop is skipped. However, the branch execution listener code was noting that when any of the three vertices were executed that they satisfied the criteria:
+The first problem was that when a conditional statement contained an operation call as part of its predicate, the executing of the operation call was causing the branch from the conditional statement to be marked as executed, regardless of whether the block of the conditional statement was actually being executed. An example of this is shown in Figure \ref{fig:caseStudyProblem1}. The for loop header contains the code \verb|class.getCompartmentReferences()| which is split into 3 vertices immediately following the for loop vertex. These are evaluated every time the for loop is reached, and if they return true then the for loop block is executed, and if not the loop is skipped. However, the branch execution listener code was noting that when any of the three vertices were executed that they satisfied the criteria:
 
 \begin{enumerate}
 \item The executed vertex is a child of the last executed vertex
@@ -61,7 +61,7 @@ A lot of the non-executed statements are those in functions that were originally
 
 \subsection{Branch Coverage}
 
-Out of 235 branches in EuGENia, 143 were executed (60.9\%). The graph that is produced is very large, too big to include as a whole graph. Instead the output code was modified to print operations as separate graphs so that they can be included more easily in Appendix. It is notable that the percentage of branches that were executed is higher than the percentage of overall statements that were covered. In a review of the statement coverage implementation it was noted that some statements are never marked as being executed, and so the percentage value is of less use that the highlighted syntax output.
+Out of 235 branches in EuGENia, 143 were executed (60.9\%). The graph that is produced is very large, too big to include in this report. Instead, the graph is included as a PDF file along with this report. It is notable that the percentage of branches that were executed is higher than the percentage of overall statements that were covered. However, this is not worth considering too much when you remember that I concluded that the percentage of statements executed value was not a great deal of use, but instead the actual syntax highlighting is what should be considered by developers.
 
 % svn diff http://dev.eclipse.org/svnroot/modeling/org.eclipse.epsilon/trunk/plugins/org.eclipse.epsilon.eugenia/transformations/ECore2GMF.eol --revision 100:200 > output2.txt
 

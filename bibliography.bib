@@ -1,12 +1,24 @@
 @book{epsilonBook,
-author="DimitrosKovolos",
+author="Dimitros Kovolos",
 title="Epsilon Book",
+url="http://www.eclipse.org/epsilon/doc/book/",
 year=2013 }
 
 @book{brambillaBook,
-author="Marco Brambillia",
-title="Model-Driven Software Engineering in Practice",
-year=2012 }
+  added-at = {2012-11-11T00:00:00.000+0100},
+  author = {Brambilla, Marco and Cabot, Jordi and Wimmer, Manuel},
+  biburl = {http://www.bibsonomy.org/bibtex/2767c1c91865855ff77b8cf0b8fb72900/dblp},
+  ee = {http://dx.doi.org/10.2200/S00441ED1V01Y201208SWE001},
+  interhash = {4459cf53e67513893efccacd17dc6e82},
+  intrahash = {767c1c91865855ff77b8cf0b8fb72900},
+  keywords = {dblp},
+  publisher = {Morgan \& Claypool Publishers},
+  series = {Synthesis Lectures on Software Engineering},
+  timestamp = {2012-11-11T00:00:00.000+0100},
+  title = {Model-Driven Software Engineering in Practice},
+  url = {http://dx.doi.org/10.2200/S00441ED1V01Y201208SWE001},
+  year = 2012
+}
 
 @journal{mdeHistory,
 author="Mark R. Blackburn",
@@ -16,9 +28,14 @@ URL="http://www.knowledgebytes.net/downloads/Whats_MDE_and_How_Can_it_Impact_me.
 accessed="2013/11/05" }
 
 @book{mdseLano,
-author="Kevin Lano",
-title="Model Driven Software Engineering with UML and Java",
-year=2009 }
+  title={Model-Driven Software Development With UML and Java},
+  author={Lano, K.},
+  isbn={9781844809523},
+  url={http://books.google.co.uk/books?id=reJSPgAACAAJ},
+  year={2009},
+  publisher={Course Technology Cengage Learning}
+}
+
 
 @misc{epsilonWebsite,
 author="York Uni Epsilon Team",
@@ -37,31 +54,58 @@ author="Epsilon Project",
 accessed="8/11/2013",
 year=2013 }
 
-@article{eugeniaLivePaper,
-author="Louis Rose, Dimitrios Kolovos, Richard Paige",
-title="EuGENia Live: A Flexible Graphical Modelling Tool",
-accessed="8/11/2013" }
-
-@misc{eugeniaLiveDocumentation,
-author="Louis Rose",
-title="Bootstrap your new graphical DSL with EuGENia Live",
-date="20/11/2012",
-accessed="17/11/2013" }
+@inproceedings{eugeniaLivePaper,
+ author = {Rose, Louis M. and Kolovos, Dimitrios S. and Paige, Richard F.},
+ title = {EuGENia Live: A Flexible Graphical Modelling Tool},
+ booktitle = {Proceedings of the 2012 Extreme Modeling Workshop},
+ series = {XM '12},
+ year = {2012},
+ isbn = {978-1-4503-1804-4},
+ location = {Innsbruck, Austria},
+ pages = {15--20},
+ numpages = {6},
+ url = {http://doi.acm.org/10.1145/2467307.2467311},
+ doi = {10.1145/2467307.2467311},
+ acmid = {2467311},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {domain-specific languages, flexible modelling, model-driven engineering},
+} 
 
 @misc{ariane5,
 author="Douglas N. Arnold",
 date="23/8/2000",
 accessed="17/11/2013",
+title="The Explosion of the Ariane 5",
 URL="http://www.ima.umn.edu/~arnold/disasters/ariane.html" }
 
 @book{softwareTestingIntro,
-author="Paul Ammann, Jeff Offutt",
-published=2008,
-title="Introduction to Software Testing" }
+ author = {Ammann, Paul and Offutt, Jeff},
+ title = {Introduction to Software Testing},
+ year = {2008},
+ isbn = {0521880386, 9780521880381},
+ edition = {1},
+ publisher = {Cambridge University Press},
+ address = {New York, NY, USA},
+}
 
 @article{mttBarriers,
-title="Barriers to Systematic Model Transformation Testing",
-author="Benoit Baudry, Sudipto Ghosh, Frank Fleurey, Robert France, Yves Le Traon, Jean-Mare Mottu",
+ author = {Baudry, Benoit and Ghosh, Sudipto and Fleurey, Franck and France, Robert and Le Traon, Yves and Mottu, Jean-Marie},
+ title = {Barriers to Systematic Model Transformation Testing},
+ journal = {Commun. ACM},
+ issue_date = {June 2010},
+ volume = {53},
+ number = {6},
+ month = jun,
+ year = {2010},
+ issn = {0001-0782},
+ pages = {139--143},
+ numpages = {5},
+ url = {http://doi.acm.org/10.1145/1743546.1743583},
+ doi = {10.1145/1743546.1743583},
+ acmid = {1743583},
+ publisher = {ACM},
+ address = {New York, NY, USA},
 }
 
 @article{fleureyMTInputs,
@@ -97,6 +141,7 @@ accessed="21/11/2013" }
 
 @misc{gmpFAQ,
 author="Eclipse",
+title="GMF FAQ",
 URL="http://wiki.eclipse.org/Graphical_Modeling_Framework_FAQ",
 date="2013",
 accessed="21/11/2013" }
@@ -246,7 +291,7 @@ url={http://www.graphviz.org/doc/info/lang.html}
 }
 
 @online{fowlerMDE,
-title={ModelDrivenSoftwareDevelopment},
+title={Model Driven Software Development},
 date={2008-07-14},
 urldate={2014,04,28},
 url="http://martinfowler.com/bliki/ModelDrivenSoftwareDevelopment.html",
@@ -299,6 +344,7 @@ author={Bullseye Testing Technology},
 date={1996},
 urldate={2014-04-29},
 url={http://www.bullseye.com/coverage.html}
+title={Code Coverage Analysis}
 }
 
 @online{dotCover,
@@ -312,7 +358,8 @@ url={http://www.jetbrains.com/dotcover/}
 author={Dr. David Pearce},
 url={http://whiley.org/2011/10/26/fall-through-by-default-switch-statements/},
 date={2011-11-26},
-urldate={2014-04-29}
+urldate={2014-04-29},
+title={Fall-Through by Default for Switch Statements?}
 }
 
 @online{compilersIntro,
@@ -320,3 +367,30 @@ author={Tim Teitelbaum},
 url={http://www.cs.cornell.edu/courses/cs412/2008sp/lectures/lec24.pdf},
 title={Introduction to Compilers}
 }
+
+@book{budinsky2009emf,
+  title={EMF: Eclipse Modeling Framework},
+  author={Budinsky, F. and Steinberg, D. and Merks, E.},
+  isbn={9780321331885},
+  lccn={2007049160},
+  series={Eclipse (Addison-Wesley)},
+  url={http://books.google.co.uk/books?id=oAYcAAAACAAJ},
+  year={2009},
+  publisher={Addison Wesley Professional}
+}
+
+@inproceedings{Royce:1987:MDL:41765.41801,
+ author = {Royce, W. W.},
+ title = {Managing the Development of Large Software Systems: Concepts and Techniques},
+ booktitle = {Proceedings of the 9th International Conference on Software Engineering},
+ series = {ICSE '87},
+ year = {1987},
+ isbn = {0-89791-216-0},
+ location = {Monterey, California, USA},
+ pages = {328--338},
+ numpages = {11},
+ url = {http://dl.acm.org/citation.cfm?id=41765.41801},
+ acmid = {41801},
+ publisher = {IEEE Computer Society Press},
+ address = {Los Alamitos, CA, USA},
+} 

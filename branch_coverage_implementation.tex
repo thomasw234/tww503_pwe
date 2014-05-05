@@ -2,8 +2,6 @@
 
 Now that an analysis and design of the conversion have been done, the implementation can be detailed. The last section of this report covered the high level algorithm details, but this section will drill down into more detail in areas where it helps for the understanding of the algorithm. All coding was done in Java because Epsilon is written in Java, and to make use of the AST class is easier if the rest of the code is in Java.
 
-All of the code is included in the appendices. Where appropriate, small sections of code will be copied into this section, but for the most part the appendices should be referred to.
-
 \subsection{Code Structure}
 
 There are two main classes. The first is the class that does the conversion called \verb|AST2CFG|, and the second is the class \verb|CFG| that represents a vertex in a CFG. There is also an interface called \verb|IStatementConversion| that defines three methods. 

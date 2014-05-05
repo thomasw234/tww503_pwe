@@ -21,10 +21,8 @@ To adapt the algorithm to work with non-EOL based languages, all that is require
 
 \subsection{Output}
 The implementation of the conversion algorithm currently only outputs DOT files that can be rendered in GraphViz. Likewise for statement coverage, the only available output is a HTML file. From a user-perspective, an Eclipse plugin similar to EclEmma that provides a quick visual overview of coverage would be useful. Currently my code provides no public API for getting coverage information, but it could be easily adapted to have one like JaCoCo \citep{JaCoCo}, and tools could be created that generate more useful outputs.
-% Further work:
 
-% * fallthrough switch statements
-% * proper path analysis on loops
+A start was made on HTML output for branch coverage by modifying the statement coverage approach. At present it highlights statements in green that have had all branches executed, yellow those that have had some but not all of their branches executed, and red those that have had no branches executed. A problem that needs fixing though is that an if statement (without an else statement following it) has two branches in the CFG. One is for when the if predicate evaluates to true and goes into the if statement's block. The other branch bypasses the if block and continues the program. Whatever the outcome of the if statement, one of the two branches will be marked as executed, and so the if statement is always coloured in yellow or green, never red. This is different to EclEmma and the other tools, which coloured in an if statement red if its predicate only ever evaluated to false. This could be fixed by modifying the CFG class to contain a boolean that marked a branch if it was a `bypass' branch, and the HTML generator not counting the bypass branch when it calculated the colour to use.
 
 \subsection{Performance}
 

@@ -16,7 +16,8 @@
 \usepackage{pdfpages}
 \usepackage{pgfgantt}
 \usepackage[]{algorithm2e}
-\usepackage{hyperref}
+%\usepackage{hyperref}
+\usepackage{acronym}
 
 % For code listings
 % For code listings

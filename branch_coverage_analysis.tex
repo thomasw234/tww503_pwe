@@ -1,6 +1,6 @@
 \section{Analysis}
 
-As detailed in the literature review, branch coverage is how many conditional statements have had all possible paths executed. So for an \verb|if| statement, if it only ever evaluates to \verb|true| then the branch coverage at that vertex is 50\%. This becomes a problem when you have code such as in Figure \ref{lst:branchingExample}.If the \verb|if| statement always evaluates to true during testing, statement coverage will show as being over 99\%. However, if it ever evaluates to false then \verb|someObject| won't be initialised, and an exception will be thrown later on if somewhere else \verb|someObject| is referenced.
+As detailed in the literature review, branch coverage is the percentage of branches from conditional statements that have been executed. So for an \verb|if| statement, if it only ever evaluates to \verb|true| then the branch coverage at that vertex is 50\%. This becomes a problem when you have code such as in Figure \ref{lst:branchingExample}. If the \verb|if| statement always evaluates to true during testing, statement coverage will show as being over 99\%. However, if it ever evaluates to false then \verb|someObject| won't be initialised, and an exception will be thrown later on if somewhere else \verb|someObject| is referenced.
 
 \begin{figure}
 \centering
@@ -24,7 +24,7 @@ By looking at the AST (Figure \ref{lst:branchingExample}) of the sample code, it
 
 Unfortunately this approach is not perfect. The blocks only appear when curly braces are used. If just a single statement is placed under the \verb|if| statement, then the block is skipped and just a vertex for the single statement appears. So this means that the code is now more complex than it was previously thought to be. Furthermore, \verb|if| statements can have children that never need to be executed (because they just contain information about the conditional), and so my algorithm would need to include details of this. If these were the only drawbacks then I would still choose this approach. However, this kind of caveat occurs for many conditional statements, and so the code that would be produced would be rather unwieldy and difficult to maintain.
 
-The approach therefore that I have chosen to take is actually quite difficult to justify. I suggest that the AST be converted to a Control Flow Graph (CFG), at which point the branches from each vertex will be clear. A record will be made on which edges between vertices have been executed, and the total number of edges will be counted. The edges that have not been recorded will map to the branches that were not taken. The reason that this is difficult to justify is that an extensive search has not come up with any explicit instructions on how to go about generating a control flow graph from an abstract syntax tree. \citet{grune2000modern} very briefly discuss the process of `threading' an AST to produce a CFG, but only state that there must be a subroutine that deals with each statement. Likewise, a set of lecture slides by \citet{compilersIntro} provide some brief details on a high level algorithm, but nowhere enough to implement it from scratch.
+The approach that I have chosen to take is actually quite difficult to justify. I suggest that the AST be converted to a Control Flow Graph (CFG), at which point the branches from each vertex will be clear. A record will be made on which edges between vertices have been executed, and the total number of edges will be counted. The edges that have not been recorded will map to the branches that were not taken. The reason that this is difficult to justify is that an extensive search has not come up with any explicit instructions on how to go about generating a control flow graph from an abstract syntax tree. \citet{grune2000modern} very briefly discuss the process of `threading' an AST to produce a CFG, but only state that there must be a subroutine that deals with each statement. Likewise, a set of lecture slides by \citet{compilersIntro} provide some brief details on a high level algorithm, but nowhere enough to implement it from scratch.
 
 Some forward thinking means that the conversion from AST to CFG will be necessary when performing the path coverage because of the formula detailed in the literature review's path coverage section to calculate cyclomatic complexity, and so this effort will solve two problems, and will have a quicker overall development time. Designing this algorithm and detailing it will be one of the large contributions of this project because of the lack of other detailed literature about the AST to CFG conversion process.
 
@@ -55,13 +55,13 @@ For each of the identified statements, I will individually analyse how they can 
 As discussed in the literature review, a CFG starts with a START vertex, and ends with an END vertex. In all the examples below of a CFG, these vertices are present. Each example represents a small subsection of an EOL program. When viewing the examples, the START vertex could be imagined to be where any part of a larger program joins up to the example CFG, and similarly the END vertex can be imagined to be the continue point of the program, where the statements following the example would join up to.
 
 \subsection{The Block}
-A block is not actually a statement, but refers to a block of statements. Within a block can be any other set of statements, including other blocks. The contents of a block are often contained within \{ \} braces, but not always (see the case statement).
+A block is not actually a statement, but refers to a block of statements. Within a block can be any other set of statements, including other blocks. The contents of a block are often contained within \{ \} (curly braces or brackets), but not always (see the case statement).
 
-The block is not conditional in any way. When represented in the AST, it can have any number of children, which are executed in order of first child (left-most) to last child (right-most). When a block is encountered in the AST by the conversion algorith, it should simply be a case of joining the block vertex to the last statement that was encountered, and also joining it to the block's first child.
+The block is not conditional in any way. When represented in the AST, it can have any number of children, which are executed in order of first child (left-most) to last child (right-most). When a block is encountered in the AST by the conversion algorithm, it should simply be a case of joining the block vertex to the last statement that was encountered, and also joining it to the block's first child.
 
 The code in Figure \ref{fig:block} is a whole EOL program. The whole program is inside a block statement, as can be seen by the AST in the same figure. There are two statements in the block, and in the AST each statement is represented as a child. In the CFG, each of the children are represented sequentially, so the first child is represented after the block, and then the second child after the first child.
 
-The block could be left out of the CFG, as arguably it does not provide any more information about control flow. However it is valid syntax for a block to exist as a pair of parenthesis with no statements in, and so not including the block statement could cause problems in this case. For the rest of this analysis, the block statement may be used to represent any subset of vertices that does not add to the analysis. The input to the block vertex will represent input to the first vertex of the subset, and the output from the block will represent the output from any possible exit vertices from the subset.
+The block could be left out of the CFG, as arguably it does not provide any more information about control flow. However it is valid syntax for a block to exist as a pair of brackets with no statements in, and so not including the block statement could cause problems in this case. For the rest of this analysis, the block statement may be used to represent any subset of vertices that does not add to the analysis. The input to the block vertex will represent input to the first vertex of the subset, and the output from the block will represent the output from any possible exit vertices from the subset.
 
 \begin{figure}
 \centering
@@ -91,13 +91,13 @@ The block could be left out of the CFG, as arguably it does not provide any more
 
 The if statement is going to be treated as a separate statement to the if .. else statement, because when it comes to designing and implementing the algorithm, different code will be required for each.
 
-The \verb|if| statement evaluates its predicate, and if the predicate evaluates to true then it executes the code in the parenthesis that follow it, or if there are no parenthesis, it executes the statement that directly follows it. While the outcome of execution is the same (when there is only one statement executed following an \verb|if| statement that evaluates to true), the use of parenthesis following the if statement changes the structure of the AST in a way that must be considered during the conversion. Figure \ref{fig:if} shows the \verb|if| statement that uses parenthesis, and figure \ref{fig:ifnoparen} shows the statement that does not use parenthesis.
+The \verb|if| statement evaluates its predicate, and if the predicate evaluates to true then it executes the code in the brackets that follow it, or if there are no brackets, it executes the statement that directly follows it. While the outcome of execution is the same (when there is only one statement executed following an \verb|if| statement that evaluates to true), the use of brackets following the if statement changes the structure of the AST in a way that must be considered during the conversion. Figure \ref{fig:if} shows the \verb|if| statement that uses brackets, and Figure \ref{fig:ifnoparen} shows the statement that does not use brackets.
 
-When the parenthesis are used, if the \verb|if| predicate evaluates to false then the statement that immediately follows the block must be the next statement to be executed. This will be the sibling of the if statement in the AST. If the if statement evaluates to true, then once it has finished executing the block it must move on to the next statement after the block, which again will be the next sibling of the if statement in the AST. This of course is assuming that a statement within either of the blocks does not divert program flow away from the next statement. A simple example would be to imagine that the contents of the block shown in Figure \ref{fig:if} are modified to include a \verb|return| statement. This is not uncommon in a program, and so must be considered. In this case the the final statement will not be executed, because return will end the current program (or sub-routine).
+When the brackets are used, if the \verb|if| predicate evaluates to false then the statement that immediately follows the block must be the next statement to be executed. This will be the sibling of the if statement in the AST. If the if statement evaluates to true, then once it has finished executing the block it must move on to the next statement after the block, which again will be the next sibling of the if statement in the AST. This of course is assuming that a statement within either of the blocks does not divert program flow away from the next statement. A simple example would be to imagine that the contents of the block shown in Figure \ref{fig:if} are modified to include a \verb|return| statement. This is not uncommon in a program, and so must be considered. In this case the the final statement will not be executed, because return will end the current program (or sub-routine).
 
-When no parenthesis are used, the same rules almost apply. Except that rather than looking for the next statement after the block, it will be the second statement in the statements that follow the \verb|if| statement. This will still be represented in the AST as the next sibling of the if statement.
+When no brackets are used, the same rules almost apply. Except that rather than looking for the next statement after the block, it will be the second statement in the statements that follow the \verb|if| statement. This will still be represented in the AST as the next sibling of the if statement.
 
-Another consideration must be made about program flow. Within the conditional part of the if statement, any number of subroutines can exist. It could be viewed as another block of code, and this is why it appears as the first child of the if statement in the AST. For the purpose of control flow, this will be ignored. Any code within the conditional will not modify the flow of the program, as it should only evaluate to either true or false.
+Another consideration must be made about program flow. Within the predicate of the if statement, any number of subroutines can exist. It could be viewed as another block of code, and this is why it appears as the first child of the if statement in the AST. For the purpose of control flow, this will be ignored. Any code within the predicate will not modify the flow of the program in this operation, and even then it will only evaluate to either true or false.
 
 \begin{figure}
 \centering
@@ -119,7 +119,7 @@ Another consideration must be made about program flow. Within the conditional pa
    % \caption{}
   %\label{fig:blockCFG}
 \end{minipage}
-\caption{From left to right: The if statement with parenthesis' code, AST and desired CFG}
+\caption{From left to right: The if statement with brackets' code, AST and desired CFG}
 \label{fig:if}
 \end{figure}
 
@@ -143,13 +143,13 @@ Another consideration must be made about program flow. Within the conditional pa
    % \caption{}
   %\label{fig:blockCFG}
 \end{minipage}
-\caption{From left to right: The if statement without parenthesis' code, AST and desired CFG}
+\caption{From left to right: The if statement without brackets' code, AST and desired CFG}
 \label{fig:ifnoparen}
 \end{figure}
 
 \subsection{The if .. else statement}
 
-The if .. else statement differs from the if statement in two ways. The first is that control flow will always go down one of two paths (see Figure \ref{fig:ifelse}), rather than potentially going down one or skipping around it. Secondly, the if statement in the AST now has three children rather than just two. The additional child is the block (or single statement if no parenthesis are used) for the else statement.
+The if .. else statement differs from the if statement in two ways. The first is that control flow will always go down one of two paths (see Figure \ref{fig:ifelse}), rather than potentially going down one or skipping around it. Secondly, the if statement in the AST now has three children rather than just two. The additional child is the block (or single statement if no brackets are used) for the else statement.
 
 When implementing the conversion a check will need to be included to see how many children the if statement has. While the EOL language parser defines an else statement, it is never featured in the AST that is generated and therefore cannot be used to distinguish between an if statement and an if .. else statement. 
 
@@ -175,7 +175,7 @@ Because control flow is forced down one of two paths, the final statement of bot
    % \caption{}
   %\label{fig:blockCFG}
 \end{minipage}
-\caption{From left to right: The if .. else statement without parenthesis' code, AST and desired CFG}
+\caption{From left to right: The if .. else statement without brackets' code, AST and desired CFG}
 \label{fig:ifelse}
 \end{figure}
 
@@ -273,7 +273,7 @@ When it comes to designing the algorithm to perform the conversion, it will make
 
 The switch statement is probably one of the most complex statements in EOL in terms of control flow. The EOL switch statement is similar to the Pascal switch statement \citep{pascalSwitch}. The switch statement takes a value as an argument, and then the case predicates within the switch statement's block are examined. If one evaluates to true, then the block that follows that case statement is executed, and control is passed to the statement that follows the block of the switch statement.
 
-This differs from the Java switch statement, where every single case predicate is evaluated, and if it evaluates to true then it is executed \citep{pascalSwitch}. This allows for multiple case statement blocks to be executed potentially in a single switch statement.
+This differs from the Java switch statement, where every single case predicate is evaluated, and each one that evaluates to true then is executed \citep{pascalSwitch}. This allows for multiple case statement blocks to be executed potentially in a single switch statement.
 
 While this is straightforward, the main complexity of the switch statement is because of the continue statement, which is now discussed.
 
@@ -402,7 +402,7 @@ breakAll is like break, but rather than just breaking from the current loop, it 
 
 return ends execution of the current operation, or the main program if it is not called within an operation.
 
-continue when used in the context of a loop has a different meaning to continue when used in a switch statement's block. In a loop, continue ends the current iteration within the loop and returns control to the loop conditional statement. 
+continue when used in the context of a loop has a different meaning to continue when used in a switch statement's block. In a loop, continue ends the current iteration within the loop and returns control to the loop statement. 
 
 The Epsilon Book \citep{epsilonBook} gives a nice example that uses break, breakAll and continue all in one small program. This is shown in Figure \ref{fig:break}. Notice that in the CFG, the continue statement only has an edge back to the for loop that it is contained within (i.e. the inner for loop), ending the current loop iteration. The break statement also breaks the control out of the inner for loop, and returns control to the outer for loop. Finally, the breakAll statement breaks out of both for loops, and execution is taken to the end of the program (because there are no statements after the outer for loop). No return statement is included in the example, but if it were at any point, then its only outbound edge would be to the end vertex, because it ends the current procedure or program.
 

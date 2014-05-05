@@ -67,7 +67,7 @@ Testing begins with the block vertex. This will be done by having a single line 
 Of note about this test is that the operation call \verb|println| is printed, but not the string that is to be printed. This is because the type string is not on the whitelist, but the operation call type is. If both were on the whitelist, then two vertices would be used to represent that line of code.
 
 \begin{samepage}
-\begin{minipage}{.6\textwidth}
+\begin{minipage}{.55\textwidth}
 \begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
 \item[\hspace*{0.3cm}Label] BT-02
 \item[\hspace*{0.3cm}Statement under Test] if
@@ -78,7 +78,7 @@ Of note about this test is that the operation call \verb|println| is printed, bu
 \begin{minipage}{.1\textwidth}
 \hspace{1.0mm}
 \end{minipage}
-\begin{minipage}{.29\textwidth}
+\begin{minipage}{.34\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/if.eol}
@@ -88,7 +88,7 @@ Of note about this test is that the operation call \verb|println| is printed, bu
 The if statement does not require any code in its block for this test, because leaving the space between the parenthesis empty produces a block vertex, which is enough for this test. The if statement above will always execute because its parameter is \verb|true|, but again for testing this is not relevant because the generated CFG does not take this into account.
 
 \begin{samepage}
-\begin{minipage}{.6\textwidth}
+\begin{minipage}{.55\textwidth}
 \begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
 \item[\hspace*{0.3cm}Label] BT-03
 \item[\hspace*{0.3cm}Statement under Test] if .. else
@@ -99,7 +99,7 @@ The if statement does not require any code in its block for this test, because l
 \begin{minipage}{.1\textwidth}
 \hspace{1.0mm}
 \end{minipage}
-\begin{minipage}{.29\textwidth}
+\begin{minipage}{.34\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/ifElse.eol}
@@ -107,7 +107,7 @@ The if statement does not require any code in its block for this test, because l
 \end{samepage}
 
 \begin{samepage}
-\begin{minipage}{.6\textwidth}
+\begin{minipage}{.55\textwidth}
 \begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
 \item[\hspace*{0.3cm}Label] BT-04
 \item[\hspace*{0.3cm}Statement under Test] for
@@ -118,7 +118,7 @@ The if statement does not require any code in its block for this test, because l
 \begin{minipage}{.1\textwidth}
 \hspace{1.0mm}
 \end{minipage}
-\begin{minipage}{.29\textwidth}
+\begin{minipage}{.34\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/for.eol}
@@ -127,25 +127,25 @@ The if statement does not require any code in its block for this test, because l
 
 \begin{figure}
 \centering
-\begin{minipage}{.25\textwidth}
+\begin{minipage}[b]{.17\textwidth}
   \centering
   \includedot[scale=0.3]{figures/branchtest/while}
   \caption{}
   \label{fig:testWhile}
 \end{minipage}%
-\begin{minipage}{.25\textwidth}
+\begin{minipage}[b]{.22\textwidth}
   \centering
   \includedot[scale=0.3]{figures/branchtest/switch1}
   \caption{}
   \label{fig:testSwitch1}
 \end{minipage}%
-\begin{minipage}{.25\textwidth}
+\begin{minipage}[b]{.25\textwidth}
   \centering
     \includedot[scale=0.3]{figures/branchtest/switch2}
     \caption{}
   	\label{fig:testSwitch2}
 \end{minipage}
-\begin{minipage}{.24\textwidth}
+\begin{minipage}[b]{.29\textwidth}
   \centering
   \includedot[scale=0.3]{figures/branchtest/operation}
   \caption{}
@@ -153,7 +153,7 @@ The if statement does not require any code in its block for this test, because l
 \end{minipage}
 \end{figure}
 
-\begin{minipage}{.6\textwidth}
+\begin{minipage}{.55\textwidth}
 \begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
 \item[\hspace*{0.3cm}Label] BT-05
 \item[\hspace*{0.3cm}Statement under Test] switch (with fallthrough, without a default statement)
@@ -164,7 +164,7 @@ The if statement does not require any code in its block for this test, because l
 \begin{minipage}{.1\textwidth}
 \hspace{1.0mm}
 \end{minipage}
-\begin{minipage}{.29\textwidth}
+\begin{minipage}{.34\textwidth}
   \centering
   Code used for testing:
   % This line breaks the document for some reason
@@ -172,7 +172,7 @@ The if statement does not require any code in its block for this test, because l
   %\lstinputlisting{code/branchtest/switch1.eol}
 \end{minipage}
 
-\begin{minipage}{.6\textwidth}
+\begin{minipage}{.55\textwidth}
 \begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
 \item[\hspace*{0.3cm}Label] BT-06
 \item[\hspace*{0.3cm}Statement under Test] switch (without fallthrough, with a default statement)
@@ -183,7 +183,7 @@ The if statement does not require any code in its block for this test, because l
 \begin{minipage}{.1\textwidth}
 \hspace{1.0mm}
 \end{minipage}
-\begin{minipage}{.29\textwidth}
+\begin{minipage}{.34\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL]{code/branchtest/switch2.eol}
@@ -191,7 +191,7 @@ The if statement does not require any code in its block for this test, because l
 
 Both context-free and contextual operations were tested in the following test. Using the example from The Epsilon Book \citep{epsilonBook} one operation of each type was defined, and then both operations called.
 
-\begin{minipage}{.6\textwidth}
+\begin{minipage}{.55\textwidth}
 \begin{description}[style=sameline,leftmargin=4.5cm,nolistsep]
 \item[\hspace*{0.3cm}Label] BT-07
 \item[\hspace*{0.3cm}Statement under Test] Operation call
@@ -202,7 +202,7 @@ Both context-free and contextual operations were tested in the following test. U
 \begin{minipage}{.1\textwidth}
 \hspace{1.0mm}
 \end{minipage}
-\begin{minipage}{.29\textwidth}
+\begin{minipage}{.34\textwidth}
   \centering
   Code used for testing:
   \lstinputlisting[language=EOL,breaklines=true]{code/branchtest/operation.eol}
@@ -212,19 +212,19 @@ Notice that the operations are actually shown in the wrong order in the generate
 
 \begin{figure}
 \centering
-\begin{minipage}{.25\textwidth}
+\begin{minipage}[b]{.25\textwidth}
   \centering
   \includedot[scale=0.3]{figures/branchtest/break}
   \caption{}
   \label{fig:testBreak}
 \end{minipage}%
-\begin{minipage}{.25\textwidth}
+\begin{minipage}[b]{.25\textwidth}
   \centering
   \includedot[scale=0.3]{figures/branchtest/breakAll}
   \caption{}
   \label{fig:testBreakAll}
 \end{minipage}%
-\begin{minipage}{.25\textwidth}
+\begin{minipage}[b]{.25\textwidth}
   \centering
     \includedot[scale=0.3]{figures/branchtest/continue}
     \caption{}
@@ -313,7 +313,7 @@ A manual walkthrough of the CFG confirms that it does as is expected. The only p
 
 \subsection{Branch Coverage Testing}
 
-Now that I am satisfied that the CFG is correctly, it can be used to perform branch analysis.
+Now that I am satisfied that the CFG is correctly generated, it can be used to perform branch analysis.
 
 \begin{minipage}{0.6\textwidth}
 \begin{description}[style=sameline,leftmargin=3.5cm,nolistsep]

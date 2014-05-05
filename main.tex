@@ -11,12 +11,13 @@
 
 In this project I have developed a framework for measuring test coverage that is used to enhance EOL, a domain-specific language.
 
-The framework that I have developed is extensible. When designing and implementing branch coverage I opted to convert the Abstract Syntax Tree (AST) to a Control Flow Graph (CFG) because this will make path analysis a lot easier to implement in a future project, and may also be useful for other types of program analysis. The conversion proved to be challenging because there is no in depth documentation of the algorithm. I therefore had to perform analysis for each type of statement, and justify any design deicions that were made.
+The framework that I have developed is extensible. When designing and implementing branch coverage, I opted to convert the Abstract Syntax Tree (AST) to a Control Flow Graph (CFG) because this will make path analysis a lot easier to implement in a future project, and may also be useful for other types of program analysis. The conversion proved to be challenging because there is no in depth documentation of the algorithm. I therefore had to perform analysis for each type of statement, and justify any design deicions that were made.
 
 The framework was evaluated by application of a case study on a large EOL program (EuGENia). The study showed that there were significant gaps in the test coverage of EuGENia, which can now be addressed by the Epsilon developers.}
 %\dedication{Dedication: To be decided}
-%\acknowledgements{I would like to acknowledge that this dissertation would probably be a lot better without Tommy Fong, whose nighclub The Willow provided far too many cheap drinks that have rotted my brain over the last 4 years.}
-\wordcount{24197}
+%\acknowledgements{I would like to thank my supervisor Dr. Louis Rose for his invaluable support throughout this project.}
+\wordcount{25234}
+\excludes{the appendices}
 \begin{document}
 \maketitle
 %\listoffigures
@@ -32,6 +33,10 @@ The framework was evaluated by application of a case study on a large EOL progra
 
 %\setcounter{page}{1}
 
+\acrodef{MDE}[MDE]{Model Driven Engineering}
+\acrodef{UML}[UML]{Unified Modeling Language}
+\acrodef{OMG}[OMG]{Object Management Group}
+
 \input{./introduction.tex}
 \input{./litreview.tex}
 \input{./analysis.tex}
@@ -41,12 +46,14 @@ The framework was evaluated by application of a case study on a large EOL progra
 \input{./case_study.tex}
 \input{./conclusion.tex}
 
-\bibliography{bibliography}
 
 \addcontentsline{toc}{chapter}{Appendices}
 \addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
+
+\nocite{*}
+\bibliography{bibliography}
 \appendix
 
-%\input{./appendix.tex}
+\input{./appendix.tex}
 
 \end{document}

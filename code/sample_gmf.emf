@@ -1,4 +1,4 @@
-mespace(uri="filesystem", prefix="filesystem")
+namespace(uri="filesystem", prefix="filesystem")
 package filesystem;
  
 @gmf.diagram
