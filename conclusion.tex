@@ -36,7 +36,7 @@ During the evaluation of EuGENia, it was noted that the EuGENia source had to be
 
 Path coverage is not too far from being completed. Implementing the AST to CFG conversion took a lot longer than hoped, but because of that it is now a fairly straightforward task to implement path coverage. The biggest challenge will be recording the path that has been taken by the program while bearing in mind that there is no need to record every iteration of a loop, and then comparing it to other classes. Some of the code that was written for branch coverage to determine whether or not a branch has been executed will be very useful in completing path coverage.
 
-\section{Reflection}
+\section*{Reflection}
 
 The lack of a detailed algorithm for the conversion from AST to CFG was a surprise. The existing coverage tools that were found did not implement path coverage, which could be explained by the difficult task of building a CFG from an AST.
 
