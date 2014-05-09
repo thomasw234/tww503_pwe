@@ -1,6 +1,11 @@
 \begin{frame}
 \frametitle{Implementing Branch Coverage}
-
+\begin{figure}
+  \centering
+  \includedot[scale=0.2]{figures/statements/if_AST}
+   % \caption{}
+  %\label{fig:blockAST}
+\end{figure}
 \begin{itemize}
 \item Need to count the number of branches executed
 \item Could consider each child of an AST, but there are some branches that we don't want to count
@@ -8,6 +13,22 @@
 \item Need to consider path coverage
 \end{itemize}
 
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Implementing Branch Coverage - Conversion Algorithm}
+\begin{figure}
+  \centering
+  \includedot[scale=0.2]{figures/statements/if_AST}
+   % \caption{}
+  %\label{fig:blockAST}
+\end{figure}
+\begin{itemize}
+\item Depth First Search
+\item Special cases for each statement
+\item Interface to add new statements
+\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -118,14 +139,4 @@
 \label{fig:switch2}
 \end{figure}
 
-\end{frame}
-
-\begin{frame}
-\frametitle{Implementing Branch Coverage - Conversion Algorithm}
-
-\begin{itemize}
-\item Depth First Search
-\item Special cases for each statement
-\item Interface to add new statements
-\end{itemize}
 \end{frame}

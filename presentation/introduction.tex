@@ -1,3 +1,4 @@
+
 \begin{frame}
 \frametitle{Introduction - Model Driven Engineering}
 
@@ -26,21 +27,15 @@
 	\centering
 	\includegraphics[scale=0.5]{./presentation/images/epsilon}
 	\end{figure}
-	\end{frame}
-
-\begin{frame}
-\frametitle{Introduction - Software Testing Metrics}
-
-	\begin{figure}
-		\centering
-		\includegraphics[width=0.758\linewidth]{figures/EclEmma}
-		\caption{EclEmma [EclEmma.org, 2014]}
-	\end{figure}
+	
+	\begin{itemize}
+	\item Has a set of languages for MDE purposes
+	\item Languages are interpreted
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Introduction - Software Testing Metrics}
-
+\frametitle{Motivation}
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.758\linewidth]{figures/appleBug.png}
@@ -48,29 +43,53 @@
 	\end{figure}
 \end{frame}
 
+
+\begin{frame}
+\frametitle{Motivation}
+\begin{itemize}
+\item Epsilon currently lacks any test coverage metrics.
+\item Useful features will attract more users to MDE, and improve the quality of MDE tools.
+\end{itemize}
+\end{frame}
+
+
 \begin{frame}
 \frametitle{Introduction - Software Testing Metrics}
-\begin{figure}
-\centering
-\begin{minipage}{.3\textwidth}
-  \centering
-  \lstinputlisting[language=EOL]{code/statements/if.java}
-  %\caption{}
-  %\label{lst:blockStatement}
-\end{minipage}%
-\begin{minipage}{.3\textwidth}
-  \centering
-  \includedot[width=\linewidth]{figures/statements/if_AST}
-   % \caption{}
-  %\label{fig:blockAST}
-\end{minipage}
-\begin{minipage}{.3\textwidth}
-  \centering
-  \includedot[scale=0.3]{figures/statements/if_CFG}
-   % \caption{}
-  %\label{fig:blockCFG}
-\end{minipage}
-\caption{From left to right: Code for an if statement, its AST and its CFG}
-\end{figure}
-
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.758\linewidth]{figures/EclEmma}
+		\caption{EclEmma [EclEmma.org, 2014]}
+	\end{figure}
+	\begin{itemize}
+	\item Statement Coverage
+	\item Branch Coverage
+	\item Path Coverage
+	\end{itemize}
 \end{frame}
+
+%\begin{frame}
+%\frametitle{Introduction - Software Testing Metrics}
+%\begin{figure}
+%\centering
+%\begin{minipage}{.3\textwidth}
+%  \centering
+%  \lstinputlisting[language=EOL]{code/statements/if.java}
+%  %\caption{}
+%  %\label{lst:blockStatement}
+%\end{minipage}%
+%\begin{minipage}{.3\textwidth}
+%  \centering
+%  \includedot[width=\linewidth]{figures/statements/if_AST}
+%   % \caption{}
+%  %\label{fig:blockAST}
+%\end{minipage}
+%\begin{minipage}{.3\textwidth}
+%  \centering
+%  \includedot[scale=0.3]{figures/statements/if_CFG}
+%   % \caption{}
+%  %\label{fig:blockCFG}
+%\end{minipage}
+%\caption{From left to right: Code for an if statement, its AST and its CFG}
+%\end{figure}
+
+%\end{frame}
